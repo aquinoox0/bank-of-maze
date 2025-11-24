@@ -1165,6 +1165,9 @@
                 <button class="tab" onclick="openTab('vadeli')"><i class="fas fa-piggy-bank"></i> Vadeli Hesap</button>
                 <button class="tab" onclick="openTab('kredi')"><i class="fas fa-hand-holding-usd"></i> Kredi Başvurusu</button>
                 <button class="tab" onclick="openTab('sigortalarim')"><i class="fas fa-shield-alt"></i> Sigortalarım</button>
+                <!-- YENİ EKLENEN SEKMELER -->
+                <button class="tab" onclick="openTab('vadeli-hesaplarim')"><i class="fas fa-piggy-bank"></i> Vadeli Hesaplarım</button>
+                <button class="tab" onclick="openTab('kredilerim')"><i class="fas fa-hand-holding-usd"></i> Kredilerim</button>
                 <button class="tab home-btn" onclick="showSection('ana-sayfa')"><i class="fas fa-home"></i> Ana Sayfa</button>
             </div>
 
@@ -1296,6 +1299,22 @@
                 <h3><i class="fas fa-shield-alt"></i> Sigortalarım</h3>
                 <div id="sigortalarimListesi">
                     <p>Henüz sigortanız bulunmamaktadır.</p>
+                </div>
+            </div>
+
+            <!-- VADELİ HESAPLARIM -->
+            <div class="tab-content" id="vadeli-hesaplarim">
+                <h3><i class="fas fa-piggy-bank"></i> Vadeli Hesaplarım</h3>
+                <div id="vadeliHesaplarimListesi">
+                    <p>Henüz vadeli hesabınız bulunmamaktadır.</p>
+                </div>
+            </div>
+
+            <!-- KREDİLERİM -->
+            <div class="tab-content" id="kredilerim">
+                <h3><i class="fas fa-hand-holding-usd"></i> Kredilerim</h3>
+                <div id="kredilerimListesi">
+                    <p>Henüz krediniz bulunmamaktadır.</p>
                 </div>
             </div>
         </div>
@@ -1635,6 +1654,10 @@
 
             if (tabName === 'sigortalarim') {
                 loadSigortalarim();
+            } else if (tabName === 'vadeli-hesaplarim') {
+                loadVadeliHesaplarim();
+            } else if (tabName === 'kredilerim') {
+                loadKredilerim();
             }
         }
 
@@ -1971,6 +1994,60 @@
             });
         }
 
+        // Vadeli Hesaplarımı Yükle
+        function loadVadeliHesaplarim() {
+            const container = document.getElementById('vadeliHesaplarimListesi');
+            container.innerHTML = '';
+
+            if (!currentUser || !currentUser.vadeliHesaplar || currentUser.vadeliHesaplar.length === 0) {
+                container.innerHTML = '<p>Henüz vadeli hesabınız bulunmamaktadır.</p>';
+                return;
+            }
+
+            currentUser.vadeliHesaplar.forEach(vadeli => {
+                const div = document.createElement('div');
+                div.className = 'aktif-item';
+                div.innerHTML = `
+                    <div class="aktif-bilgi">
+                        <strong>${vadeli.miktar}$</strong><br>
+                        Faiz: %${vadeli.faiz} | Vade: ${vadeli.vade} gün<br>
+                        <small>Başlangıç: ${vadeli.baslangicTarihi} | Durum: ${vadeli.durum}</small>
+                    </div>
+                    <div class="aktif-actions">
+                        <button class="btn btn-danger" onclick="vadeliHesapSil('${vadeli.id}')"><i class="fas fa-trash"></i> Sil</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Kredilerimi Yükle
+        function loadKredilerim() {
+            const container = document.getElementById('kredilerimListesi');
+            container.innerHTML = '';
+
+            if (!currentUser || !currentUser.krediler || currentUser.krediler.length === 0) {
+                container.innerHTML = '<p>Henüz krediniz bulunmamaktadır.</p>';
+                return;
+            }
+
+            currentUser.krediler.forEach(kredi => {
+                const div = document.createElement('div');
+                div.className = 'aktif-item';
+                div.innerHTML = `
+                    <div class="aktif-bilgi">
+                        <strong>${kredi.miktar}$</strong><br>
+                        Faiz: %${kredi.faiz} | Vade: ${kredi.vade} gün<br>
+                        <small>Başlangıç: ${kredi.baslangicTarihi} | Durum: ${kredi.durum}</small>
+                    </div>
+                    <div class="aktif-actions">
+                        <button class="btn btn-danger" onclick="krediSil('${kredi.id}')"><i class="fas fa-trash"></i> Sil</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
         // Sigorta sil
         function sigortaSil(sigortaId) {
             if (confirm('Bu sigortayı silmek istediğinizden emin misiniz?')) {
@@ -1979,6 +2056,28 @@
                 loadSigortalarim();
                 updateStatistics();
                 showNotification('Sigorta başarıyla silindi!', 'success');
+            }
+        }
+
+        // Vadeli Hesap sil
+        function vadeliHesapSil(vadeliId) {
+            if (confirm('Bu vadeli hesabı silmek istediğinizden emin misiniz?')) {
+                currentUser.vadeliHesaplar = currentUser.vadeliHesaplar.filter(v => v.id !== vadeliId);
+                updateLocalStorage();
+                loadVadeliHesaplarim();
+                updateStatistics();
+                showNotification('Vadeli hesap başarıyla silindi!', 'success');
+            }
+        }
+
+        // Kredi sil
+        function krediSil(krediId) {
+            if (confirm('Bu krediyi silmek istediğinizden emin misiniz?')) {
+                currentUser.krediler = currentUser.krediler.filter(k => k.id !== krediId);
+                updateLocalStorage();
+                loadKredilerim();
+                updateStatistics();
+                showNotification('Kredi başarıyla silindi!', 'success');
             }
         }
 
