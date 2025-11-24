@@ -1,0 +1,2795 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank of Maze - Güvenli Bankacılık</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #333;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* FDIC Banner */
+        .fdic-banner {
+            background: #002d72;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 0.9rem;
+            font-weight: bold;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 2000;
+            border-bottom: 2px solid #ffc72c;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        /* Header Styles */
+        header {
+            background: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 40px;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #cc0000;
+            letter-spacing: -0.5px;
+        }
+
+        .bank-logo {
+            height: 40px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.2rem;
+        }
+
+        .nav-links button {
+            background: #cc0000;
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            box-shadow: 0 2px 5px rgba(204, 0, 0, 0.3);
+        }
+
+        .nav-links button:hover {
+            background: #8b0000;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(139, 0, 0, 0.4);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1400px;
+            margin: 140px auto 20px;
+            padding: 2rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 5rem 2rem;
+            background: linear-gradient(rgba(0, 45, 114, 0.85), rgba(204, 0, 0, 0.8)), 
+                        url('https://images.unsplash.com/photo-1601597111158-2fceff292cdc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            opacity: 0.95;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-top: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-info {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .contact-info p {
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        /* Credit Card Grid */
+        .credit-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #e0e0e0;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #002d72 0%, #0047ab 100%);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .card-new {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ffc72c;
+            color: #002d72;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .card-amount {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+
+        .card-type {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            color: #002d72;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .card-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-features li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            color: #666;
+            display: flex;
+            align-items: center;
+        }
+
+        .card-features li:before {
+            content: '✓';
+            color: #28a745;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        .card-footer {
+            background: #f8f9fa;
+            padding: 1rem 1.5rem;
+            text-align: center;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .card-logo {
+            height: 30px;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Form Styles */
+        .form-container {
+            background: #f8f9fa;
+            padding: 2.5rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            display: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: 1px solid #e9ecef;
+        }
+
+        .form-container h2 {
+            color: #002d72;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #002d72;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: #002d72;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 45, 114, 0.1);
+        }
+
+        .btn {
+            background: #cc0000;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 0.5rem;
+            transition: all 0.3s;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn:hover {
+            background: #8b0000;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(139, 0, 0, 0.3);
+        }
+
+        .btn i {
+            font-size: 0.9rem;
+        }
+
+        /* Dashboard */
+        .dashboard {
+            display: none;
+        }
+
+        .balance-card {
+            background: linear-gradient(135deg, #cc0000 0%, #8b0000 100%);
+            color: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 20px rgba(204, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .balance-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255,255,255,0.1);
+            transform: rotate(45deg);
+            z-index: 1;
+        }
+
+        .balance-card > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .balance-amount {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin: 1rem 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .action-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .action-card:hover {
+            transform: translateY(-5px);
+            border-color: #cc0000;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .action-card i {
+            font-size: 2rem;
+            color: #cc0000;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Insurance Packages */
+        .insurance-packages {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .package {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border: 2px solid #ddd;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .package:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .package.selected {
+            border-color: #cc0000;
+            background: #fff5f5;
+            transform: scale(1.02);
+        }
+
+        .package h3 {
+            color: #cc0000;
+            margin-bottom: 1rem;
+        }
+
+        .package-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #cc0000;
+            margin: 1rem 0;
+        }
+
+        /* Police Süresi Paketleri */
+        .police-packages {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        /* Tab System */
+        .tabs {
+            display: flex;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #ddd;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tab {
+            padding: 1rem 2rem;
+            cursor: pointer;
+            background: #f8f9fa;
+            border: none;
+            border-radius: 8px 8px 0 0;
+            transition: all 0.3s;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tab:hover {
+            background: #e9ecef;
+        }
+
+        .tab.active {
+            background: #cc0000;
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 2rem;
+            background: white;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Home Button */
+        .home-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 1rem;
+        }
+
+        .home-btn:hover {
+            background: #218838;
+        }
+
+        /* Hesap Listesi */
+        .hesap-listesi {
+            margin-top: 2rem;
+        }
+
+        .hesap-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 0.5rem 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            cursor: pointer;
+            border-left: 4px solid #cc0000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .hesap-item:hover {
+            background: #f8f9fa;
+            transform: translateX(5px);
+        }
+
+        .hesap-detay {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* Admin Panel */
+        .admin-panel {
+            display: none;
+        }
+
+        .admin-category {
+            margin-bottom: 2rem;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .admin-category-header {
+            background: #cc0000;
+            color: white;
+            padding: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+        }
+
+        .admin-category-header:hover {
+            background: #8b0000;
+        }
+
+        .admin-category-content {
+            padding: 1.5rem;
+            background: white;
+            display: none;
+        }
+
+        .admin-category.active .admin-category-content {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* Request Item Styles */
+        .request-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 0.5rem 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 4px solid #cc0000;
+        }
+
+        .request-info {
+            flex: 1;
+        }
+
+        .request-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-approve {
+            background: #28a745;
+        }
+
+        .btn-approve:hover {
+            background: #218838;
+        }
+
+        .btn-reject {
+            background: #dc3545;
+        }
+
+        .btn-reject:hover {
+            background: #c82333;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .tab {
+                border-radius: 8px;
+                margin-bottom: 0.5rem;
+            }
+            
+            .credit-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .request-item {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+            
+            .request-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+        }
+
+        /* Notification Styles */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            z-index: 3000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transform: translateX(150%);
+            transition: transform 0.5s ease;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            background: #28a745;
+        }
+
+        .notification.error {
+            background: #dc3545;
+        }
+
+        .notification.info {
+            background: #17a2b8;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Feature Grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-align: center;
+            border: 1px solid #e9ecef;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .feature-card i {
+            font-size: 2.5rem;
+            color: #cc0000;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            color: #002d72;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        /* Statistics */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-align: center;
+            border-left: 4px solid #cc0000;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #cc0000;
+            margin: 0.5rem 0;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Calisan Sigorta Styles */
+        .calisan-sigorta-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 0.5rem 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-left: 4px solid #17a2b8;
+        }
+
+        .calisan-sigorta-detay {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+        }
+
+        .detay-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .detay-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .detay-label {
+            font-weight: bold;
+            color: #002d72;
+        }
+
+        .detay-value {
+            color: #333;
+        }
+
+        /* Aktif Listeler */
+        .aktif-listeler {
+            margin-top: 2rem;
+        }
+
+        .aktif-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 0.5rem 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-left: 4px solid #28a745;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .aktif-bilgi {
+            flex: 1;
+        }
+
+        .aktif-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- FDIC Banner -->
+    <div class="fdic-banner">
+        <i class="fas fa-shield-alt"></i> Bank of Maze mevduat: FDIC-Insured - Backed by the full faith and credit of the U.S. Government
+    </div>
+
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <div class="logo-container">
+                <!-- Bank of Maze Logo -->
+                <div class="logo">BANK OF MAZE</div>
+            </div>
+            <div class="nav-links">
+                <button onclick="showSection('ana-sayfa')"><i class="fas fa-home"></i> Ana Sayfa</button>
+                <button onclick="showSection('hesap-ac')"><i class="fas fa-plus-circle"></i> Hesap Aç</button>
+                <button onclick="showSection('giris-yap')"><i class="fas fa-sign-in-alt"></i> Giriş Yap</button>
+                <button onclick="showAdminLogin()"><i class="fas fa-user-shield"></i> Yönetici Girişi</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Notification Container -->
+    <div id="notification-container"></div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero" id="ana-sayfa">
+            <div class="hero-content">
+                <h1>Bank of Maze'e Hoş Geldiniz</h1>
+                <p>Geleceğin Bankacılık Deneyimi Bugün Başlıyor</p>
+                <div class="hero-subtitle">
+                    <p>150 yıllık güven ve modern teknolojinin buluştuğu nokta. 
+                    Kişisel ve kurumsal banking çözümlerimizle yanınızdayız.</p>
+                    <p style="margin-top: 1rem;"><strong>Güvenli • Hızlı • Yenilikçi</strong></p>
+                </div>
+                
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">10M+</div>
+                        <div class="stat-label">Müşteri</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">$2.4T</div>
+                        <div class="stat-label">Varlık</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">4,300+</div>
+                        <div class="stat-label">Şube</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">150+</div>
+                        <div class="stat-label">Yıllık Deneyim</div>
+                    </div>
+                </div>
+                
+                <!-- Kredi Kartları Grid -->
+                <h2 style="text-align: center; margin: 3rem 0 2rem 0; color: white; text-shadow: 1px 1px 3px rgba(0,0,0,0.5);">Size Uygun Kartı Seçin</h2>
+                <div class="credit-cards">
+                    <!-- Kart 1 -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-new">YENİ TEKLİF</div>
+                            <div class="card-amount">$200</div>
+                            <div class="card-type">çevrimiçi bonus teklifi</div>
+                            <div>Yıllık ücret yok.</div>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title">Özelleştirilmiş Nakit Ödüller</h3>
+                            <ul class="card-features">
+                                <li>Yenil %6 seçim kategorisi</li>
+                                <li>Para ladesi teklifi</li>
+                                <li>7/24 müşteri hizmetleri</li>
+                            </ul>
+                        </div>
+                        <div class="card-footer">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/800px-Visa_Inc._logo.svg.png" 
+                                 alt="Visa" class="card-logo">
+                            <div>BANK OF MAZE</div>
+                        </div>
+                    </div>
+
+                    <!-- Kart 2 -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-new">YENİ TEKLİF</div>
+                            <div class="card-amount">$200</div>
+                            <div class="card-type">çevrimiçi bonus teklifi</div>
+                            <div>Yıllık ücret yok.</div>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title">Sınırsız Nakit Ödüller</h3>
+                            <ul class="card-features">
+                                <li>Yenil %2 sınırsız</li>
+                                <li>Para ladesi teklifi</li>
+                                <li>Ödül programı</li>
+                            </ul>
+                        </div>
+                        <div class="card-footer">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/800px-Visa_Inc._logo.svg.png" 
+                                 alt="Visa" class="card-logo">
+                            <div>BANK OF MAZE</div>
+                        </div>
+                    </div>
+
+                    <!-- Kart 3 -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-amount">25,000</div>
+                            <div class="card-type">çevrimiçi bonus puan teklifi</div>
+                            <div>Yıllık ücret yok.</div>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title">Seyahat Ödülleri</h3>
+                            <ul class="card-features">
+                                <li>Tüm satın alımlarda harcanan her 1 ABD Doları için sınırsız 1.5 puan</li>
+                                <li>Seyahat sigortası</li>
+                                <li>Havalimanı lounge erişimi</li>
+                            </ul>
+                        </div>
+                        <div class="card-footer">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/800px-Visa_Inc._logo.svg.png" 
+                                 alt="Visa" class="card-logo">
+                            <div>BANK OF MAZE</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Özellikler Grid -->
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-mobile-alt"></i>
+                        <h3>7/24 Bankacılık</h3>
+                        <p>İstediğiniz zaman, istediğiniz yerden bankacılık işlemlerinizi gerçekleştirin</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3>Güvenli İşlemler</h3>
+                        <p>Gelişmiş şifreleme teknolojisi ile işlemleriniz güvende</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-percentage"></i>
+                        <h3>Düşük Faiz Oranları</h3>
+                        <p>Kredi ve yatırım ürünlerimizde rekabetçi faiz oranları</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-bolt"></i>
+                        <h3>Hızlı Onay</h3>
+                        <p>Kredi ve sigorta başvurularınız hızlı onay süreci</p>
+                    </div>
+                </div>
+                
+                <div class="hero-buttons">
+                    <button class="btn" onclick="showSection('hesap-ac')"><i class="fas fa-plus-circle"></i> Hesap Aç</button>
+                    <button class="btn" onclick="showSection('calisan-sigortasi')"><i class="fas fa-user-tie"></i> Çalışan Sigortası</button>
+                    <button class="btn" onclick="showSection('giris-yap')"><i class="fas fa-sign-in-alt"></i> Giriş Yap</button>
+                </div>
+                
+                <div class="contact-info">
+                    <p><i class="fas fa-envelope"></i> bankofmaze@losantos.us</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Çalışan Sigortası Form -->
+        <div class="form-container" id="calisan-sigortasi-form">
+            <h2><i class="fas fa-user-tie"></i> Çalışan Sigortası Başvurusu</h2>
+            <form id="calisanSigortasiForm">
+                <div class="form-group">
+                    <label><i class="fas fa-building"></i> İşletme Adı:</label>
+                    <input type="text" id="isletmeAd" required>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-user"></i> İşletme Sahibi Ad Soyad:</label>
+                    <input type="text" id="isletmeSahibi" required>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-phone"></i> İşletme Sahibi Telefon No:</label>
+                    <input type="tel" id="isletmeTel" required>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-briefcase"></i> İşletme Türü:</label>
+                    <input type="text" id="isletmeTuru" required>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-industry"></i> İşletme Sektörü:</label>
+                    <input type="text" id="isletmeSektor" required>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-id-card"></i> Çalışan Ad Soyad:</label>
+                    <input type="text" id="calisanAdSoyad" required>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-phone"></i> Çalışan Telefon No:</label>
+                    <input type="tel" id="calisanTel" required>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-file-medical"></i> Çalışan Sağlık Raporu:</label>
+                    <input type="text" id="calisanSaglikRaporu" required>
+                </div>
+                <button type="submit" class="btn"><i class="fas fa-paper-plane"></i> Talep Gönder</button>
+                <button type="button" class="btn home-btn" onclick="showSection('ana-sayfa')"><i class="fas fa-home"></i> Ana Sayfa</button>
+            </form>
+        </div>
+
+        <!-- Hesap Aç Form -->
+        <div class="form-container" id="hesap-ac-form">
+            <h2><i class="fas fa-user-plus"></i> Yeni Hesap Aç</h2>
+            <form id="hesapAcForm">
+                <div class="form-group">
+                    <label><i class="fas fa-user"></i> İsim Soyisim:</label>
+                    <input type="text" id="isim" required>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-calendar-alt"></i> Doğum Tarihi:</label>
+                    <input type="date" id="dogumTarihi" required>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-phone"></i> Telefon Numarası:</label>
+                    <input type="tel" id="telefon" required>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-lock"></i> Şifre:</label>
+                    <input type="password" id="sifre" required>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-briefcase"></i> Meslek:</label>
+                    <input type="text" id="meslek" required>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-home"></i> Üzerindeki Mallar:</label>
+                    <input type="text" id="mallar" required>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-money-bill-wave"></i> Haftalık Gelir:</label>
+                    <input type="number" id="gelir" required>
+                </div>
+                <button type="submit" class="btn"><i class="fas fa-check"></i> Hesap Aç</button>
+                <button type="button" class="btn home-btn" onclick="showSection('ana-sayfa')"><i class="fas fa-home"></i> Ana Sayfa</button>
+            </form>
+        </div>
+
+        <!-- Giriş Yap Form -->
+        <div class="form-container" id="giris-form">
+            <h2><i class="fas fa-sign-in-alt"></i> Giriş Yap</h2>
+            <form id="girisForm">
+                <div class="form-group">
+                    <label><i class="fas fa-phone"></i> Telefon Numarası:</label>
+                    <input type="tel" id="girisTelefon" required>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-lock"></i> Şifre:</label>
+                    <input type="password" id="girisSifre" required>
+                </div>
+                <button type="submit" class="btn"><i class="fas fa-sign-in-alt"></i> Giriş Yap</button>
+                <button type="button" class="btn home-btn" onclick="showSection('ana-sayfa')"><i class="fas fa-home"></i> Ana Sayfa</button>
+            </form>
+        </div>
+
+        <!-- Yönetici Giriş Form -->
+        <div class="form-container" id="admin-form">
+            <h2><i class="fas fa-user-shield"></i> Yönetici Girişi</h2>
+            <form id="adminForm">
+                <div class="form-group">
+                    <label><i class="fas fa-id-card"></i> Yönetici ID:</label>
+                    <input type="text" id="adminId" required>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-lock"></i> Şifre:</label>
+                    <input type="password" id="adminSifre" required>
+                </div>
+                <button type="submit" class="btn"><i class="fas fa-sign-in-alt"></i> Yönetici Girişi</button>
+                <button type="button" class="btn home-btn" onclick="showSection('ana-sayfa')"><i class="fas fa-home"></i> Ana Sayfa</button>
+            </form>
+        </div>
+
+        <!-- Kullanıcı Dashboard -->
+        <div class="dashboard" id="dashboard">
+            <div class="balance-card">
+                <h2>Hesap Bakiyesi</h2>
+                <div class="balance-amount" id="bakiye">0.00 $</div>
+                <p>Hesap No: <span id="hesapNumarasi"></span></p>
+            </div>
+
+            <div class="tabs">
+                <button class="tab active" onclick="openTab('para-islemleri')"><i class="fas fa-money-bill-wave"></i> Para İşlemleri</button>
+                <button class="tab" onclick="openTab('sigorta')"><i class="fas fa-car"></i> Araç Sigortası</button>
+                <button class="tab" onclick="openTab('vadeli')"><i class="fas fa-piggy-bank"></i> Vadeli Hesap</button>
+                <button class="tab" onclick="openTab('kredi')"><i class="fas fa-hand-holding-usd"></i> Kredi Başvurusu</button>
+                <button class="tab" onclick="openTab('sigortalarim')"><i class="fas fa-shield-alt"></i> Sigortalarım</button>
+                <button class="tab home-btn" onclick="showSection('ana-sayfa')"><i class="fas fa-home"></i> Ana Sayfa</button>
+            </div>
+
+            <!-- Para İşlemleri -->
+            <div class="tab-content active" id="para-islemleri">
+                <h3><i class="fas fa-money-bill-wave"></i> Para İşlemleri</h3>
+                <div class="action-buttons">
+                    <div class="action-card" onclick="showParaIslem('yatir')">
+                        <i class="fas fa-plus-circle"></i>
+                        <h4>Para Yatır</h4>
+                        <p>Hesabınıza para yatırın</p>
+                    </div>
+                    <div class="action-card" onclick="showParaIslem('cek')">
+                        <i class="fas fa-minus-circle"></i>
+                        <h4>Para Çek</h4>
+                        <p>Hesabınızdan para çekin</p>
+                    </div>
+                </div>
+
+                <div class="form-container" id="para-yatir-form" style="display: none;">
+                    <h4><i class="fas fa-plus-circle"></i> Para Yatırma</h4>
+                    <form id="yatirForm">
+                        <div class="form-group">
+                            <label>Miktar ($):</label>
+                            <input type="number" id="yatirMiktar" required min="1">
+                        </div>
+                        <button type="submit" class="btn"><i class="fas fa-check"></i> Talep Gönder</button>
+                    </form>
+                </div>
+
+                <div class="form-container" id="para-cek-form" style="display: none;">
+                    <h4><i class="fas fa-minus-circle"></i> Para Çekme</h4>
+                    <form id="cekForm">
+                        <div class="form-group">
+                            <label>Miktar ($):</label>
+                            <input type="number" id="cekMiktar" required min="1">
+                        </div>
+                        <button type="submit" class="btn"><i class="fas fa-check"></i> Talep Gönder</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Sigorta -->
+            <div class="tab-content" id="sigorta">
+                <h3><i class="fas fa-car"></i> Araç Sigortası</h3>
+                <form id="sigortaForm">
+                    <div class="form-group">
+                        <label>Araç Marka:</label>
+                        <input type="text" id="aracMarka" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Araç Model:</label>
+                        <input type="text" id="aracModel" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Plaka:</label>
+                        <input type="text" id="plaka" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Araç Değeri ($):</label>
+                        <input type="number" id="aracDeger" required min="1">
+                    </div>
+
+                    <h4>Sigorta Paketleri</h4>
+                    <div class="insurance-packages">
+                        <div class="package" onclick="selectPackage(this, 'standart')">
+                            <h3>Standart Paket</h3>
+                            <p>Küçük hasar: %20 ödeme</p>
+                            <div class="package-price">100$</div>
+                        </div>
+                        <div class="package" onclick="selectPackage(this, 'premium')">
+                            <h3>Premium Paket</h3>
+                            <p>Tam hasar: %60, Küçük: %20</p>
+                            <div class="package-price">300$</div>
+                        </div>
+                        <div class="package" onclick="selectPackage(this, 'vip')">
+                            <h3>VIP Paket</h3>
+                            <p>Tam hasar: %80, Küçük: %50</p>
+                            <div class="package-price">500$</div>
+                        </div>
+                    </div>
+
+                    <h4>Poliçe Süresi</h4>
+                    <div class="police-packages">
+                        <div class="package" onclick="selectPoliceSuresi(this, '7')">
+                            <h3>7 Günlük</h3>
+                            <div class="package-price">125$</div>
+                        </div>
+                        <div class="package" onclick="selectPoliceSuresi(this, '14')">
+                            <h3>14 Günlük</h3>
+                            <div class="package-price">240$</div>
+                        </div>
+                    </div>
+
+                    <input type="hidden" id="selectedPackage">
+                    <input type="hidden" id="selectedPoliceSuresi">
+                    <button type="submit" class="btn" style="margin-top: 2rem;"><i class="fas fa-paper-plane"></i> Sigorta Talebi Gönder</button>
+                </form>
+            </div>
+
+            <!-- Vadeli Hesap -->
+            <div class="tab-content" id="vadeli">
+                <h3><i class="fas fa-piggy-bank"></i> Vadeli Hesap</h3>
+                <p>Vade süresi: 5 gün | Faiz: %10</p>
+                <form id="vadeliForm">
+                    <div class="form-group">
+                        <label>Yatırılacak Miktar ($):</label>
+                        <input type="number" id="vadeliMiktar" required min="1">
+                    </div>
+                    <button type="submit" class="btn"><i class="fas fa-check"></i> Vadeli Hesap Aç</button>
+                </form>
+            </div>
+
+            <!-- Kredi -->
+            <div class="tab-content" id="kredi">
+                <h3><i class="fas fa-hand-holding-usd"></i> Kredi Başvurusu</h3>
+                <p>Geri ödeme süresi: 5 gün | Faiz: %23</p>
+                <form id="krediForm">
+                    <div class="form-group">
+                        <label>İstenen Kredi Miktarı ($):</label>
+                        <input type="number" id="krediMiktar" required min="1">
+                    </div>
+                    <button type="submit" class="btn"><i class="fas fa-check"></i> Kredi Talebi Gönder</button>
+                </form>
+            </div>
+
+            <!-- Sigortalarım -->
+            <div class="tab-content" id="sigortalarim">
+                <h3><i class="fas fa-shield-alt"></i> Sigortalarım</h3>
+                <div id="sigortalarimListesi">
+                    <p>Henüz sigortanız bulunmamaktadır.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Yönetici Panel -->
+        <div class="admin-panel" id="admin-panel">
+            <h2><i class="fas fa-user-shield"></i> Yönetici Paneli</h2>
+            
+            <!-- Hesap İstatistikleri -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="toplam-hesap">0</div>
+                    <div class="stat-label">Toplam Hesap</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="toplam-bakiye">0$</div>
+                    <div class="stat-label">Toplam Bakiye</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="toplam-kredi">0</div>
+                    <div class="stat-label">Aktif Kredi</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="toplam-vadeli">0</div>
+                    <div class="stat-label">Aktif Vadeli</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="toplam-sigorta">0</div>
+                    <div class="stat-label">Aktif Sigorta</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="toplam-calisan-sigorta">0</div>
+                    <div class="stat-label">Çalışan Sigorta</div>
+                </div>
+            </div>
+            
+            <!-- Kategorize Edilmiş Yönetici Paneli -->
+            <div class="admin-category active">
+                <div class="admin-category-header" onclick="toggleAdminCategory(this)">
+                    <span><i class="fas fa-tasks"></i> Talepler</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="admin-category-content">
+                    <div class="tabs">
+                        <button class="tab active" onclick="openAdminTab('para-talepler')"><i class="fas fa-money-bill-wave"></i> Para Talepleri</button>
+                        <button class="tab" onclick="openAdminTab('sigorta-talepler')"><i class="fas fa-car"></i> Sigorta Talepleri</button>
+                        <button class="tab" onclick="openAdminTab('vadeli-talepler')"><i class="fas fa-piggy-bank"></i> Vadeli Talepleri</button>
+                        <button class="tab" onclick="openAdminTab('kredi-talepler')"><i class="fas fa-hand-holding-usd"></i> Kredi Talepleri</button>
+                        <button class="tab" onclick="openAdminTab('calisan-sigorta-talepler')"><i class="fas fa-user-tie"></i> Çalışan Sigorta Talepleri</button>
+                    </div>
+
+                    <div class="tab-content active" id="para-talepler">
+                        <h3>Para İşlem Talepleri</h3>
+                        <div id="paraTalepleriListesi">
+                            <p>Para işlem talebi bulunmamaktadır.</p>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="sigorta-talepler">
+                        <h3>Sigorta Talepleri</h3>
+                        <div id="sigortaTalepleriListesi">
+                            <p>Sigorta talebi bulunmamaktadır.</p>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="vadeli-talepler">
+                        <h3>Vadeli Hesap Talepleri</h3>
+                        <div id="vadeliTalepleriListesi">
+                            <p>Vadeli hesap talebi bulunmamaktadır.</p>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="kredi-talepler">
+                        <h3>Kredi Talepleri</h3>
+                        <div id="krediTalepleriListesi">
+                            <p>Kredi talebi bulunmamaktadır.</p>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="calisan-sigorta-talepler">
+                        <h3>Çalışan Sigortası Talepleri</h3>
+                        <div id="calisanSigortasiTalepleriListesi">
+                            <p>Çalışan sigortası talebi bulunmamaktadır.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="admin-category">
+                <div class="admin-category-header" onclick="toggleAdminCategory(this)">
+                    <span><i class="fas fa-chart-bar"></i> Aktif Hizmetler</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="admin-category-content">
+                    <div class="tabs">
+                        <button class="tab active" onclick="openAdminTab('aktif-krediler')"><i class="fas fa-hand-holding-usd"></i> Aktif Krediler</button>
+                        <button class="tab" onclick="openAdminTab('aktif-vadeli')"><i class="fas fa-piggy-bank"></i> Aktif Vadeli Hesaplar</button>
+                        <button class="tab" onclick="openAdminTab('aktif-sigortalar')"><i class="fas fa-car"></i> Aktif Araç Sigortaları</button>
+                    </div>
+
+                    <div class="tab-content active" id="aktif-krediler">
+                        <h3>Aktif Krediler</h3>
+                        <div class="aktif-listeler" id="aktifKredilerListesi">
+                            <p>Aktif kredi bulunmamaktadır.</p>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="aktif-vadeli">
+                        <h3>Aktif Vadeli Hesaplar</h3>
+                        <div class="aktif-listeler" id="aktifVadeliListesi">
+                            <p>Aktif vadeli hesap bulunmamaktadır.</p>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="aktif-sigortalar">
+                        <h3>Aktif Araç Sigortaları</h3>
+                        <div class="aktif-listeler" id="aktifSigortalarListesi">
+                            <p>Aktif araç sigortası bulunmamaktadır.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="admin-category">
+                <div class="admin-category-header" onclick="toggleAdminCategory(this)">
+                    <span><i class="fas fa-users"></i> Tüm Hesaplar</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="admin-category-content">
+                    <div class="tabs">
+                        <button class="tab active" onclick="openAdminTab('tum-hesaplar')"><i class="fas fa-user"></i> Tüm Hesaplar</button>
+                        <button class="tab" onclick="openAdminTab('calisan-hesaplari')"><i class="fas fa-user-tie"></i> Çalışan Hesapları</button>
+                    </div>
+
+                    <div class="tab-content active" id="tum-hesaplar">
+                        <h3>Tüm Hesaplar</h3>
+                        <div class="hesap-listesi" id="tumHesaplarListesi">
+                            <p>Henüz hesap bulunmamaktadır.</p>
+                        </div>
+                        <div id="hesapDetaylari"></div>
+                    </div>
+
+                    <div class="tab-content" id="calisan-hesaplari">
+                        <h3>Çalışan Hesapları</h3>
+                        <div id="calisanHesaplariListesi">
+                            <p>Henüz çalışan hesabı bulunmamaktadır.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn home-btn" onclick="showSection('ana-sayfa')" style="margin-top: 2rem;"><i class="fas fa-home"></i> Ana Sayfa</button>
+        </div>
+    </div>
+
+    <script>
+        // Veri depolama - Tüm verileri başlat
+        let hesaplar = JSON.parse(localStorage.getItem('bankofmaze_hesaplar')) || [];
+        let paraTalepleri = JSON.parse(localStorage.getItem('bankofmaze_para_talepler')) || [];
+        let sigortaTalepleri = JSON.parse(localStorage.getItem('bankofmaze_sigorta_talepler')) || [];
+        let vadeliTalepleri = JSON.parse(localStorage.getItem('bankofmaze_vadeli_talepler')) || [];
+        let krediTalepleri = JSON.parse(localStorage.getItem('bankofmaze_kredi_talepler')) || [];
+        let calisanSigortasiTalepleri = JSON.parse(localStorage.getItem('bankofmaze_calisan_sigortasi_talepler')) || [];
+        let calisanSigortaHesaplari = JSON.parse(localStorage.getItem('bankofmaze_calisan_sigorta_hesaplari')) || [];
+        let currentUser = null;
+
+        // Mock yönetici hesabı
+        const adminHesap = {
+            id: "admin",
+            sifre: "admin123"
+        };
+
+        // Sayfa yüklendiğinde
+        document.addEventListener('DOMContentLoaded', function() {
+            // Form event listener'ları
+            document.getElementById('hesapAcForm').addEventListener('submit', hesapAc);
+            document.getElementById('girisForm').addEventListener('submit', girisYap);
+            document.getElementById('adminForm').addEventListener('submit', adminGiris);
+            document.getElementById('yatirForm').addEventListener('submit', paraYatirTalep);
+            document.getElementById('cekForm').addEventListener('submit', paraCekTalep);
+            document.getElementById('sigortaForm').addEventListener('submit', sigortaTalep);
+            document.getElementById('vadeliForm').addEventListener('submit', vadeliTalep);
+            document.getElementById('krediForm').addEventListener('submit', krediTalep);
+            document.getElementById('calisanSigortasiForm').addEventListener('submit', calisanSigortasiTalep);
+            
+            // İstatistikleri güncelle
+            updateStatistics();
+        });
+
+        // Yönetici kategori toggle
+        function toggleAdminCategory(header) {
+            const category = header.parentElement;
+            category.classList.toggle('active');
+            
+            // İkonu değiştir
+            const icon = header.querySelector('.fa-chevron-down');
+            if (category.classList.contains('active')) {
+                icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
+            } else {
+                icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
+            }
+        }
+
+        // Bildirim göster
+        function showNotification(message, type = 'info') {
+            const container = document.getElementById('notification-container');
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                ${message}
+            `;
+            container.appendChild(notification);
+            
+            // Bildirimi göster
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+            
+            // Bildirimi kaldır
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    container.removeChild(notification);
+                }, 500);
+            }, 4000);
+        }
+
+        // Bölüm göster
+        function showSection(section) {
+            document.querySelectorAll('.form-container').forEach(el => el.style.display = 'none');
+            document.getElementById('ana-sayfa').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('admin-panel').style.display = 'none';
+
+            if (section === 'hesap-ac') {
+                document.getElementById('hesap-ac-form').style.display = 'block';
+            } else if (section === 'giris-yap') {
+                document.getElementById('giris-form').style.display = 'block';
+            } else if (section === 'ana-sayfa') {
+                document.getElementById('ana-sayfa').style.display = 'block';
+            } else if (section === 'admin-giris') {
+                document.getElementById('admin-form').style.display = 'block';
+            } else if (section === 'calisan-sigortasi') {
+                document.getElementById('calisan-sigortasi-form').style.display = 'block';
+            }
+        }
+
+        function showAdminLogin() {
+            document.querySelectorAll('.form-container').forEach(el => el.style.display = 'none');
+            document.getElementById('ana-sayfa').style.display = 'none';
+            document.getElementById('admin-form').style.display = 'block';
+        }
+
+        // Hesap Aç
+        function hesapAc(e) {
+            e.preventDefault();
+            
+            const yeniHesap = {
+                id: Date.now().toString(),
+                isim: document.getElementById('isim').value,
+                dogumTarihi: document.getElementById('dogumTarihi').value,
+                telefon: document.getElementById('telefon').value,
+                sifre: document.getElementById('sifre').value,
+                meslek: document.getElementById('meslek').value,
+                mallar: document.getElementById('mallar').value,
+                gelir: parseFloat(document.getElementById('gelir').value),
+                bakiye: 0,
+                hesapNo: 'MAZE' + Date.now().toString().slice(-8),
+                sigortalar: [],
+                vadeliHesaplar: [],
+                krediler: []
+            };
+
+            hesaplar.push(yeniHesap);
+            updateLocalStorage();
+
+            showNotification(`Hesabınız başarıyla açıldı! Hesap Numaranız: ${yeniHesap.hesapNo}`, 'success');
+            document.getElementById('hesapAcForm').reset();
+            showSection('ana-sayfa');
+            
+            // İstatistikleri güncelle
+            updateStatistics();
+        }
+
+        // Giriş Yap
+        function girisYap(e) {
+            e.preventDefault();
+            
+            const telefon = document.getElementById('girisTelefon').value;
+            const sifre = document.getElementById('girisSifre').value;
+            const hesap = hesaplar.find(h => h.telefon === telefon && h.sifre === sifre);
+
+            if (hesap) {
+                currentUser = hesap;
+                document.getElementById('bakiye').textContent = hesap.bakiye.toFixed(2) + ' $';
+                document.getElementById('hesapNumarasi').textContent = hesap.hesapNo;
+                
+                document.querySelectorAll('.form-container').forEach(el => el.style.display = 'none');
+                document.getElementById('ana-sayfa').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+                
+                // Sigortalarım sekmesini yükle
+                loadSigortalarim();
+                
+                showNotification('Başarıyla giriş yapıldı!', 'success');
+            } else {
+                showNotification('Telefon numarası veya şifre hatalı!', 'error');
+            }
+        }
+
+        // Yönetici Giriş
+        function adminGiris(e) {
+            e.preventDefault();
+            
+            const adminId = document.getElementById('adminId').value;
+            const adminSifre = document.getElementById('adminSifre').value;
+
+            if (adminId === adminHesap.id && adminSifre === adminHesap.sifre) {
+                document.querySelectorAll('.form-container').forEach(el => el.style.display = 'none');
+                document.getElementById('ana-sayfa').style.display = 'none';
+                document.getElementById('admin-panel').style.display = 'block';
+                loadAdminData();
+                showNotification('Yönetici paneline başarıyla giriş yapıldı!', 'success');
+            } else {
+                showNotification('Yönetici ID veya şifre hatalı!', 'error');
+            }
+        }
+
+        // Tab sistemleri
+        function openTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+
+            if (tabName === 'sigortalarim') {
+                loadSigortalarim();
+            }
+        }
+
+        function openAdminTab(tabName) {
+            const activeCategory = document.querySelector('.admin-category.active');
+            if (activeCategory) {
+                activeCategory.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+                activeCategory.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+            }
+            
+            event.target.classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+
+            if (tabName === 'para-talepler') {
+                loadParaTalepleri();
+            } else if (tabName === 'sigorta-talepler') {
+                loadSigortaTalepleri();
+            } else if (tabName === 'vadeli-talepler') {
+                loadVadeliTalepleri();
+            } else if (tabName === 'kredi-talepler') {
+                loadKrediTalepleri();
+            } else if (tabName === 'calisan-sigorta-talepler') {
+                loadCalisanSigortasiTalepleri();
+            } else if (tabName === 'tum-hesaplar') {
+                loadHesapListesi();
+            } else if (tabName === 'calisan-hesaplari') {
+                loadCalisanHesaplari();
+            } else if (tabName === 'aktif-krediler') {
+                loadAktifKrediler();
+            } else if (tabName === 'aktif-vadeli') {
+                loadAktifVadeliHesaplar();
+            } else if (tabName === 'aktif-sigortalar') {
+                loadAktifSigortalar();
+            }
+        }
+
+        // Para işlemleri göster
+        function showParaIslem(type) {
+            document.getElementById('para-yatir-form').style.display = 'none';
+            document.getElementById('para-cek-form').style.display = 'none';
+            
+            if (type === 'yatir') {
+                document.getElementById('para-yatir-form').style.display = 'block';
+            } else {
+                document.getElementById('para-cek-form').style.display = 'block';
+            }
+        }
+
+        // Sigorta paketi seç
+        function selectPackage(element, packageType) {
+            // Tüm paketlerin seçimini kaldır
+            document.querySelectorAll('.package').forEach(p => p.classList.remove('selected'));
+            
+            // Seçilen paketi işaretle
+            element.classList.add('selected');
+            
+            // Hidden input'a değeri ata
+            document.getElementById('selectedPackage').value = packageType;
+        }
+
+        // Poliçe süresi seç
+        function selectPoliceSuresi(element, sure) {
+            // Tüm poliçe süresi paketlerinin seçimini kaldır
+            document.querySelectorAll('.police-packages .package').forEach(p => p.classList.remove('selected'));
+            
+            // Seçilen paketi işaretle
+            element.classList.add('selected');
+            
+            // Hidden input'a değeri ata
+            document.getElementById('selectedPoliceSuresi').value = sure;
+        }
+
+        // Para Yatırma Talebi
+        function paraYatirTalep(e) {
+            e.preventDefault();
+            const miktar = parseFloat(document.getElementById('yatirMiktar').value);
+
+            if (!miktar || miktar <= 0) {
+                showNotification('Lütfen geçerli bir miktar girin!', 'error');
+                return;
+            }
+
+            const talep = {
+                id: Date.now().toString(),
+                hesapNo: currentUser.hesapNo,
+                isim: currentUser.isim,
+                type: 'yatir',
+                miktar: miktar,
+                durum: 'beklemede',
+                tarih: new Date().toLocaleString()
+            };
+
+            paraTalepleri.push(talep);
+            updateLocalStorage();
+
+            showNotification('Para yatırma talebiniz yönetici onayına gönderildi!', 'success');
+            document.getElementById('yatirForm').reset();
+            document.getElementById('para-yatir-form').style.display = 'none';
+        }
+
+        // Para Çekme Talebi
+        function paraCekTalep(e) {
+            e.preventDefault();
+            const miktar = parseFloat(document.getElementById('cekMiktar').value);
+
+            if (!miktar || miktar <= 0) {
+                showNotification('Lütfen geçerli bir miktar girin!', 'error');
+                return;
+            }
+
+            const talep = {
+                id: Date.now().toString(),
+                hesapNo: currentUser.hesapNo,
+                isim: currentUser.isim,
+                type: 'cek',
+                miktar: miktar,
+                durum: 'beklemede',
+                tarih: new Date().toLocaleString()
+            };
+
+            paraTalepleri.push(talep);
+            updateLocalStorage();
+
+            showNotification('Para çekme talebiniz yönetici onayına gönderildi!', 'success');
+            document.getElementById('cekForm').reset();
+            document.getElementById('para-cek-form').style.display = 'none';
+        }
+
+        // Sigorta Talebi
+        function sigortaTalep(e) {
+            e.preventDefault();
+            const selectedPackage = document.getElementById('selectedPackage').value;
+            const selectedPoliceSuresi = document.getElementById('selectedPoliceSuresi').value;
+            
+            if (!selectedPackage) {
+                showNotification('Lütfen bir sigorta paketi seçin!', 'error');
+                return;
+            }
+
+            if (!selectedPoliceSuresi) {
+                showNotification('Lütfen bir poliçe süresi seçin!', 'error');
+                return;
+            }
+
+            // Paket fiyatlarını belirle
+            const paketFiyatlari = {
+                'standart': 100,
+                'premium': 300,
+                'vip': 500
+            };
+
+            // Poliçe süresi fiyatlarını belirle
+            const policeFiyatlari = {
+                '7': 125,
+                '14': 240
+            };
+
+            const toplamFiyat = paketFiyatlari[selectedPackage] + policeFiyatlari[selectedPoliceSuresi];
+
+            const talep = {
+                id: Date.now().toString(),
+                hesapNo: currentUser.hesapNo,
+                isim: currentUser.isim,
+                aracMarka: document.getElementById('aracMarka').value,
+                aracModel: document.getElementById('aracModel').value,
+                plaka: document.getElementById('plaka').value,
+                aracDeger: parseFloat(document.getElementById('aracDeger').value),
+                paket: selectedPackage,
+                policeSuresi: selectedPoliceSuresi,
+                toplamFiyat: toplamFiyat,
+                durum: 'beklemede',
+                tarih: new Date().toLocaleString()
+            };
+
+            sigortaTalepleri.push(talep);
+            updateLocalStorage();
+
+            showNotification('Sigorta talebiniz yönetici onayına gönderildi!', 'success');
+            document.getElementById('sigortaForm').reset();
+            
+            // Seçimleri sıfırla
+            document.querySelectorAll('.package').forEach(p => p.classList.remove('selected'));
+            document.getElementById('selectedPackage').value = '';
+            document.getElementById('selectedPoliceSuresi').value = '';
+        }
+
+        // Vadeli Hesap Talebi
+        function vadeliTalep(e) {
+            e.preventDefault();
+            const miktar = parseFloat(document.getElementById('vadeliMiktar').value);
+
+            if (!miktar || miktar <= 0) {
+                showNotification('Lütfen geçerli bir miktar girin!', 'error');
+                return;
+            }
+
+            const talep = {
+                id: Date.now().toString(),
+                hesapNo: currentUser.hesapNo,
+                isim: currentUser.isim,
+                miktar: miktar,
+                faiz: 10,
+                vade: 5,
+                durum: 'beklemede',
+                tarih: new Date().toLocaleString()
+            };
+
+            vadeliTalepleri.push(talep);
+            updateLocalStorage();
+
+            showNotification('Vadeli hesap talebiniz yönetici onayına gönderildi!', 'success');
+            document.getElementById('vadeliForm').reset();
+        }
+
+        // Kredi Talebi
+        function krediTalep(e) {
+            e.preventDefault();
+            const miktar = parseFloat(document.getElementById('krediMiktar').value);
+
+            if (!miktar || miktar <= 0) {
+                showNotification('Lütfen geçerli bir miktar girin!', 'error');
+                return;
+            }
+
+            const talep = {
+                id: Date.now().toString(),
+                hesapNo: currentUser.hesapNo,
+                isim: currentUser.isim,
+                miktar: miktar,
+                faiz: 23,
+                vade: 5,
+                durum: 'beklemede',
+                tarih: new Date().toLocaleString()
+            };
+
+            krediTalepleri.push(talep);
+            updateLocalStorage();
+
+            showNotification('Kredi talebiniz yönetici onayına gönderildi!', 'success');
+            document.getElementById('krediForm').reset();
+        }
+
+        // Çalışan Sigortası Talebi
+        function calisanSigortasiTalep(e) {
+            e.preventDefault();
+            
+            const talep = {
+                id: Date.now().toString(),
+                isletmeAd: document.getElementById('isletmeAd').value,
+                isletmeSahibi: document.getElementById('isletmeSahibi').value,
+                isletmeTel: document.getElementById('isletmeTel').value,
+                isletmeTuru: document.getElementById('isletmeTuru').value,
+                isletmeSektor: document.getElementById('isletmeSektor').value,
+                calisanAdSoyad: document.getElementById('calisanAdSoyad').value,
+                calisanTel: document.getElementById('calisanTel').value,
+                calisanSaglikRaporu: document.getElementById('calisanSaglikRaporu').value,
+                durum: 'beklemede',
+                tarih: new Date().toLocaleString()
+            };
+
+            calisanSigortasiTalepleri.push(talep);
+            updateLocalStorage();
+
+            showNotification('Çalışan sigortası talebiniz yönetici onayına gönderildi!', 'success');
+            document.getElementById('calisanSigortasiForm').reset();
+        }
+
+        // Yönetici verilerini yükle
+        function loadAdminData() {
+            loadParaTalepleri();
+            loadSigortaTalepleri();
+            loadVadeliTalepleri();
+            loadKrediTalepleri();
+            loadCalisanSigortasiTalepleri();
+            loadHesapListesi();
+            loadCalisanHesaplari();
+            loadAktifKrediler();
+            loadAktifVadeliHesaplar();
+            loadAktifSigortalar();
+            updateStatistics();
+        }
+
+        // İstatistikleri güncelle
+        function updateStatistics() {
+            const toplamHesap = hesaplar.length;
+            const toplamBakiye = hesaplar.reduce((toplam, hesap) => toplam + hesap.bakiye, 0);
+            
+            let toplamKredi = 0;
+            let toplamVadeli = 0;
+            let toplamSigorta = 0;
+            
+            hesaplar.forEach(hesap => {
+                if (hesap.krediler) toplamKredi += hesap.krediler.length;
+                if (hesap.vadeliHesaplar) toplamVadeli += hesap.vadeliHesaplar.length;
+                if (hesap.sigortalar) toplamSigorta += hesap.sigortalar.length;
+            });
+
+            const toplamCalisanSigorta = calisanSigortaHesaplari.length;
+
+            document.getElementById('toplam-hesap').textContent = toplamHesap;
+            document.getElementById('toplam-bakiye').textContent = toplamBakiye.toFixed(2) + '$';
+            document.getElementById('toplam-kredi').textContent = toplamKredi;
+            document.getElementById('toplam-vadeli').textContent = toplamVadeli;
+            document.getElementById('toplam-sigorta').textContent = toplamSigorta;
+            document.getElementById('toplam-calisan-sigorta').textContent = toplamCalisanSigorta;
+        }
+
+        // Kullanıcının sigortalarını yükle
+        function loadSigortalarim() {
+            const container = document.getElementById('sigortalarimListesi');
+            container.innerHTML = '';
+
+            if (!currentUser || !currentUser.sigortalar || currentUser.sigortalar.length === 0) {
+                container.innerHTML = '<p>Henüz sigortanız bulunmamaktadır.</p>';
+                return;
+            }
+
+            currentUser.sigortalar.forEach(sigorta => {
+                const div = document.createElement('div');
+                div.className = 'aktif-item';
+                div.innerHTML = `
+                    <div class="aktif-bilgi">
+                        <strong>${sigorta.aracMarka} ${sigorta.aracModel}</strong><br>
+                        Plaka: ${sigorta.plaka} | Değer: ${sigorta.aracDeger}$<br>
+                        Paket: ${sigorta.paket} | Poliçe Süresi: ${sigorta.policeSuresi} gün<br>
+                        Toplam Fiyat: ${sigorta.toplamFiyat}$<br>
+                        <small>Başlangıç: ${sigorta.baslangicTarihi}</small>
+                    </div>
+                    <div class="aktif-actions">
+                        <button class="btn btn-danger" onclick="sigortaSil('${sigorta.id}')"><i class="fas fa-trash"></i> Sil</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Sigorta sil
+        function sigortaSil(sigortaId) {
+            if (confirm('Bu sigortayı silmek istediğinizden emin misiniz?')) {
+                currentUser.sigortalar = currentUser.sigortalar.filter(s => s.id !== sigortaId);
+                updateLocalStorage();
+                loadSigortalarim();
+                updateStatistics();
+                showNotification('Sigorta başarıyla silindi!', 'success');
+            }
+        }
+
+        // Para Taleplerini Yükle
+        function loadParaTalepleri() {
+            const container = document.getElementById('paraTalepleriListesi');
+            container.innerHTML = '';
+
+            const bekleyenTalepler = paraTalepleri.filter(t => t.durum === 'beklemede');
+            
+            if (bekleyenTalepler.length === 0) {
+                container.innerHTML = '<p>Para işlem talebi bulunmamaktadır.</p>';
+                return;
+            }
+
+            bekleyenTalepler.forEach(talep => {
+                const div = document.createElement('div');
+                div.className = 'request-item';
+                div.innerHTML = `
+                    <div class="request-info">
+                        <strong>${talep.isim}</strong> - ${talep.hesapNo}<br>
+                        ${talep.type === 'yatir' ? 'Para Yatırma' : 'Para Çekme'} - ${talep.miktar}$<br>
+                        <small>${talep.tarih}</small>
+                    </div>
+                    <div class="request-actions">
+                        <button class="btn btn-approve" onclick="onaylaPara('${talep.id}')"><i class="fas fa-check"></i> Onayla</button>
+                        <button class="btn btn-reject" onclick="reddetPara('${talep.id}')"><i class="fas fa-times"></i> Reddet</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Para Talebini Onayla
+        function onaylaPara(talepId) {
+            const talep = paraTalepleri.find(t => t.id === talepId);
+            if (!talep) return;
+
+            const hesap = hesaplar.find(h => h.hesapNo === talep.hesapNo);
+            if (!hesap) return;
+
+            if (talep.type === 'yatir') {
+                hesap.bakiye += talep.miktar;
+            } else if (talep.type === 'cek') {
+                if (hesap.bakiye >= talep.miktar) {
+                    hesap.bakiye -= talep.miktar;
+                } else {
+                    showNotification('Hesap bakiyesi yetersiz!', 'error');
+                    return;
+                }
+            }
+
+            talep.durum = 'onaylandı';
+            updateLocalStorage();
+            loadParaTalepleri();
+            loadHesapListesi();
+            updateStatistics();
+            showNotification('İşlem onaylandı!', 'success');
+        }
+
+        // Para Talebini Reddet
+        function reddetPara(talepId) {
+            const talep = paraTalepleri.find(t => t.id === talepId);
+            if (!talep) return;
+
+            talep.durum = 'reddedildi';
+            updateLocalStorage();
+            loadParaTalepleri();
+            showNotification('İşlem reddedildi!', 'info');
+        }
+
+        // Sigorta Taleplerini Yükle
+        function loadSigortaTalepleri() {
+            const container = document.getElementById('sigortaTalepleriListesi');
+            container.innerHTML = '';
+
+            const bekleyenTalepler = sigortaTalepleri.filter(t => t.durum === 'beklemede');
+            
+            if (bekleyenTalepler.length === 0) {
+                container.innerHTML = '<p>Sigorta talebi bulunmamaktadır.</p>';
+                return;
+            }
+
+            bekleyenTalepler.forEach(talep => {
+                const div = document.createElement('div');
+                div.className = 'request-item';
+                div.innerHTML = `
+                    <div class="request-info">
+                        <strong>${talep.isim}</strong> - ${talep.hesapNo}<br>
+                        ${talep.aracMarka} ${talep.aracModel} - ${talep.plaka}<br>
+                        Değer: ${talep.aracDeger}$ - Paket: ${talep.paket} - Süre: ${talep.policeSuresi} gün<br>
+                        Toplam Fiyat: ${talep.toplamFiyat}$<br>
+                        <small>${talep.tarih}</small>
+                    </div>
+                    <div class="request-actions">
+                        <button class="btn btn-approve" onclick="onaylaSigorta('${talep.id}')"><i class="fas fa-check"></i> Onayla</button>
+                        <button class="btn btn-reject" onclick="reddetSigorta('${talep.id}')"><i class="fas fa-times"></i> Reddet</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Sigorta Talebini Onayla
+        function onaylaSigorta(talepId) {
+            const talep = sigortaTalepleri.find(t => t.id === talepId);
+            if (!talep) return;
+
+            const hesap = hesaplar.find(h => h.hesapNo === talep.hesapNo);
+            if (!hesap) return;
+
+            if (!hesap.sigortalar) hesap.sigortalar = [];
+            hesap.sigortalar.push({
+                id: talep.id,
+                aracMarka: talep.aracMarka,
+                aracModel: talep.aracModel,
+                plaka: talep.plaka,
+                aracDeger: talep.aracDeger,
+                paket: talep.paket,
+                policeSuresi: talep.policeSuresi,
+                toplamFiyat: talep.toplamFiyat,
+                baslangicTarihi: new Date().toLocaleString()
+            });
+
+            talep.durum = 'onaylandı';
+            updateLocalStorage();
+            loadSigortaTalepleri();
+            loadHesapListesi();
+            loadAktifSigortalar();
+            updateStatistics();
+            showNotification('Sigorta talebi onaylandı!', 'success');
+        }
+
+        // Sigorta Talebini Reddet
+        function reddetSigorta(talepId) {
+            const talep = sigortaTalepleri.find(t => t.id === talepId);
+            if (!talep) return;
+
+            talep.durum = 'reddedildi';
+            updateLocalStorage();
+            loadSigortaTalepleri();
+            showNotification('Sigorta talebi reddedildi!', 'info');
+        }
+
+        // Vadeli Taleplerini Yükle
+        function loadVadeliTalepleri() {
+            const container = document.getElementById('vadeliTalepleriListesi');
+            container.innerHTML = '';
+
+            const bekleyenTalepler = vadeliTalepleri.filter(t => t.durum === 'beklemede');
+            
+            if (bekleyenTalepler.length === 0) {
+                container.innerHTML = '<p>Vadeli hesap talebi bulunmamaktadır.</p>';
+                return;
+            }
+
+            bekleyenTalepler.forEach(talep => {
+                const div = document.createElement('div');
+                div.className = 'request-item';
+                div.innerHTML = `
+                    <div class="request-info">
+                        <strong>${talep.isim}</strong> - ${talep.hesapNo}<br>
+                        Miktar: ${talep.miktar}$ - Vade: ${talep.vade} gün - Faiz: %${talep.faiz}<br>
+                        <small>${talep.tarih}</small>
+                    </div>
+                    <div class="request-actions">
+                        <button class="btn btn-approve" onclick="onaylaVadeli('${talep.id}')"><i class="fas fa-check"></i> Onayla</button>
+                        <button class="btn btn-reject" onclick="reddetVadeli('${talep.id}')"><i class="fas fa-times"></i> Reddet</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Vadeli Talebini Onayla
+        function onaylaVadeli(talepId) {
+            const talep = vadeliTalepleri.find(t => t.id === talepId);
+            if (!talep) return;
+
+            const hesap = hesaplar.find(h => h.hesapNo === talep.hesapNo);
+            if (!hesap) return;
+
+            if (hesap.bakiye >= talep.miktar) {
+                hesap.bakiye -= talep.miktar;
+            } else {
+                showNotification('Hesap bakiyesi yetersiz!', 'error');
+                return;
+            }
+
+            if (!hesap.vadeliHesaplar) hesap.vadeliHesaplar = [];
+            hesap.vadeliHesaplar.push({
+                id: talep.id,
+                miktar: talep.miktar,
+                faiz: talep.faiz,
+                vade: talep.vade,
+                baslangicTarihi: new Date().toLocaleString(),
+                durum: 'aktif'
+            });
+
+            talep.durum = 'onaylandı';
+            updateLocalStorage();
+            loadVadeliTalepleri();
+            loadHesapListesi();
+            loadAktifVadeliHesaplar();
+            updateStatistics();
+            showNotification('Vadeli hesap talebi onaylandı!', 'success');
+        }
+
+        // Vadeli Talebini Reddet
+        function reddetVadeli(talepId) {
+            const talep = vadeliTalepleri.find(t => t.id === talepId);
+            if (!talep) return;
+
+            talep.durum = 'reddedildi';
+            updateLocalStorage();
+            loadVadeliTalepleri();
+            showNotification('Vadeli hesap talebi reddedildi!', 'info');
+        }
+
+        // Kredi Taleplerini Yükle
+        function loadKrediTalepleri() {
+            const container = document.getElementById('krediTalepleriListesi');
+            container.innerHTML = '';
+
+            const bekleyenTalepler = krediTalepleri.filter(t => t.durum === 'beklemede');
+            
+            if (bekleyenTalepler.length === 0) {
+                container.innerHTML = '<p>Kredi talebi bulunmamaktadır.</p>';
+                return;
+            }
+
+            bekleyenTalepler.forEach(talep => {
+                const div = document.createElement('div');
+                div.className = 'request-item';
+                div.innerHTML = `
+                    <div class="request-info">
+                        <strong>${talep.isim}</strong> - ${talep.hesapNo}<br>
+                        Miktar: ${talep.miktar}$ - Vade: ${talep.vade} gün - Faiz: %${talep.faiz}<br>
+                        <small>${talep.tarih}</small>
+                    </div>
+                    <div class="request-actions">
+                        <button class="btn btn-approve" onclick="onaylaKredi('${talep.id}')"><i class="fas fa-check"></i> Onayla</button>
+                        <button class="btn btn-reject" onclick="reddetKredi('${talep.id}')"><i class="fas fa-times"></i> Reddet</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Kredi Talebini Onayla
+        function onaylaKredi(talepId) {
+            const talep = krediTalepleri.find(t => t.id === talepId);
+            if (!talep) return;
+
+            const hesap = hesaplar.find(h => h.hesapNo === talep.hesapNo);
+            if (!hesap) return;
+
+            hesap.bakiye += talep.miktar;
+
+            if (!hesap.krediler) hesap.krediler = [];
+            hesap.krediler.push({
+                id: talep.id,
+                miktar: talep.miktar,
+                faiz: talep.faiz,
+                vade: talep.vade,
+                baslangicTarihi: new Date().toLocaleString(),
+                durum: 'aktif'
+            });
+
+            talep.durum = 'onaylandı';
+            updateLocalStorage();
+            loadKrediTalepleri();
+            loadHesapListesi();
+            loadAktifKrediler();
+            updateStatistics();
+            showNotification('Kredi talebi onaylandı!', 'success');
+        }
+
+        // Kredi Talebini Reddet
+        function reddetKredi(talepId) {
+            const talep = krediTalepleri.find(t => t.id === talepId);
+            if (!talep) return;
+
+            talep.durum = 'reddedildi';
+            updateLocalStorage();
+            loadKrediTalepleri();
+            showNotification('Kredi talebi reddedildi!', 'info');
+        }
+
+        // Çalışan Sigortası Taleplerini Yükle
+        function loadCalisanSigortasiTalepleri() {
+            const container = document.getElementById('calisanSigortasiTalepleriListesi');
+            container.innerHTML = '';
+
+            const bekleyenTalepler = calisanSigortasiTalepleri.filter(t => t.durum === 'beklemede');
+            
+            if (bekleyenTalepler.length === 0) {
+                container.innerHTML = '<p>Çalışan sigortası talebi bulunmamaktadır.</p>';
+                return;
+            }
+
+            bekleyenTalepler.forEach(talep => {
+                const div = document.createElement('div');
+                div.className = 'request-item';
+                div.innerHTML = `
+                    <div class="request-info">
+                        <strong>${talep.isletmeAd}</strong> - ${talep.isletmeSahibi}<br>
+                        Çalışan: ${talep.calisanAdSoyad} - Tel: ${talep.calisanTel}<br>
+                        Sektör: ${talep.isletmeSektor} - Tür: ${talep.isletmeTuru}<br>
+                        <small>${talep.tarih}</small>
+                    </div>
+                    <div class="request-actions">
+                        <button class="btn btn-approve" onclick="onaylaCalisanSigortasi('${talep.id}')"><i class="fas fa-check"></i> Onayla</button>
+                        <button class="btn btn-reject" onclick="reddetCalisanSigortasi('${talep.id}')"><i class="fas fa-times"></i> Reddet</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Çalışan Sigortası Talebini Onayla
+        function onaylaCalisanSigortasi(talepId) {
+            const talep = calisanSigortasiTalepleri.find(t => t.id === talepId);
+            if (!talep) return;
+
+            talep.durum = 'onaylandı';
+            
+            // Çalışan sigorta hesabı oluştur
+            const calisanSigortaHesabi = {
+                id: talep.id,
+                isletmeAd: talep.isletmeAd,
+                isletmeSahibi: talep.isletmeSahibi,
+                isletmeTel: talep.isletmeTel,
+                isletmeTuru: talep.isletmeTuru,
+                isletmeSektor: talep.isletmeSektor,
+                calisanAdSoyad: talep.calisanAdSoyad,
+                calisanTel: talep.calisanTel,
+                calisanSaglikRaporu: talep.calisanSaglikRaporu,
+                onayTarihi: new Date().toLocaleString(),
+                durum: 'aktif'
+            };
+            
+            calisanSigortaHesaplari.push(calisanSigortaHesabi);
+            
+            updateLocalStorage();
+            loadCalisanSigortasiTalepleri();
+            loadCalisanHesaplari();
+            updateStatistics();
+            showNotification('Çalışan sigortası talebi onaylandı ve hesap oluşturuldu!', 'success');
+        }
+
+        // Çalışan Sigortası Talebini Reddet
+        function reddetCalisanSigortasi(talepId) {
+            const talep = calisanSigortasiTalepleri.find(t => t.id === talepId);
+            if (!talep) return;
+
+            talep.durum = 'reddedildi';
+            updateLocalStorage();
+            loadCalisanSigortasiTalepleri();
+            showNotification('Çalışan sigortası talebi reddedildi!', 'info');
+        }
+
+        // Aktif Kredileri Yükle
+        function loadAktifKrediler() {
+            const container = document.getElementById('aktifKredilerListesi');
+            container.innerHTML = '';
+
+            let aktifKrediler = [];
+            hesaplar.forEach(hesap => {
+                if (hesap.krediler && hesap.krediler.length > 0) {
+                    hesap.krediler.forEach(kredi => {
+                        aktifKrediler.push({
+                            ...kredi,
+                            isim: hesap.isim,
+                            hesapNo: hesap.hesapNo
+                        });
+                    });
+                }
+            });
+
+            if (aktifKrediler.length === 0) {
+                container.innerHTML = '<p>Aktif kredi bulunmamaktadır.</p>';
+                return;
+            }
+
+            aktifKrediler.forEach(kredi => {
+                const div = document.createElement('div');
+                div.className = 'aktif-item';
+                div.innerHTML = `
+                    <div class="aktif-bilgi">
+                        <strong>${kredi.isim}</strong> - ${kredi.hesapNo}<br>
+                        Miktar: ${kredi.miktar}$ - Faiz: %${kredi.faiz} - Vade: ${kredi.vade} gün<br>
+                        <small>Başlangıç: ${kredi.baslangicTarihi}</small>
+                    </div>
+                    <div class="aktif-actions">
+                        <button class="btn btn-danger" onclick="adminSilKredi('${kredi.hesapNo}', '${kredi.id}')"><i class="fas fa-trash"></i> Sil</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Aktif Vadeli Hesapları Yükle
+        function loadAktifVadeliHesaplar() {
+            const container = document.getElementById('aktifVadeliListesi');
+            container.innerHTML = '';
+
+            let aktifVadeliHesaplar = [];
+            hesaplar.forEach(hesap => {
+                if (hesap.vadeliHesaplar && hesap.vadeliHesaplar.length > 0) {
+                    hesap.vadeliHesaplar.forEach(vadeli => {
+                        aktifVadeliHesaplar.push({
+                            ...vadeli,
+                            isim: hesap.isim,
+                            hesapNo: hesap.hesapNo
+                        });
+                    });
+                }
+            });
+
+            if (aktifVadeliHesaplar.length === 0) {
+                container.innerHTML = '<p>Aktif vadeli hesap bulunmamaktadır.</p>';
+                return;
+            }
+
+            aktifVadeliHesaplar.forEach(vadeli => {
+                const div = document.createElement('div');
+                div.className = 'aktif-item';
+                div.innerHTML = `
+                    <div class="aktif-bilgi">
+                        <strong>${vadeli.isim}</strong> - ${vadeli.hesapNo}<br>
+                        Miktar: ${vadeli.miktar}$ - Faiz: %${vadeli.faiz} - Vade: ${vadeli.vade} gün<br>
+                        <small>Başlangıç: ${vadeli.baslangicTarihi}</small>
+                    </div>
+                    <div class="aktif-actions">
+                        <button class="btn btn-danger" onclick="adminSilVadeliHesap('${vadeli.hesapNo}', '${vadeli.id}')"><i class="fas fa-trash"></i> Sil</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Aktif Sigortaları Yükle
+        function loadAktifSigortalar() {
+            const container = document.getElementById('aktifSigortalarListesi');
+            container.innerHTML = '';
+
+            let aktifSigortalar = [];
+            hesaplar.forEach(hesap => {
+                if (hesap.sigortalar && hesap.sigortalar.length > 0) {
+                    hesap.sigortalar.forEach(sigorta => {
+                        aktifSigortalar.push({
+                            ...sigorta,
+                            isim: hesap.isim,
+                            hesapNo: hesap.hesapNo
+                        });
+                    });
+                }
+            });
+
+            if (aktifSigortalar.length === 0) {
+                container.innerHTML = '<p>Aktif araç sigortası bulunmamaktadır.</p>';
+                return;
+            }
+
+            aktifSigortalar.forEach(sigorta => {
+                const div = document.createElement('div');
+                div.className = 'aktif-item';
+                div.innerHTML = `
+                    <div class="aktif-bilgi">
+                        <strong>${sigorta.isim}</strong> - ${sigorta.hesapNo}<br>
+                        ${sigorta.aracMarka} ${sigorta.aracModel} - ${sigorta.plaka}<br>
+                        Değer: ${sigorta.aracDeger}$ - Paket: ${sigorta.paket} - Süre: ${sigorta.policeSuresi} gün<br>
+                        Toplam Fiyat: ${sigorta.toplamFiyat}$<br>
+                        <small>Başlangıç: ${sigorta.baslangicTarihi}</small>
+                    </div>
+                    <div class="aktif-actions">
+                        <button class="btn btn-danger" onclick="adminSilSigorta('${sigorta.hesapNo}', '${sigorta.id}')"><i class="fas fa-trash"></i> Sil</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Admin Kredi Sil
+        function adminSilKredi(hesapNo, krediId) {
+            if (confirm('Bu krediyi silmek istediğinizden emin misiniz?')) {
+                const hesap = hesaplar.find(h => h.hesapNo === hesapNo);
+                if (hesap && hesap.krediler) {
+                    const kredi = hesap.krediler.find(k => k.id === krediId);
+                    if (kredi && hesap.bakiye >= kredi.miktar) {
+                        hesap.bakiye -= kredi.miktar;
+                        hesap.krediler = hesap.krediler.filter(k => k.id !== krediId);
+                        updateLocalStorage();
+                        loadAktifKrediler();
+                        loadHesapListesi();
+                        updateStatistics();
+                        showNotification('Kredi silindi!', 'success');
+                    } else {
+                        showNotification('Krediyi kapatmak için hesap bakiyesi yetersiz!', 'error');
+                    }
+                }
+            }
+        }
+
+        // Admin Vadeli Hesap Sil
+        function adminSilVadeliHesap(hesapNo, vadeliId) {
+            if (confirm('Bu vadeli hesabı silmek istediğinizden emin misiniz?')) {
+                const hesap = hesaplar.find(h => h.hesapNo === hesapNo);
+                if (hesap && hesap.vadeliHesaplar) {
+                    const vadeli = hesap.vadeliHesaplar.find(v => v.id === vadeliId);
+                    if (vadeli) {
+                        hesap.bakiye += vadeli.miktar;
+                        hesap.vadeliHesaplar = hesap.vadeliHesaplar.filter(v => v.id !== vadeliId);
+                        updateLocalStorage();
+                        loadAktifVadeliHesaplar();
+                        loadHesapListesi();
+                        updateStatistics();
+                        showNotification('Vadeli hesap silindi!', 'success');
+                    }
+                }
+            }
+        }
+
+        // Admin Sigorta Sil
+        function adminSilSigorta(hesapNo, sigortaId) {
+            if (confirm('Bu sigortayı silmek istediğinizden emin misiniz?')) {
+                const hesap = hesaplar.find(h => h.hesapNo === hesapNo);
+                if (hesap && hesap.sigortalar) {
+                    hesap.sigortalar = hesap.sigortalar.filter(s => s.id !== sigortaId);
+                    updateLocalStorage();
+                    loadAktifSigortalar();
+                    loadHesapListesi();
+                    updateStatistics();
+                    showNotification('Sigorta silindi!', 'success');
+                }
+            }
+        }
+
+        // Hesap listesini yükle
+        function loadHesapListesi() {
+            const container = document.getElementById('tumHesaplarListesi');
+            container.innerHTML = '';
+
+            if (hesaplar.length === 0) {
+                container.innerHTML = '<p>Henüz hesap bulunmamaktadır.</p>';
+                return;
+            }
+
+            hesaplar.forEach(hesap => {
+                const div = document.createElement('div');
+                div.className = 'hesap-item';
+                div.innerHTML = `
+                    <div>
+                        <strong>${hesap.isim}</strong> - ${hesap.hesapNo}<br>
+                        <small>Bakiye: ${hesap.bakiye.toFixed(2)}$ | Telefon: ${hesap.telefon}</small>
+                    </div>
+                    <div>
+                        <button class="btn btn-danger" onclick="event.stopPropagation(); hesapSil('${hesap.id}')"><i class="fas fa-trash"></i> Sil</button>
+                    </div>
+                `;
+                div.onclick = () => showHesapDetay(hesap.id);
+                container.appendChild(div);
+            });
+        }
+
+        // Çalışan Hesaplarını Yükle
+        function loadCalisanHesaplari() {
+            const container = document.getElementById('calisanHesaplariListesi');
+            container.innerHTML = '';
+
+            if (calisanSigortaHesaplari.length === 0) {
+                container.innerHTML = '<p>Henüz çalışan hesabı bulunmamaktadır.</p>';
+                return;
+            }
+
+            calisanSigortaHesaplari.forEach(hesap => {
+                const div = document.createElement('div');
+                div.className = 'calisan-sigorta-item';
+                div.innerHTML = `
+                    <div>
+                        <strong>${hesap.isletmeAd}</strong> - ${hesap.calisanAdSoyad}<br>
+                        <small>Onay Tarihi: ${hesap.onayTarihi} | Durum: ${hesap.durum}</small>
+                    </div>
+                    <div>
+                        <button class="btn btn-info" onclick="showCalisanHesapDetay('${hesap.id}')"><i class="fas fa-info-circle"></i> Detay</button>
+                        <button class="btn btn-danger" onclick="calisanHesapSil('${hesap.id}')"><i class="fas fa-trash"></i> Sil</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Hesap sil
+        function hesapSil(hesapId) {
+            if (confirm('Bu hesabı silmek istediğinizden emin misiniz? Bu işlem geri alınamaz!')) {
+                hesaplar = hesaplar.filter(h => h.id !== hesapId);
+                updateLocalStorage();
+                loadHesapListesi();
+                document.getElementById('hesapDetaylari').innerHTML = '';
+                updateStatistics();
+                showNotification('Hesap başarıyla silindi!', 'success');
+            }
+        }
+
+        // Çalışan Hesap sil
+        function calisanHesapSil(hesapId) {
+            if (confirm('Bu çalışan hesabını silmek istediğinizden emin misiniz? Bu işlem geri alınamaz!')) {
+                calisanSigortaHesaplari = calisanSigortaHesaplari.filter(h => h.id !== hesapId);
+                updateLocalStorage();
+                loadCalisanHesaplari();
+                updateStatistics();
+                showNotification('Çalışan hesabı başarıyla silindi!', 'success');
+            }
+        }
+
+        // Hesap detayını göster
+        function showHesapDetay(hesapId) {
+            const hesap = hesaplar.find(h => h.id === hesapId);
+            const container = document.getElementById('hesapDetaylari');
+            
+            if (!hesap) return;
+            
+            container.innerHTML = `
+                <div class="hesap-detay">
+                    <h4>Hesap Detayları - ${hesap.isim}</h4>
+                    <div class="detay-grid">
+                        <div class="detay-item">
+                            <span class="detay-label">Hesap No:</span>
+                            <span class="detay-value">${hesap.hesapNo}</span>
+                        </div>
+                        <div class="detay-item">
+                            <span class="detay-label">Bakiye:</span>
+                            <span class="detay-value">${hesap.bakiye.toFixed(2)}$</span>
+                        </div>
+                        <div class="detay-item">
+                            <span class="detay-label">Doğum Tarihi:</span>
+                            <span class="detay-value">${hesap.dogumTarihi}</span>
+                        </div>
+                        <div class="detay-item">
+                            <span class="detay-label">Telefon:</span>
+                            <span class="detay-value">${hesap.telefon}</span>
+                        </div>
+                        <div class="detay-item">
+                            <span class="detay-label">Meslek:</span>
+                            <span class="detay-value">${hesap.meslek}</span>
+                        </div>
+                        <div class="detay-item">
+                            <span class="detay-label">Mallar:</span>
+                            <span class="detay-value">${hesap.mallar}</span>
+                        </div>
+                        <div class="detay-item">
+                            <span class="detay-label">Haftalık Gelir:</span>
+                            <span class="detay-value">${hesap.gelir}$</span>
+                        </div>
+                    </div>
+                    
+                    <h5>Sigortalar (${hesap.sigortalar ? hesap.sigortalar.length : 0})</h5>
+                    ${hesap.sigortalar && hesap.sigortalar.length > 0 ? 
+                        hesap.sigortalar.map(sigorta => `
+                            <div class="calisan-sigorta-item">
+                                <div class="sigorta-bilgi">
+                                    <strong>${sigorta.aracMarka} ${sigorta.aracModel}</strong><br>
+                                    Plaka: ${sigorta.plaka} | Değer: ${sigorta.aracDeger}$ | Paket: ${sigorta.paket}<br>
+                                    Poliçe Süresi: ${sigorta.policeSuresi} gün | Toplam Fiyat: ${sigorta.toplamFiyat}$<br>
+                                    <small>Başlangıç: ${sigorta.baslangicTarihi}</small>
+                                </div>
+                            </div>
+                        `).join('') : '<p>Sigorta bulunmamaktadır.</p>'
+                    }
+                    
+                    <h5>Vadeli Hesaplar (${hesap.vadeliHesaplar ? hesap.vadeliHesaplar.length : 0})</h5>
+                    ${hesap.vadeliHesaplar && hesap.vadeliHesaplar.length > 0 ? 
+                        hesap.vadeliHesaplar.map(vadeli => `
+                            <div class="calisan-sigorta-item">
+                                <div>
+                                    <strong>${vadeli.miktar}$</strong> - %${vadeli.faiz} faiz - ${vadeli.vade} gün<br>
+                                    <small>Başlangıç: ${vadeli.baslangicTarihi} | Durum: ${vadeli.durum}</small>
+                                </div>
+                            </div>
+                        `).join('') : '<p>Vadeli hesap bulunmamaktadır.</p>'
+                    }
+                    
+                    <h5>Krediler (${hesap.krediler ? hesap.krediler.length : 0})</h5>
+                    ${hesap.krediler && hesap.krediler.length > 0 ? 
+                        hesap.krediler.map(kredi => `
+                            <div class="calisan-sigorta-item">
+                                <div>
+                                    <strong>${kredi.miktar}$</strong> - %${kredi.faiz} faiz - ${kredi.vade} gün<br>
+                                    <small>Başlangıç: ${kredi.baslangicTarihi} | Durum: ${kredi.durum}</small>
+                                </div>
+                            </div>
+                        `).join('') : '<p>Kredi bulunmamaktadır.</p>'
+                    }
+                    
+                    <button class="btn btn-info" onclick="duzenleHesap('${hesap.id}')" style="margin-top: 1rem;"><i class="fas fa-edit"></i> Bakiye Düzenle</button>
+                </div>
+            `;
+            container.style.display = 'block';
+        }
+
+        // Çalışan Hesap detayını göster
+        function showCalisanHesapDetay(hesapId) {
+            const hesap = calisanSigortaHesaplari.find(h => h.id === hesapId);
+            if (!hesap) return;
+            
+            const container = document.getElementById('calisanHesaplariListesi');
+            const detayDiv = document.createElement('div');
+            detayDiv.className = 'calisan-sigorta-detay';
+            detayDiv.innerHTML = `
+                <h4>Çalışan Hesap Detayları - ${hesap.isletmeAd}</h4>
+                <div class="detay-grid">
+                    <div class="detay-item">
+                        <span class="detay-label">İşletme Adı:</span>
+                        <span class="detay-value">${hesap.isletmeAd}</span>
+                    </div>
+                    <div class="detay-item">
+                        <span class="detay-label">İşletme Sahibi:</span>
+                        <span class="detay-value">${hesap.isletmeSahibi}</span>
+                    </div>
+                    <div class="detay-item">
+                        <span class="detay-label">İşletme Telefon:</span>
+                        <span class="detay-value">${hesap.isletmeTel}</span>
+                    </div>
+                    <div class="detay-item">
+                        <span class="detay-label">İşletme Türü:</span>
+                        <span class="detay-value">${hesap.isletmeTuru}</span>
+                    </div>
+                    <div class="detay-item">
+                        <span class="detay-label">İşletme Sektörü:</span>
+                        <span class="detay-value">${hesap.isletmeSektor}</span>
+                    </div>
+                    <div class="detay-item">
+                        <span class="detay-label">Çalışan Ad Soyad:</span>
+                        <span class="detay-value">${hesap.calisanAdSoyad}</span>
+                    </div>
+                    <div class="detay-item">
+                        <span class="detay-label">Çalışan Telefon:</span>
+                        <span class="detay-value">${hesap.calisanTel}</span>
+                    </div>
+                    <div class="detay-item">
+                        <span class="detay-label">Sağlık Raporu:</span>
+                        <span class="detay-value">${hesap.calisanSaglikRaporu}</span>
+                    </div>
+                    <div class="detay-item">
+                        <span class="detay-label">Onay Tarihi:</span>
+                        <span class="detay-value">${hesap.onayTarihi}</span>
+                    </div>
+                    <div class="detay-item">
+                        <span class="detay-label">Durum:</span>
+                        <span class="detay-value">${hesap.durum}</span>
+                    </div>
+                </div>
+                <button class="btn btn-warning" onclick="pasiflestirCalisanHesap('${hesap.id}')" style="margin-top: 1rem;"><i class="fas fa-pause"></i> Pasifleştir</button>
+                <button class="btn btn-success" onclick="aktiflestirCalisanHesap('${hesap.id}')" style="margin-top: 1rem;"><i class="fas fa-play"></i> Aktifleştir</button>
+            `;
+            
+            // Eski detayı kaldır ve yenisini ekle
+            const eskiDetay = container.querySelector('.calisan-sigorta-detay');
+            if (eskiDetay) {
+                container.removeChild(eskiDetay);
+            }
+            container.appendChild(detayDiv);
+        }
+
+        // Çalışan Hesabı Pasifleştir
+        function pasiflestirCalisanHesap(hesapId) {
+            const hesap = calisanSigortaHesaplari.find(h => h.id === hesapId);
+            if (hesap) {
+                hesap.durum = 'pasif';
+                updateLocalStorage();
+                loadCalisanHesaplari();
+                showNotification('Çalışan hesabı pasifleştirildi!', 'success');
+            }
+        }
+
+        // Çalışan Hesabı Aktifleştir
+        function aktiflestirCalisanHesap(hesapId) {
+            const hesap = calisanSigortaHesaplari.find(h => h.id === hesapId);
+            if (hesap) {
+                hesap.durum = 'aktif';
+                updateLocalStorage();
+                loadCalisanHesaplari();
+                showNotification('Çalışan hesabı aktifleştirildi!', 'success');
+            }
+        }
+
+        // Hesap düzenle
+        function duzenleHesap(hesapId) {
+            const hesap = hesaplar.find(h => h.id === hesapId);
+            const yeniBakiye = prompt(`Hesap bakiyesini güncelleyin (Mevcut: ${hesap.bakiye}$):`, hesap.bakiye);
+            
+            if (yeniBakiye !== null && !isNaN(yeniBakiye)) {
+                hesap.bakiye = parseFloat(yeniBakiye);
+                updateLocalStorage();
+                loadHesapListesi();
+                showHesapDetay(hesapId);
+                updateStatistics();
+                showNotification('Hesap bakiyesi güncellendi!', 'success');
+            }
+        }
+
+        function updateLocalStorage() {
+            localStorage.setItem('bankofmaze_hesaplar', JSON.stringify(hesaplar));
+            localStorage.setItem('bankofmaze_para_talepler', JSON.stringify(paraTalepleri));
+            localStorage.setItem('bankofmaze_sigorta_talepler', JSON.stringify(sigortaTalepleri));
+            localStorage.setItem('bankofmaze_vadeli_talepler', JSON.stringify(vadeliTalepleri));
+            localStorage.setItem('bankofmaze_kredi_talepler', JSON.stringify(krediTalepleri));
+            localStorage.setItem('bankofmaze_calisan_sigortasi_talepler', JSON.stringify(calisanSigortasiTalepleri));
+            localStorage.setItem('bankofmaze_calisan_sigorta_hesaplari', JSON.stringify(calisanSigortaHesaplari));
+        }
+    </script>
+</body>
+</html>
