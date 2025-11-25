@@ -13,16 +13,35 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
+        :root {
+            --primary-color: #cc0000;
+            --secondary-color: #002d72;
+            --background-color: #ffffff;
+            --text-color: #333333;
+            --card-bg: #ffffff;
+            --border-color: #e0e0e0;
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #ff4444;
+            --secondary-color: #4a90e2;
+            --background-color: #1a1a2e;
+            --text-color: #ffffff;
+            --card-bg: #16213e;
+            --border-color: #30475e;
+        }
+
         body {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: #333;
+            background: linear-gradient(135deg, var(--background-color) 0%, var(--card-bg) 100%);
+            color: var(--text-color);
             min-height: 100vh;
             line-height: 1.6;
+            transition: all 0.3s ease;
         }
 
         /* FDIC Banner */
         .fdic-banner {
-            background: #002d72;
+            background: var(--secondary-color);
             color: white;
             text-align: center;
             padding: 10px 0;
@@ -38,13 +57,14 @@
 
         /* Header Styles */
         header {
-            background: white;
+            background: var(--card-bg);
             padding: 1rem 2rem;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             position: fixed;
             width: 100%;
             top: 40px;
             z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .navbar {
@@ -64,13 +84,23 @@
         .logo {
             font-size: 1.8rem;
             font-weight: bold;
-            color: #cc0000;
+            color: var(--primary-color);
             letter-spacing: -0.5px;
         }
 
-        .bank-logo {
-            height: 40px;
-            width: auto;
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .theme-toggle:hover {
+            background: var(--border-color);
         }
 
         .nav-links {
@@ -79,7 +109,7 @@
         }
 
         .nav-links button {
-            background: #cc0000;
+            background: var(--primary-color);
             color: white;
             border: none;
             padding: 0.7rem 1.5rem;
@@ -101,9 +131,10 @@
             max-width: 1400px;
             margin: 140px auto 20px;
             padding: 2rem;
-            background: white;
+            background: var(--card-bg);
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 1px solid var(--border-color);
         }
 
         .hero {
@@ -186,12 +217,12 @@
         }
 
         .card {
-            background: white;
+            background: var(--card-bg);
             border-radius: 15px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.1);
             overflow: hidden;
             transition: transform 0.3s, box-shadow 0.3s;
-            border: 1px solid #e0e0e0;
+            border: 1px solid var(--border-color);
             position: relative;
         }
 
@@ -201,7 +232,7 @@
         }
 
         .card-header {
-            background: linear-gradient(135deg, #002d72 0%, #0047ab 100%);
+            background: linear-gradient(135deg, var(--secondary-color) 0%, #0047ab 100%);
             color: white;
             padding: 1.5rem;
             text-align: center;
@@ -213,7 +244,7 @@
             top: 10px;
             right: 10px;
             background: #ffc72c;
-            color: #002d72;
+            color: var(--secondary-color);
             padding: 0.3rem 0.8rem;
             border-radius: 20px;
             font-size: 0.8rem;
@@ -236,7 +267,7 @@
         }
 
         .card-title {
-            color: #002d72;
+            color: var(--secondary-color);
             margin-bottom: 1rem;
             font-size: 1.3rem;
         }
@@ -248,7 +279,7 @@
 
         .card-features li {
             padding: 0.5rem 0;
-            border-bottom: 1px solid #f0f0f0;
+            border-bottom: 1px solid var(--border-color);
             color: #666;
             display: flex;
             align-items: center;
@@ -285,7 +316,7 @@
         }
 
         .form-container h2 {
-            color: #002d72;
+            color: var(--secondary-color);
             margin-bottom: 1.5rem;
             text-align: center;
             font-size: 1.8rem;
@@ -299,26 +330,28 @@
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 600;
-            color: #002d72;
+            color: var(--secondary-color);
         }
 
-        .form-group input, .form-group select {
+        .form-group input, .form-group select, .form-group textarea {
             width: 100%;
             padding: 0.75rem 1rem;
             border: 1px solid #ddd;
             border-radius: 8px;
             font-size: 1rem;
             transition: border 0.3s;
+            background: white;
+            color: #333;
         }
 
-        .form-group input:focus, .form-group select:focus {
-            border-color: #002d72;
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: var(--secondary-color);
             outline: none;
             box-shadow: 0 0 0 3px rgba(0, 45, 114, 0.1);
         }
 
         .btn {
-            background: #cc0000;
+            background: var(--primary-color);
             color: white;
             padding: 0.75rem 1.5rem;
             border: none;
@@ -350,7 +383,7 @@
         }
 
         .balance-card {
-            background: linear-gradient(135deg, #cc0000 0%, #8b0000 100%);
+            background: linear-gradient(135deg, var(--primary-color) 0%, #8b0000 100%);
             color: white;
             padding: 2.5rem;
             border-radius: 15px;
@@ -393,14 +426,14 @@
         }
 
         .action-card {
-            background: white;
+            background: var(--card-bg);
             padding: 1.5rem;
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             text-align: center;
             cursor: pointer;
             transition: all 0.3s;
-            border: 2px solid #f8f9fa;
+            border: 2px solid var(--border-color);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -410,13 +443,13 @@
 
         .action-card:hover {
             transform: translateY(-5px);
-            border-color: #cc0000;
+            border-color: var(--primary-color);
             box-shadow: 0 8px 20px rgba(0,0,0,0.15);
         }
 
         .action-card i {
             font-size: 2rem;
-            color: #cc0000;
+            color: var(--primary-color);
             margin-bottom: 0.5rem;
         }
 
@@ -429,11 +462,11 @@
         }
 
         .package {
-            background: white;
+            background: var(--card-bg);
             padding: 1.5rem;
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            border: 2px solid #ddd;
+            border: 2px solid var(--border-color);
             text-align: center;
             cursor: pointer;
             transition: all 0.3s;
@@ -448,20 +481,20 @@
         }
 
         .package.selected {
-            border-color: #cc0000;
+            border-color: var(--primary-color);
             background: #fff5f5;
             transform: scale(1.02);
         }
 
         .package h3 {
-            color: #cc0000;
+            color: var(--primary-color);
             margin-bottom: 1rem;
         }
 
         .package-price {
             font-size: 1.5rem;
             font-weight: bold;
-            color: #cc0000;
+            color: var(--primary-color);
             margin: 1rem 0;
         }
 
@@ -477,7 +510,7 @@
         .tabs {
             display: flex;
             margin-bottom: 1rem;
-            border-bottom: 2px solid #ddd;
+            border-bottom: 2px solid var(--border-color);
             flex-wrap: wrap;
             gap: 0.5rem;
         }
@@ -493,6 +526,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            color: var(--text-color);
         }
 
         .tab:hover {
@@ -500,16 +534,17 @@
         }
 
         .tab.active {
-            background: #cc0000;
+            background: var(--primary-color);
             color: white;
         }
 
         .tab-content {
             display: none;
             padding: 2rem;
-            background: white;
+            background: var(--card-bg);
             border-radius: 0 0 12px 12px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
         }
 
         .tab-content.active {
@@ -543,13 +578,13 @@
         }
 
         .hesap-item {
-            background: white;
+            background: var(--card-bg);
             padding: 1.5rem;
             border-radius: 10px;
             margin: 0.5rem 0;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             cursor: pointer;
-            border-left: 4px solid #cc0000;
+            border-left: 4px solid var(--primary-color);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -557,12 +592,12 @@
         }
 
         .hesap-item:hover {
-            background: #f8f9fa;
+            background: var(--border-color);
             transform: translateX(5px);
         }
 
         .hesap-detay {
-            background: #f8f9fa;
+            background: var(--border-color);
             padding: 1.5rem;
             border-radius: 10px;
             margin-top: 1rem;
@@ -577,14 +612,14 @@
 
         .admin-category {
             margin-bottom: 2rem;
-            border: 1px solid #ddd;
+            border: 1px solid var(--border-color);
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
 
         .admin-category-header {
-            background: #cc0000;
+            background: var(--primary-color);
             color: white;
             padding: 1.2rem;
             font-weight: bold;
@@ -601,7 +636,7 @@
 
         .admin-category-content {
             padding: 1.5rem;
-            background: white;
+            background: var(--card-bg);
             display: none;
         }
 
@@ -612,7 +647,7 @@
 
         /* Request Item Styles */
         .request-item {
-            background: white;
+            background: var(--card-bg);
             padding: 1.5rem;
             border-radius: 10px;
             margin: 0.5rem 0;
@@ -620,7 +655,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-left: 4px solid #cc0000;
+            border-left: 4px solid var(--primary-color);
         }
 
         .request-info {
@@ -691,6 +726,14 @@
                 width: 100%;
                 justify-content: flex-end;
             }
+            
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            .balance-amount {
+                font-size: 2.5rem;
+            }
         }
 
         /* Notification Styles */
@@ -748,12 +791,12 @@
         }
 
         .feature-card {
-            background: white;
+            background: var(--card-bg);
             padding: 1.5rem;
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             text-align: center;
-            border: 1px solid #e9ecef;
+            border: 1px solid var(--border-color);
             transition: all 0.3s;
         }
 
@@ -764,12 +807,12 @@
 
         .feature-card i {
             font-size: 2.5rem;
-            color: #cc0000;
+            color: var(--primary-color);
             margin-bottom: 1rem;
         }
 
         .feature-card h3 {
-            color: #002d72;
+            color: var(--secondary-color);
             margin-bottom: 1rem;
         }
 
@@ -787,18 +830,18 @@
         }
 
         .stat-card {
-            background: white;
+            background: var(--card-bg);
             padding: 1.5rem;
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             text-align: center;
-            border-left: 4px solid #cc0000;
+            border-left: 4px solid var(--primary-color);
         }
 
         .stat-value {
             font-size: 2.5rem;
             font-weight: bold;
-            color: #cc0000;
+            color: var(--primary-color);
             margin: 0.5rem 0;
         }
 
@@ -809,16 +852,19 @@
 
         /* Calisan Sigorta Styles */
         .calisan-sigorta-item {
-            background: white;
+            background: var(--card-bg);
             padding: 1.5rem;
             border-radius: 10px;
             margin: 0.5rem 0;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             border-left: 4px solid #17a2b8;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .calisan-sigorta-detay {
-            background: #f8f9fa;
+            background: var(--border-color);
             padding: 1.5rem;
             border-radius: 10px;
             margin-top: 1rem;
@@ -834,16 +880,16 @@
             display: flex;
             justify-content: space-between;
             padding: 0.5rem 0;
-            border-bottom: 1px solid #e9ecef;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .detay-label {
             font-weight: bold;
-            color: #002d72;
+            color: var(--secondary-color);
         }
 
         .detay-value {
-            color: #333;
+            color: var(--text-color);
         }
 
         /* Aktif Listeler */
@@ -852,7 +898,7 @@
         }
 
         .aktif-item {
-            background: white;
+            background: var(--card-bg);
             padding: 1.5rem;
             border-radius: 10px;
             margin: 0.5rem 0;
@@ -871,6 +917,106 @@
             display: flex;
             gap: 0.5rem;
         }
+
+        /* Yeni Eklenen Stiller */
+        .search-box {
+            margin-bottom: 1.5rem;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            background: var(--card-bg);
+            color: var(--text-color);
+        }
+
+        .pdf-btn {
+            background: #dc3545;
+        }
+
+        .pdf-btn:hover {
+            background: #c82333;
+        }
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .quick-action-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid var(--border-color);
+        }
+
+        .quick-action-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary-color);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .quick-action-card i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .bildirim-item {
+            background: var(--card-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 0.5rem 0;
+            border-left: 4px solid #17a2b8;
+        }
+
+        .bildirim-okunmadi {
+            border-left-color: var(--primary-color);
+            background: rgba(204, 0, 0, 0.05);
+        }
+
+        .exchange-rates {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .exchange-card {
+            background: var(--card-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .exchange-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 0.5rem 0;
+        }
+
+        .payment-schedule {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 0.5rem 0;
+            border-left: 4px solid #28a745;
+        }
+
+        .payment-overdue {
+            border-left-color: #dc3545;
+            background: rgba(220, 53, 69, 0.05);
+        }
     </style>
 </head>
 <body>
@@ -883,8 +1029,10 @@
     <header>
         <nav class="navbar">
             <div class="logo-container">
-                <!-- Bank of Maze Logo -->
                 <div class="logo">BANK OF MAZE</div>
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    <i class="fas fa-moon"></i>
+                </button>
             </div>
             <div class="nav-links">
                 <button onclick="showSection('ana-sayfa')"><i class="fas fa-home"></i> Ana Sayfa</button>
@@ -909,6 +1057,22 @@
                     <p>150 yıllık güven ve modern teknolojinin buluştuğu nokta. 
                     Kişisel ve kurumsal banking çözümlerimizle yanınızdayız.</p>
                     <p style="margin-top: 1rem;"><strong>Güvenli • Hızlı • Yenilikçi</strong></p>
+                </div>
+                
+                <!-- Döviz Kurları -->
+                <div class="exchange-rates">
+                    <div class="exchange-card">
+                        <div class="exchange-value" id="euroKuru">0,87</div>
+                        <div class="stat-label">EUR/USD</div>
+                    </div>
+                    <div class="exchange-card">
+                        <div class="exchange-value" id="poundKuru">0,76</div>
+                        <div class="stat-label">GPB/USD</div>
+                    </div>
+                    <div class="exchange-card">
+                        <div class="exchange-value" id="altinKuru">127.77</div>
+                        <div class="stat-label">Altın (USD/gr)</div>
+                    </div>
                 </div>
                 
                 <!-- Stats Grid -->
@@ -1159,6 +1323,26 @@
                 <p>Hesap No: <span id="hesapNumarasi"></span></p>
             </div>
 
+            <!-- Hızlı İşlemler -->
+            <div class="quick-actions">
+                <div class="quick-action-card" onclick="hizliIslem('fatura')">
+                    <i class="fas fa-receipt"></i>
+                    <h4>Fatura Öde</h4>
+                </div>
+                <div class="quick-action-card" onclick="hizliIslem('havale')">
+                    <i class="fas fa-exchange-alt"></i>
+                    <h4>Havale Yap</h4>
+                </div>
+                <div class="quick-action-card" onclick="hizliIslem('yatirim')">
+                    <i class="fas fa-chart-line"></i>
+                    <h4>Yatırım</h4>
+                </div>
+                <div class="quick-action-card" onclick="hizliIslem('doviz')">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <h4>Döviz İşlemleri</h4>
+                </div>
+            </div>
+
             <div class="tabs">
                 <button class="tab active" onclick="openTab('para-islemleri')"><i class="fas fa-money-bill-wave"></i> Para İşlemleri</button>
                 <button class="tab" onclick="openTab('sigorta')"><i class="fas fa-car"></i> Araç Sigortası</button>
@@ -1168,6 +1352,11 @@
                 <!-- YENİ EKLENEN SEKMELER -->
                 <button class="tab" onclick="openTab('vadeli-hesaplarim')"><i class="fas fa-piggy-bank"></i> Vadeli Hesaplarım</button>
                 <button class="tab" onclick="openTab('kredilerim')"><i class="fas fa-hand-holding-usd"></i> Kredilerim</button>
+                <button class="tab" onclick="openTab('hesap-hareketleri')"><i class="fas fa-history"></i> Hesap Hareketleri</button>
+                <button class="tab" onclick="openTab('profil')"><i class="fas fa-user-edit"></i> Profilim</button>
+                <button class="tab" onclick="openTab('bildirimler')"><i class="fas fa-bell"></i> Bildirimler</button>
+                <button class="tab" onclick="openTab('odeme-takvimi')"><i class="fas fa-calendar-alt"></i> Ödeme Takvimi</button>
+                <button class="tab home-btn" onclick="cikisYap()"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</button>
                 <button class="tab home-btn" onclick="showSection('ana-sayfa')"><i class="fas fa-home"></i> Ana Sayfa</button>
             </div>
 
@@ -1317,11 +1506,87 @@
                     <p>Henüz krediniz bulunmamaktadır.</p>
                 </div>
             </div>
+
+            <!-- HESAP HAREKETLERİ -->
+            <div class="tab-content" id="hesap-hareketleri">
+                <h3><i class="fas fa-history"></i> Hesap Hareketleri</h3>
+                <div class="search-box">
+                    <input type="text" id="hareketArama" placeholder="Hareketlerde ara..." onkeyup="filtreleHareketler()">
+                </div>
+                <div id="hesapHareketleriListesi">
+                    <p>Henüz hesap hareketiniz bulunmamaktadır.</p>
+                </div>
+            </div>
+
+            <!-- PROFİLİM -->
+            <div class="tab-content" id="profil">
+                <h3><i class="fas fa-user-edit"></i> Profil Bilgilerim</h3>
+                <form id="profilForm">
+                    <div class="form-group">
+                        <label>İsim Soyisim:</label>
+                        <input type="text" id="profilIsim" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Telefon:</label>
+                        <input type="tel" id="profilTelefon" required>
+                    </div>
+                    <div class="form-group">
+                        <label>E-posta:</label>
+                        <input type="email" id="profilEmail">
+                    </div>
+                    <div class="form-group">
+                        <label>Adres:</label>
+                        <textarea id="profilAdres" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn"><i class="fas fa-save"></i> Bilgileri Güncelle</button>
+                </form>
+
+                <h4>Şifre Değiştir</h4>
+                <form id="sifreDegistirForm">
+                    <div class="form-group">
+                        <label>Mevcut Şifre:</label>
+                        <input type="password" id="mevcutSifre" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Yeni Şifre:</label>
+                        <input type="password" id="yeniSifre" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Yeni Şifre (Tekrar):</label>
+                        <input type="password" id="yeniSifreTekrar" required>
+                    </div>
+                    <button type="submit" class="btn"><i class="fas fa-key"></i> Şifreyi Değiştir</button>
+                </form>
+            </div>
+
+            <!-- BİLDİRİMLER -->
+            <div class="tab-content" id="bildirimler">
+                <h3><i class="fas fa-bell"></i> Bildirimler</h3>
+                <div id="bildirimlerListesi">
+                    <p>Henüz bildiriminiz bulunmamaktadır.</p>
+                </div>
+            </div>
+
+            <!-- ÖDEME TAKVİMİ -->
+            <div class="tab-content" id="odeme-takvimi">
+                <h3><i class="fas fa-calendar-alt"></i> Ödeme Takvimi</h3>
+                <div id="odemeTakvimiListesi">
+                    <p>Yaklaşan ödemeniz bulunmamaktadır.</p>
+                </div>
+            </div>
         </div>
 
         <!-- Yönetici Panel -->
         <div class="admin-panel" id="admin-panel">
             <h2><i class="fas fa-user-shield"></i> Yönetici Paneli</h2>
+            
+            <!-- Arama Kutusu -->
+            <div class="search-box">
+                <input type="text" id="adminArama" placeholder="Tüm verilerde ara..." onkeyup="filtreleAdmin()">
+            </div>
+            
+            <!-- PDF İndirme Butonu -->
+            <button class="btn pdf-btn" onclick="raporIndir('genel')"><i class="fas fa-file-pdf"></i> Genel Rapor İndir</button>
             
             <!-- Hesap İstatistikleri -->
             <div class="stats-grid">
@@ -1348,6 +1613,19 @@
                 <div class="stat-card">
                     <div class="stat-value" id="toplam-calisan-sigorta">0</div>
                     <div class="stat-label">Çalışan Sigorta</div>
+                </div>
+            </div>
+            
+            <!-- Detaylı İstatistikler -->
+            <div class="admin-category">
+                <div class="admin-category-header" onclick="toggleAdminCategory(this)">
+                    <span><i class="fas fa-chart-bar"></i> Detaylı İstatistikler</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="admin-category-content">
+                    <div id="detayliIstatistikler">
+                        <p>İstatistikler yükleniyor...</p>
+                    </div>
                 </div>
             </div>
             
@@ -1462,6 +1740,7 @@
                         <div id="calisanHesaplariListesi">
                             <p>Henüz çalışan hesabı bulunmamaktadır.</p>
                         </div>
+                        <div id="calisanHesapDetaylari"></div>
                     </div>
                 </div>
             </div>
@@ -1479,7 +1758,9 @@
         let krediTalepleri = JSON.parse(localStorage.getItem('bankofmaze_kredi_talepler')) || [];
         let calisanSigortasiTalepleri = JSON.parse(localStorage.getItem('bankofmaze_calisan_sigortasi_talepler')) || [];
         let calisanSigortaHesaplari = JSON.parse(localStorage.getItem('bankofmaze_calisan_sigorta_hesaplari')) || [];
+        let bildirimler = JSON.parse(localStorage.getItem('bankofmaze_bildirimler')) || {};
         let currentUser = null;
+        let inactivityTimer;
 
         // Mock yönetici hesabı
         const adminHesap = {
@@ -1499,10 +1780,34 @@
             document.getElementById('vadeliForm').addEventListener('submit', vadeliTalep);
             document.getElementById('krediForm').addEventListener('submit', krediTalep);
             document.getElementById('calisanSigortasiForm').addEventListener('submit', calisanSigortasiTalep);
+            document.getElementById('profilForm').addEventListener('submit', profilGuncelle);
+            document.getElementById('sifreDegistirForm').addEventListener('submit', sifreDegistir);
             
             // İstatistikleri güncelle
             updateStatistics();
+            updateExchangeRates();
+            startInactivityTimer();
+            
+            // Tema kontrolü
+            const savedTheme = localStorage.getItem('bankofmaze_theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            updateThemeIcon(savedTheme);
         });
+
+        // Tema değiştirme
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('bankofmaze_theme', newTheme);
+            updateThemeIcon(newTheme);
+        }
+
+        function updateThemeIcon(theme) {
+            const icon = document.querySelector('.theme-toggle i');
+            icon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+        }
 
         // Yönetici kategori toggle
         function toggleAdminCategory(header) {
@@ -1561,6 +1866,8 @@
             } else if (section === 'calisan-sigortasi') {
                 document.getElementById('calisan-sigortasi-form').style.display = 'block';
             }
+            
+            resetInactivityTimer();
         }
 
         function showAdminLogin() {
@@ -1586,7 +1893,10 @@
                 hesapNo: 'MAZE' + Date.now().toString().slice(-8),
                 sigortalar: [],
                 vadeliHesaplar: [],
-                krediler: []
+                krediler: [],
+                hesapHareketleri: [],
+                email: '',
+                adres: ''
             };
 
             hesaplar.push(yeniHesap);
@@ -1617,10 +1927,16 @@
                 document.getElementById('ana-sayfa').style.display = 'none';
                 document.getElementById('dashboard').style.display = 'block';
                 
-                // Sigortalarım sekmesini yükle
+                // Kullanıcıya özel verileri yükle
                 loadSigortalarim();
+                loadVadeliHesaplarim();
+                loadKredilerim();
+                loadHesapHareketleri();
+                loadBildirimler();
+                loadOdemeTakvimi();
                 
                 showNotification('Başarıyla giriş yapıldı!', 'success');
+                resetInactivityTimer();
             } else {
                 showNotification('Telefon numarası veya şifre hatalı!', 'error');
             }
@@ -1639,9 +1955,18 @@
                 document.getElementById('admin-panel').style.display = 'block';
                 loadAdminData();
                 showNotification('Yönetici paneline başarıyla giriş yapıldı!', 'success');
+                resetInactivityTimer();
             } else {
                 showNotification('Yönetici ID veya şifre hatalı!', 'error');
             }
+        }
+
+        // Çıkış Yap
+        function cikisYap() {
+            currentUser = null;
+            showSection('ana-sayfa');
+            showNotification('Başarıyla çıkış yapıldı!', 'success');
+            clearTimeout(inactivityTimer);
         }
 
         // Tab sistemleri
@@ -1658,7 +1983,17 @@
                 loadVadeliHesaplarim();
             } else if (tabName === 'kredilerim') {
                 loadKredilerim();
+            } else if (tabName === 'hesap-hareketleri') {
+                loadHesapHareketleri();
+            } else if (tabName === 'profil') {
+                loadProfil();
+            } else if (tabName === 'bildirimler') {
+                loadBildirimler();
+            } else if (tabName === 'odeme-takvimi') {
+                loadOdemeTakvimi();
             }
+            
+            resetInactivityTimer();
         }
 
         function openAdminTab(tabName) {
@@ -1692,6 +2027,8 @@
             } else if (tabName === 'aktif-sigortalar') {
                 loadAktifSigortalar();
             }
+            
+            resetInactivityTimer();
         }
 
         // Para işlemleri göster
@@ -1704,6 +2041,8 @@
             } else {
                 document.getElementById('para-cek-form').style.display = 'block';
             }
+            
+            resetInactivityTimer();
         }
 
         // Sigorta paketi seç
@@ -1716,6 +2055,8 @@
             
             // Hidden input'a değeri ata
             document.getElementById('selectedPackage').value = packageType;
+            
+            resetInactivityTimer();
         }
 
         // Poliçe süresi seç
@@ -1728,6 +2069,23 @@
             
             // Hidden input'a değeri ata
             document.getElementById('selectedPoliceSuresi').value = sure;
+            
+            resetInactivityTimer();
+        }
+
+        // Hızlı İşlemler
+        function hizliIslem(tip) {
+            if (tip === 'fatura') {
+                showNotification('Fatura ödeme işlemi yakında eklenecek!', 'info');
+            } else if (tip === 'havale') {
+                showNotification('Havale işlemi yakında eklenecek!', 'info');
+            } else if (tip === 'yatirim') {
+                showNotification('Yatırım işlemleri yakında eklenecek!', 'info');
+            } else if (tip === 'doviz') {
+                showNotification('Döviz işlemleri yakında eklenecek!', 'info');
+            }
+            
+            resetInactivityTimer();
         }
 
         // Para Yatırma Talebi
@@ -1756,6 +2114,8 @@
             showNotification('Para yatırma talebiniz yönetici onayına gönderildi!', 'success');
             document.getElementById('yatirForm').reset();
             document.getElementById('para-yatir-form').style.display = 'none';
+            
+            resetInactivityTimer();
         }
 
         // Para Çekme Talebi
@@ -1784,6 +2144,8 @@
             showNotification('Para çekme talebiniz yönetici onayına gönderildi!', 'success');
             document.getElementById('cekForm').reset();
             document.getElementById('para-cek-form').style.display = 'none';
+            
+            resetInactivityTimer();
         }
 
         // Sigorta Talebi
@@ -1842,6 +2204,8 @@
             document.querySelectorAll('.package').forEach(p => p.classList.remove('selected'));
             document.getElementById('selectedPackage').value = '';
             document.getElementById('selectedPoliceSuresi').value = '';
+            
+            resetInactivityTimer();
         }
 
         // Vadeli Hesap Talebi
@@ -1870,6 +2234,8 @@
 
             showNotification('Vadeli hesap talebiniz yönetici onayına gönderildi!', 'success');
             document.getElementById('vadeliForm').reset();
+            
+            resetInactivityTimer();
         }
 
         // Kredi Talebi
@@ -1898,6 +2264,8 @@
 
             showNotification('Kredi talebiniz yönetici onayına gönderildi!', 'success');
             document.getElementById('krediForm').reset();
+            
+            resetInactivityTimer();
         }
 
         // Çalışan Sigortası Talebi
@@ -1923,78 +2291,811 @@
 
             showNotification('Çalışan sigortası talebiniz yönetici onayına gönderildi!', 'success');
             document.getElementById('calisanSigortasiForm').reset();
-        }
-
-        // Yönetici verilerini yükle
-        function loadAdminData() {
-            loadParaTalepleri();
-            loadSigortaTalepleri();
-            loadVadeliTalepleri();
-            loadKrediTalepleri();
-            loadCalisanSigortasiTalepleri();
-            loadHesapListesi();
-            loadCalisanHesaplari();
-            loadAktifKrediler();
-            loadAktifVadeliHesaplar();
-            loadAktifSigortalar();
-            updateStatistics();
-        }
-
-        // İstatistikleri güncelle
-        function updateStatistics() {
-            const toplamHesap = hesaplar.length;
-            const toplamBakiye = hesaplar.reduce((toplam, hesap) => toplam + hesap.bakiye, 0);
             
-            let toplamKredi = 0;
-            let toplamVadeli = 0;
-            let toplamSigorta = 0;
-            
-            hesaplar.forEach(hesap => {
-                if (hesap.krediler) toplamKredi += hesap.krediler.length;
-                if (hesap.vadeliHesaplar) toplamVadeli += hesap.vadeliHesaplar.length;
-                if (hesap.sigortalar) toplamSigorta += hesap.sigortalar.length;
-            });
-
-            const toplamCalisanSigorta = calisanSigortaHesaplari.length;
-
-            document.getElementById('toplam-hesap').textContent = toplamHesap;
-            document.getElementById('toplam-bakiye').textContent = toplamBakiye.toFixed(2) + '$';
-            document.getElementById('toplam-kredi').textContent = toplamKredi;
-            document.getElementById('toplam-vadeli').textContent = toplamVadeli;
-            document.getElementById('toplam-sigorta').textContent = toplamSigorta;
-            document.getElementById('toplam-calisan-sigorta').textContent = toplamCalisanSigorta;
+            resetInactivityTimer();
         }
 
-        // Kullanıcının sigortalarını yükle
-        function loadSigortalarim() {
-            const container = document.getElementById('sigortalarimListesi');
+        // Yönetici Panel Talep Listelerini Yükleme Fonksiyonları
+        function loadParaTalepleri() {
+            const container = document.getElementById('paraTalepleriListesi');
             container.innerHTML = '';
 
-            if (!currentUser || !currentUser.sigortalar || currentUser.sigortalar.length === 0) {
-                container.innerHTML = '<p>Henüz sigortanız bulunmamaktadır.</p>';
+            if (paraTalepleri.length === 0) {
+                container.innerHTML = '<p>Para işlem talebi bulunmamaktadır.</p>';
                 return;
             }
 
-            currentUser.sigortalar.forEach(sigorta => {
+            // Beklemedeki talepleri göster
+            const beklemedekiTalepler = paraTalepleri.filter(talep => talep.durum === 'beklemede');
+            
+            if (beklemedekiTalepler.length === 0) {
+                container.innerHTML = '<p>Bekleyen para işlem talebi bulunmamaktadır.</p>';
+                return;
+            }
+
+            beklemedekiTalepler.forEach(talep => {
                 const div = document.createElement('div');
-                div.className = 'aktif-item';
+                div.className = 'request-item';
                 div.innerHTML = `
-                    <div class="aktif-bilgi">
-                        <strong>${sigorta.aracMarka} ${sigorta.aracModel}</strong><br>
-                        Plaka: ${sigorta.plaka} | Değer: ${sigorta.aracDeger}$<br>
-                        Paket: ${sigorta.paket} | Poliçe Süresi: ${sigorta.policeSuresi} gün<br>
-                        Toplam Fiyat: ${sigorta.toplamFiyat}$<br>
-                        <small>Başlangıç: ${sigorta.baslangicTarihi}</small>
+                    <div class="request-info">
+                        <strong>${talep.isim}</strong> (${talep.hesapNo})<br>
+                        <strong>${talep.type === 'yatir' ? 'Para Yatırma' : 'Para Çekme'}:</strong> ${talep.miktar}$<br>
+                        <small>Tarih: ${talep.tarih}</small>
                     </div>
-                    <div class="aktif-actions">
-                        <button class="btn btn-danger" onclick="sigortaSil('${sigorta.id}')"><i class="fas fa-trash"></i> Sil</button>
+                    <div class="request-actions">
+                        <button class="btn btn-approve" onclick="onaylaPara('${talep.id}')"><i class="fas fa-check"></i> Onayla</button>
+                        <button class="btn btn-reject" onclick="reddetPara('${talep.id}')"><i class="fas fa-times"></i> Reddet</button>
                     </div>
                 `;
                 container.appendChild(div);
             });
         }
 
-        // Vadeli Hesaplarımı Yükle
+        function loadSigortaTalepleri() {
+            const container = document.getElementById('sigortaTalepleriListesi');
+            container.innerHTML = '';
+
+            if (sigortaTalepleri.length === 0) {
+                container.innerHTML = '<p>Sigorta talebi bulunmamaktadır.</p>';
+                return;
+            }
+
+            const beklemedekiTalepler = sigortaTalepleri.filter(talep => talep.durum === 'beklemede');
+            
+            if (beklemedekiTalepler.length === 0) {
+                container.innerHTML = '<p>Bekleyen sigorta talebi bulunmamaktadır.</p>';
+                return;
+            }
+
+            beklemedekiTalepler.forEach(talep => {
+                const div = document.createElement('div');
+                div.className = 'request-item';
+                div.innerHTML = `
+                    <div class="request-info">
+                        <strong>${talep.isim}</strong> (${talep.hesapNo})<br>
+                        <strong>Araç:</strong> ${talep.aracMarka} ${talep.aracModel}<br>
+                        <strong>Plaka:</strong> ${talep.plaka}<br>
+                        <strong>Paket:</strong> ${talep.paket} | <strong>Süre:</strong> ${talep.policeSuresi} gün<br>
+                        <strong>Toplam:</strong> ${talep.toplamFiyat}$<br>
+                        <small>Tarih: ${talep.tarih}</small>
+                    </div>
+                    <div class="request-actions">
+                        <button class="btn btn-approve" onclick="onaylaSigorta('${talep.id}')"><i class="fas fa-check"></i> Onayla</button>
+                        <button class="btn btn-reject" onclick="reddetSigorta('${talep.id}')"><i class="fas fa-times"></i> Reddet</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function loadVadeliTalepleri() {
+            const container = document.getElementById('vadeliTalepleriListesi');
+            container.innerHTML = '';
+
+            if (vadeliTalepleri.length === 0) {
+                container.innerHTML = '<p>Vadeli hesap talebi bulunmamaktadır.</p>';
+                return;
+            }
+
+            const beklemedekiTalepler = vadeliTalepleri.filter(talep => talep.durum === 'beklemede');
+            
+            if (beklemedekiTalepler.length === 0) {
+                container.innerHTML = '<p>Bekleyen vadeli hesap talebi bulunmamaktadır.</p>';
+                return;
+            }
+
+            beklemedekiTalepler.forEach(talep => {
+                const div = document.createElement('div');
+                div.className = 'request-item';
+                div.innerHTML = `
+                    <div class="request-info">
+                        <strong>${talep.isim}</strong> (${talep.hesapNo})<br>
+                        <strong>Miktar:</strong> ${talep.miktar}$<br>
+                        <strong>Faiz:</strong> %${talep.faiz} | <strong>Vade:</strong> ${talep.vade} gün<br>
+                        <small>Tarih: ${talep.tarih}</small>
+                    </div>
+                    <div class="request-actions">
+                        <button class="btn btn-approve" onclick="onaylaVadeli('${talep.id}')"><i class="fas fa-check"></i> Onayla</button>
+                        <button class="btn btn-reject" onclick="reddetVadeli('${talep.id}')"><i class="fas fa-times"></i> Reddet</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function loadKrediTalepleri() {
+            const container = document.getElementById('krediTalepleriListesi');
+            container.innerHTML = '';
+
+            if (krediTalepleri.length === 0) {
+                container.innerHTML = '<p>Kredi talebi bulunmamaktadır.</p>';
+                return;
+            }
+
+            const beklemedekiTalepler = krediTalepleri.filter(talep => talep.durum === 'beklemede');
+            
+            if (beklemedekiTalepler.length === 0) {
+                container.innerHTML = '<p>Bekleyen kredi talebi bulunmamaktadır.</p>';
+                return;
+            }
+
+            beklemedekiTalepler.forEach(talep => {
+                const div = document.createElement('div');
+                div.className = 'request-item';
+                div.innerHTML = `
+                    <div class="request-info">
+                        <strong>${talep.isim}</strong> (${talep.hesapNo})<br>
+                        <strong>Miktar:</strong> ${talep.miktar}$<br>
+                        <strong>Faiz:</strong> %${talep.faiz} | <strong>Vade:</strong> ${talep.vade} gün<br>
+                        <small>Tarih: ${talep.tarih}</small>
+                    </div>
+                    <div class="request-actions">
+                        <button class="btn btn-approve" onclick="onaylaKredi('${talep.id}')"><i class="fas fa-check"></i> Onayla</button>
+                        <button class="btn btn-reject" onclick="reddetKredi('${talep.id}')"><i class="fas fa-times"></i> Reddet</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function loadCalisanSigortasiTalepleri() {
+            const container = document.getElementById('calisanSigortasiTalepleriListesi');
+            container.innerHTML = '';
+
+            if (calisanSigortasiTalepleri.length === 0) {
+                container.innerHTML = '<p>Çalışan sigortası talebi bulunmamaktadır.</p>';
+                return;
+            }
+
+            const beklemedekiTalepler = calisanSigortasiTalepleri.filter(talep => talep.durum === 'beklemede');
+            const digerTalepler = calisanSigortasiTalepleri.filter(talep => talep.durum !== 'beklemede');
+            
+            if (beklemedekiTalepler.length === 0 && digerTalepler.length === 0) {
+                container.innerHTML = '<p>Bekleyen çalışan sigortası talebi bulunmamaktadır.</p>';
+                return;
+            }
+
+            // Bekleyen talepler
+            if (beklemedekiTalepler.length > 0) {
+                const baslik = document.createElement('h4');
+                baslik.textContent = 'Bekleyen Talepler';
+                container.appendChild(baslik);
+
+                beklemedekiTalepler.forEach(talep => {
+                    const div = document.createElement('div');
+                    div.className = 'request-item';
+                    div.innerHTML = `
+                        <div class="request-info">
+                            <strong>İşletme:</strong> ${talep.isletmeAd}<br>
+                            <strong>Sahip:</strong> ${talep.isletmeSahibi} (${talep.isletmeTel})<br>
+                            <strong>Çalışan:</strong> ${talep.calisanAdSoyad} (${talep.calisanTel})<br>
+                            <strong>Sektör:</strong> ${talep.isletmeSektor}<br>
+                            <strong>Sağlık Raporu:</strong> ${talep.calisanSaglikRaporu}<br>
+                            <small>Tarih: ${talep.tarih}</small>
+                        </div>
+                        <div class="request-actions">
+                            <button class="btn btn-approve" onclick="onaylaCalisanSigortasi('${talep.id}')"><i class="fas fa-check"></i> Onayla</button>
+                            <button class="btn btn-reject" onclick="reddetCalisanSigortasi('${talep.id}')"><i class="fas fa-times"></i> Reddet</button>
+                            <button class="btn btn-danger" onclick="calisanTalepSil('${talep.id}')"><i class="fas fa-trash"></i> Sil</button>
+                        </div>
+                    `;
+                    container.appendChild(div);
+                });
+            }
+
+            // Diğer talepler (onaylanmış/reddedilmiş)
+            if (digerTalepler.length > 0) {
+                const baslik = document.createElement('h4');
+                baslik.textContent = 'Geçmiş Talepler';
+                baslik.style.marginTop = '2rem';
+                container.appendChild(baslik);
+
+                digerTalepler.forEach(talep => {
+                    const div = document.createElement('div');
+                    div.className = 'request-item';
+                    div.style.opacity = '0.7';
+                    div.innerHTML = `
+                        <div class="request-info">
+                            <strong>İşletme:</strong> ${talep.isletmeAd}<br>
+                            <strong>Sahip:</strong> ${talep.isletmeSahibi} (${talep.isletmeTel})<br>
+                            <strong>Çalışan:</strong> ${talep.calisanAdSoyad} (${talep.calisanTel})<br>
+                            <strong>Durum:</strong> ${talep.durum}<br>
+                            <small>Tarih: ${talep.tarih}</small>
+                        </div>
+                        <div class="request-actions">
+                            <button class="btn btn-danger" onclick="calisanTalepSil('${talep.id}')"><i class="fas fa-trash"></i> Sil</button>
+                        </div>
+                    `;
+                    container.appendChild(div);
+                });
+            }
+        }
+
+        // Onaylama ve Reddetme Fonksiyonları
+        function onaylaPara(talepId) {
+            const talep = paraTalepleri.find(t => t.id === talepId);
+            if (talep) {
+                const hesap = hesaplar.find(h => h.hesapNo === talep.hesapNo);
+                if (hesap) {
+                    if (talep.type === 'yatir') {
+                        hesap.bakiye += talep.miktar;
+                        // Hesap hareketi ekle
+                        if (!hesap.hesapHareketleri) hesap.hesapHareketleri = [];
+                        hesap.hesapHareketleri.push({
+                            id: Date.now().toString(),
+                            islem: 'Para Yatırma',
+                            miktar: talep.miktar,
+                            aciklama: 'Yönetici onaylı para yatırma',
+                            tarih: new Date().toLocaleString()
+                        });
+                    } else if (talep.type === 'cek') {
+                        if (hesap.bakiye >= talep.miktar) {
+                            hesap.bakiye -= talep.miktar;
+                            // Hesap hareketi ekle
+                            if (!hesap.hesapHareketleri) hesap.hesapHareketleri = [];
+                            hesap.hesapHareketleri.push({
+                                id: Date.now().toString(),
+                                islem: 'Para Çekme',
+                                miktar: -talep.miktar,
+                                aciklama: 'Yönetici onaylı para çekme',
+                                tarih: new Date().toLocaleString()
+                            });
+                        } else {
+                            showNotification('Hesap bakiyesi yetersiz!', 'error');
+                            return;
+                        }
+                    }
+                    
+                    talep.durum = 'onaylandi';
+                    updateLocalStorage();
+                    loadParaTalepleri();
+                    updateStatistics();
+                    
+                    // Kullanıcıya bildirim gönder
+                    bildirimEkle(hesap.hesapNo, 
+                        `${talep.type === 'yatir' ? 'Para yatırma' : 'Para çekme'} talebiniz onaylandı. Miktar: ${talep.miktar}$`, 
+                        'success');
+                    
+                    showNotification('Para işlemi onaylandı!', 'success');
+                }
+            }
+        }
+
+        function reddetPara(talepId) {
+            const talep = paraTalepleri.find(t => t.id === talepId);
+            if (talep) {
+                talep.durum = 'reddedildi';
+                updateLocalStorage();
+                loadParaTalepleri();
+                
+                // Kullanıcıya bildirim gönder
+                const hesap = hesaplar.find(h => h.hesapNo === talep.hesapNo);
+                if (hesap) {
+                    bildirimEkle(hesap.hesapNo, 
+                        `${talep.type === 'yatir' ? 'Para yatırma' : 'Para çekme'} talebiniz reddedildi.`, 
+                        'error');
+                }
+                
+                showNotification('Para işlemi reddedildi!', 'success');
+            }
+        }
+
+        function onaylaSigorta(talepId) {
+            const talep = sigortaTalepleri.find(t => t.id === talepId);
+            if (talep) {
+                const hesap = hesaplar.find(h => h.hesapNo === talep.hesapNo);
+                if (hesap) {
+                    // Sigorta oluştur
+                    const sigorta = {
+                        id: Date.now().toString(),
+                        aracMarka: talep.aracMarka,
+                        aracModel: talep.aracModel,
+                        plaka: talep.plaka,
+                        paket: talep.paket,
+                        policeSuresi: talep.policeSuresi,
+                        baslangicTarihi: new Date().toLocaleString(),
+                        bitisTarihi: new Date(Date.now() + talep.policeSuresi * 24 * 60 * 60 * 1000).toLocaleString(),
+                        durum: 'aktif'
+                    };
+                    
+                    if (!hesap.sigortalar) hesap.sigortalar = [];
+                    hesap.sigortalar.push(sigorta);
+                    
+                    talep.durum = 'onaylandi';
+                    updateLocalStorage();
+                    loadSigortaTalepleri();
+                    updateStatistics();
+                    
+                    // Kullanıcıya bildirim gönder
+                    bildirimEkle(hesap.hesapNo, 
+                        `Araç sigortanız onaylandı! Araç: ${talep.aracMarka} ${talep.aracModel}`, 
+                        'success');
+                    
+                    showNotification('Sigorta talebi onaylandı!', 'success');
+                }
+            }
+        }
+
+        function reddetSigorta(talepId) {
+            const talep = sigortaTalepleri.find(t => t.id === talepId);
+            if (talep) {
+                talep.durum = 'reddedildi';
+                updateLocalStorage();
+                loadSigortaTalepleri();
+                
+                // Kullanıcıya bildirim gönder
+                const hesap = hesaplar.find(h => h.hesapNo === talep.hesapNo);
+                if (hesap) {
+                    bildirimEkle(hesap.hesapNo, 
+                        `Araç sigorta talebiniz reddedildi.`, 
+                        'error');
+                }
+                
+                showNotification('Sigorta talebi reddedildi!', 'success');
+            }
+        }
+
+        function onaylaVadeli(talepId) {
+            const talep = vadeliTalepleri.find(t => t.id === talepId);
+            if (talep) {
+                const hesap = hesaplar.find(h => h.hesapNo === talep.hesapNo);
+                if (hesap && hesap.bakiye >= talep.miktar) {
+                    // Bakiyeden düş
+                    hesap.bakiye -= talep.miktar;
+                    
+                    // Vadeli hesap oluştur
+                    const vadeliHesap = {
+                        id: Date.now().toString(),
+                        miktar: talep.miktar,
+                        faiz: talep.faiz,
+                        vade: talep.vade,
+                        baslangicTarihi: new Date().toLocaleString(),
+                        bitisTarihi: new Date(Date.now() + talep.vade * 24 * 60 * 60 * 1000).toLocaleString(),
+                        durum: 'aktif'
+                    };
+                    
+                    if (!hesap.vadeliHesaplar) hesap.vadeliHesaplar = [];
+                    hesap.vadeliHesaplar.push(vadeliHesap);
+                    
+                    // Hesap hareketi ekle
+                    if (!hesap.hesapHareketleri) hesap.hesapHareketleri = [];
+                    hesap.hesapHareketleri.push({
+                        id: Date.now().toString(),
+                        islem: 'Vadeli Hesap Açılışı',
+                        miktar: -talep.miktar,
+                        aciklama: `Vadeli hesap - %${talep.faiz} faiz`,
+                        tarih: new Date().toLocaleString()
+                    });
+                    
+                    talep.durum = 'onaylandi';
+                    updateLocalStorage();
+                    loadVadeliTalepleri();
+                    updateStatistics();
+                    
+                    // Kullanıcıya bildirim gönder
+                    bildirimEkle(hesap.hesapNo, 
+                        `Vadeli hesabınız açıldı! Miktar: ${talep.miktar}$, Faiz: %${talep.faiz}`, 
+                        'success');
+                    
+                    showNotification('Vadeli hesap talebi onaylandı!', 'success');
+                } else {
+                    showNotification('Hesap bakiyesi yetersiz!', 'error');
+                }
+            }
+        }
+
+        function reddetVadeli(talepId) {
+            const talep = vadeliTalepleri.find(t => t.id === talepId);
+            if (talep) {
+                talep.durum = 'reddedildi';
+                updateLocalStorage();
+                loadVadeliTalepleri();
+                
+                // Kullanıcıya bildirim gönder
+                const hesap = hesaplar.find(h => h.hesapNo === talep.hesapNo);
+                if (hesap) {
+                    bildirimEkle(hesap.hesapNo, 
+                        `Vadeli hesap talebiniz reddedildi.`, 
+                        'error');
+                }
+                
+                showNotification('Vadeli hesap talebi reddedildi!', 'success');
+            }
+        }
+
+        function onaylaKredi(talepId) {
+            const talep = krediTalepleri.find(t => t.id === talepId);
+            if (talep) {
+                const hesap = hesaplar.find(h => h.hesapNo === talep.hesapNo);
+                if (hesap) {
+                    // Kredi oluştur
+                    const kredi = {
+                        id: Date.now().toString(),
+                        miktar: talep.miktar,
+                        faiz: talep.faiz,
+                        vade: talep.vade,
+                        kalanTutar: talep.miktar * (1 + talep.faiz/100),
+                        baslangicTarihi: new Date().toLocaleString(),
+                        bitisTarihi: new Date(Date.now() + talep.vade * 24 * 60 * 60 * 1000).toLocaleString(),
+                        durum: 'aktif'
+                    };
+                    
+                    if (!hesap.krediler) hesap.krediler = [];
+                    hesap.krediler.push(kredi);
+                    
+                    // Bakiyeye ekle
+                    hesap.bakiye += talep.miktar;
+                    
+                    // Hesap hareketi ekle
+                    if (!hesap.hesapHareketleri) hesap.hesapHareketleri = [];
+                    hesap.hesapHareketleri.push({
+                        id: Date.now().toString(),
+                        islem: 'Kredi Çekme',
+                        miktar: talep.miktar,
+                        aciklama: `Kredi - %${talep.faiz} faiz`,
+                        tarih: new Date().toLocaleString()
+                    });
+                    
+                    talep.durum = 'onaylandi';
+                    updateLocalStorage();
+                    loadKrediTalepleri();
+                    updateStatistics();
+                    
+                    // Kullanıcıya bildirim gönder
+                    bildirimEkle(hesap.hesapNo, 
+                        `Krediniz onaylandı! Miktar: ${talep.miktar}$, Faiz: %${talep.faiz}`, 
+                        'success');
+                    
+                    showNotification('Kredi talebi onaylandı!', 'success');
+                }
+            }
+        }
+
+        function reddetKredi(talepId) {
+            const talep = krediTalepleri.find(t => t.id === talepId);
+            if (talep) {
+                talep.durum = 'reddedildi';
+                updateLocalStorage();
+                loadKrediTalepleri();
+                
+                // Kullanıcıya bildirim gönder
+                const hesap = hesaplar.find(h => h.hesapNo === talep.hesapNo);
+                if (hesap) {
+                    bildirimEkle(hesap.hesapNo, 
+                        `Kredi talebiniz reddedildi.`, 
+                        'error');
+                }
+                
+                showNotification('Kredi talebi reddedildi!', 'success');
+            }
+        }
+
+        function onaylaCalisanSigortasi(talepId) {
+            const talep = calisanSigortasiTalepleri.find(t => t.id === talepId);
+            if (talep) {
+                // Çalışan sigortası oluştur
+                const calisanSigorta = {
+                    id: Date.now().toString(),
+                    isletmeAd: talep.isletmeAd,
+                    isletmeSahibi: talep.isletmeSahibi,
+                    isletmeTel: talep.isletmeTel,
+                    isletmeTuru: talep.isletmeTuru,
+                    isletmeSektor: talep.isletmeSektor,
+                    calisanAdSoyad: talep.calisanAdSoyad,
+                    calisanTel: talep.calisanTel,
+                    calisanSaglikRaporu: talep.calisanSaglikRaporu,
+                    baslangicTarihi: new Date().toLocaleString(),
+                    durum: 'aktif'
+                };
+                
+                calisanSigortaHesaplari.push(calisanSigorta);
+                talep.durum = 'onaylandi';
+                updateLocalStorage();
+                loadCalisanSigortasiTalepleri();
+                updateStatistics();
+                
+                showNotification('Çalışan sigortası talebi onaylandı!', 'success');
+            }
+        }
+
+        function reddetCalisanSigortasi(talepId) {
+            const talep = calisanSigortasiTalepleri.find(t => t.id === talepId);
+            if (talep) {
+                talep.durum = 'reddedildi';
+                updateLocalStorage();
+                loadCalisanSigortasiTalepleri();
+                
+                showNotification('Çalışan sigortası talebi reddedildi!', 'success');
+            }
+        }
+
+        // Yeni Eklenen Fonksiyonlar
+
+        // Hesap Hareketleri
+        function loadHesapHareketleri() {
+            const container = document.getElementById('hesapHareketleriListesi');
+            container.innerHTML = '';
+
+            if (!currentUser || !currentUser.hesapHareketleri || currentUser.hesapHareketleri.length === 0) {
+                container.innerHTML = '<p>Henüz hesap hareketiniz bulunmamaktadır.</p>';
+                return;
+            }
+
+            currentUser.hesapHareketleri.sort((a, b) => new Date(b.tarih) - new Date(a.tarih)).forEach(hareket => {
+                const div = document.createElement('div');
+                div.className = 'aktif-item';
+                div.innerHTML = `
+                    <div class="aktif-bilgi">
+                        <strong>${hareket.islem}</strong><br>
+                        <small>${hareket.tarih}</small><br>
+                        <span>${hareket.aciklama} - ${hareket.miktar}$</span>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Profil Yönetimi
+        function loadProfil() {
+            if (!currentUser) return;
+            
+            document.getElementById('profilIsim').value = currentUser.isim;
+            document.getElementById('profilTelefon').value = currentUser.telefon;
+            document.getElementById('profilEmail').value = currentUser.email || '';
+            document.getElementById('profilAdres').value = currentUser.adres || '';
+        }
+
+        function profilGuncelle(e) {
+            e.preventDefault();
+            
+            currentUser.isim = document.getElementById('profilIsim').value;
+            currentUser.telefon = document.getElementById('profilTelefon').value;
+            currentUser.email = document.getElementById('profilEmail').value;
+            currentUser.adres = document.getElementById('profilAdres').value;
+
+            updateLocalStorage();
+            showNotification('Profil bilgileriniz güncellendi!', 'success');
+            
+            resetInactivityTimer();
+        }
+
+        function sifreDegistir(e) {
+            e.preventDefault();
+            
+            const mevcutSifre = document.getElementById('mevcutSifre').value;
+            const yeniSifre = document.getElementById('yeniSifre').value;
+            const yeniSifreTekrar = document.getElementById('yeniSifreTekrar').value;
+
+            if (mevcutSifre !== currentUser.sifre) {
+                showNotification('Mevcut şifreniz hatalı!', 'error');
+                return;
+            }
+
+            if (yeniSifre !== yeniSifreTekrar) {
+                showNotification('Yeni şifreler uyuşmuyor!', 'error');
+                return;
+            }
+
+            currentUser.sifre = yeniSifre;
+            updateLocalStorage();
+            document.getElementById('sifreDegistirForm').reset();
+            showNotification('Şifreniz başarıyla değiştirildi!', 'success');
+            
+            resetInactivityTimer();
+        }
+
+        // Bildirim Sistemi
+        function bildirimEkle(hesapNo, mesaj, tip = 'info') {
+            if (!bildirimler[hesapNo]) bildirimler[hesapNo] = [];
+            bildirimler[hesapNo].push({
+                id: Date.now().toString(),
+                mesaj: mesaj,
+                tip: tip,
+                tarih: new Date().toLocaleString(),
+                okundu: false
+            });
+            updateLocalStorage();
+        }
+
+        function loadBildirimler() {
+            const container = document.getElementById('bildirimlerListesi');
+            container.innerHTML = '';
+
+            if (!currentUser || !bildirimler[currentUser.hesapNo] || bildirimler[currentUser.hesapNo].length === 0) {
+                container.innerHTML = '<p>Henüz bildiriminiz bulunmamaktadır.</p>';
+                return;
+            }
+
+            bildirimler[currentUser.hesapNo].sort((a, b) => new Date(b.tarih) - new Date(a.tarih)).forEach(bildirim => {
+                const div = document.createElement('div');
+                div.className = `bildirim-item ${bildirim.okundu ? '' : 'bildirim-okunmadi'}`;
+                div.innerHTML = `
+                    <div class="aktif-bilgi">
+                        <strong>${bildirim.mesaj}</strong><br>
+                        <small>${bildirim.tarih}</small>
+                    </div>
+                    <div class="aktif-actions">
+                        ${!bildirim.okundu ? `<button class="btn btn-info" onclick="bildirimOkundu('${bildirim.id}')"><i class="fas fa-check"></i> Okundu</button>` : ''}
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function bildirimOkundu(bildirimId) {
+            const kullaniciBildirimleri = bildirimler[currentUser.hesapNo];
+            const bildirim = kullaniciBildirimleri.find(b => b.id === bildirimId);
+            if (bildirim) {
+                bildirim.okundu = true;
+                updateLocalStorage();
+                loadBildirimler();
+            }
+        }
+
+        // Ödeme Takvimi
+        function loadOdemeTakvimi() {
+            const container = document.getElementById('odemeTakvimiListesi');
+            container.innerHTML = '';
+
+            if (!currentUser) {
+                container.innerHTML = '<p>Yaklaşan ödemeniz bulunmamaktadır.</p>';
+                return;
+            }
+
+            let odemeler = [];
+
+            // Kredi ödemeleri
+            if (currentUser.krediler && currentUser.krediler.length > 0) {
+                currentUser.krediler.forEach(kredi => {
+                    odemeler.push({
+                        tur: 'Kredi Taksiti',
+                        miktar: (kredi.miktar * (1 + kredi.faiz/100) / kredi.vade).toFixed(2),
+                        tarih: 'Her 5 günde bir',
+                        durum: 'bekliyor'
+                    });
+                });
+            }
+
+            // Vadeli hesap vadesi
+            if (currentUser.vadeliHesaplar && currentUser.vadeliHesaplar.length > 0) {
+                currentUser.vadeliHesaplar.forEach(vadeli => {
+                    odemeler.push({
+                        tur: 'Vadeli Hesap Vadesi',
+                        miktar: (vadeli.miktar * (1 + vadeli.faiz/100)).toFixed(2),
+                        tarih: '5 gün sonra',
+                        durum: 'bekliyor'
+                    });
+                });
+            }
+
+            if (odemeler.length === 0) {
+                container.innerHTML = '<p>Yaklaşan ödemeniz bulunmamaktadır.</p>';
+                return;
+            }
+
+            odemeler.forEach(odeme => {
+                const div = document.createElement('div');
+                div.className = `payment-schedule ${odeme.durum === 'gecikmis' ? 'payment-overdue' : ''}`;
+                div.innerHTML = `
+                    <div class="aktif-bilgi">
+                        <strong>${odeme.tur}</strong><br>
+                        <span>Miktar: ${odeme.miktar}$ | Tarih: ${odeme.tarih}</span><br>
+                        <small>Durum: ${odeme.durum}</small>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Döviz Kurları
+        function updateExchangeRates() {
+            // Basit rastgele değişim simülasyonu
+            const dolar = (19.50 + (Math.random() - 0.5) * 0.5).toFixed(2);
+            const euro = (21.20 + (Math.random() - 0.5) * 0.5).toFixed(2);
+            const altin = (1250 + (Math.random() - 0.5) * 50).toFixed(2);
+
+            document.getElementById('dolarKuru').textContent = dolar;
+            document.getElementById('euroKuru').textContent = euro;
+            document.getElementById('altinKuru').textContent = altin;
+        }
+
+        // Arama ve Filtreleme
+        function filtreleHareketler() {
+            const aramaMetni = document.getElementById('hareketArama').value.toLowerCase();
+            const hareketler = document.querySelectorAll('#hesapHareketleriListesi .aktif-item');
+            
+            hareketler.forEach(hareket => {
+                const text = hareket.textContent.toLowerCase();
+                hareket.style.display = text.includes(aramaMetni) ? 'flex' : 'none';
+            });
+        }
+
+        function filtreleAdmin() {
+            const aramaMetni = document.getElementById('adminArama').value.toLowerCase();
+            const ogeler = document.querySelectorAll('.admin-panel .aktif-item, .admin-panel .request-item, .admin-panel .hesap-item, .admin-panel .calisan-sigorta-item');
+            
+            ogeler.forEach(oge => {
+                const text = oge.textContent.toLowerCase();
+                oge.style.display = text.includes(aramaMetni) ? 'flex' : 'none';
+            });
+        }
+
+        // PDF Rapor İndirme
+        function raporIndir(tur) {
+            showNotification('PDF rapor oluşturuluyor...', 'info');
+            // Burada PDF oluşturma kodu olacak
+            setTimeout(() => {
+                showNotification('Rapor başarıyla oluşturuldu!', 'success');
+            }, 2000);
+        }
+
+        // Detaylı İstatistikler
+        function loadDetayliIstatistikler() {
+            const container = document.getElementById('detayliIstatistikler');
+            
+            const toplamMusteri = hesaplar.length;
+            const ortalamaBakiye = toplamMusteri > 0 ? 
+                (hesaplar.reduce((top, h) => top + h.bakiye, 0) / toplamMusteri).toFixed(2) : 0;
+            const enCokKredi = Math.max(...hesaplar.map(h => h.krediler?.length || 0));
+            const aktifOran = toplamMusteri > 0 ? 
+                (hesaplar.filter(h => h.bakiye > 0).length / toplamMusteri * 100).toFixed(2) : 0;
+
+            container.innerHTML = `
+                <div class="detay-grid">
+                    <div class="detay-item">
+                        <span class="detay-label">Ortalama Bakiye:</span>
+                        <span class="detay-value">${ortalamaBakiye}$</span>
+                    </div>
+                    <div class="detay-item">
+                        <span class="detay-label">En Çok Kredi Sayısı:</span>
+                        <span class="detay-value">${enCokKredi}</span>
+                    </div>
+                    <div class="detay-item">
+                        <span class="detay-label">Aktif Hesap Oranı:</span>
+                        <span class="detay-value">%${aktifOran}</span>
+                    </div>
+                    <div class="detay-item">
+                        <span class="detay-label">Toplam Varlık:</span>
+                        <span class="detay-value">${hesaplar.reduce((top, h) => top + h.bakiye, 0).toFixed(2)}$</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Otomatik Çıkış Sistemi
+        function startInactivityTimer() {
+            resetInactivityTimer();
+        }
+
+        function resetInactivityTimer() {
+            clearTimeout(inactivityTimer);
+            inactivityTimer = setTimeout(logout, 30 * 60 * 1000); // 30 dakika
+        }
+
+        function logout() {
+            if (currentUser) {
+                cikisYap();
+                showNotification('Güvenlik nedeniyle oturumunuz sonlandırıldı.', 'info');
+            }
+        }
+
+        // Sayfa etkinliklerini dinle
+        ['click', 'mousemove', 'keypress', 'scroll', 'touchstart'].forEach(event => {
+            document.addEventListener(event, resetInactivityTimer);
+        });
+
+        // Kalan fonksiyonlar
+        function updateLocalStorage() {
+            localStorage.setItem('bankofmaze_hesaplar', JSON.stringify(hesaplar));
+            localStorage.setItem('bankofmaze_para_talepler', JSON.stringify(paraTalepleri));
+            localStorage.setItem('bankofmaze_sigorta_talepler', JSON.stringify(sigortaTalepleri));
+            localStorage.setItem('bankofmaze_vadeli_talepler', JSON.stringify(vadeliTalepleri));
+            localStorage.setItem('bankofmaze_kredi_talepler', JSON.stringify(krediTalepleri));
+            localStorage.setItem('bankofmaze_calisan_sigortasi_talepler', JSON.stringify(calisanSigortasiTalepleri));
+            localStorage.setItem('bankofmaze_calisan_sigorta_hesaplari', JSON.stringify(calisanSigortaHesaplari));
+            localStorage.setItem('bankofmaze_bildirimler', JSON.stringify(bildirimler));
+        }
+
         function loadVadeliHesaplarim() {
             const container = document.getElementById('vadeliHesaplarimListesi');
             container.innerHTML = '';
@@ -2021,7 +3122,6 @@
             });
         }
 
-        // Kredilerimi Yükle
         function loadKredilerim() {
             const container = document.getElementById('kredilerimListesi');
             container.innerHTML = '';
@@ -2048,18 +3148,6 @@
             });
         }
 
-        // Sigorta sil
-        function sigortaSil(sigortaId) {
-            if (confirm('Bu sigortayı silmek istediğinizden emin misiniz?')) {
-                currentUser.sigortalar = currentUser.sigortalar.filter(s => s.id !== sigortaId);
-                updateLocalStorage();
-                loadSigortalarim();
-                updateStatistics();
-                showNotification('Sigorta başarıyla silindi!', 'success');
-            }
-        }
-
-        // Vadeli Hesap sil
         function vadeliHesapSil(vadeliId) {
             if (confirm('Bu vadeli hesabı silmek istediğinizden emin misiniz?')) {
                 currentUser.vadeliHesaplar = currentUser.vadeliHesaplar.filter(v => v.id !== vadeliId);
@@ -2070,7 +3158,6 @@
             }
         }
 
-        // Kredi sil
         function krediSil(krediId) {
             if (confirm('Bu krediyi silmek istediğinizden emin misiniz?')) {
                 currentUser.krediler = currentUser.krediler.filter(k => k.id !== krediId);
@@ -2081,570 +3168,7 @@
             }
         }
 
-        // Para Taleplerini Yükle
-        function loadParaTalepleri() {
-            const container = document.getElementById('paraTalepleriListesi');
-            container.innerHTML = '';
-
-            const bekleyenTalepler = paraTalepleri.filter(t => t.durum === 'beklemede');
-            
-            if (bekleyenTalepler.length === 0) {
-                container.innerHTML = '<p>Para işlem talebi bulunmamaktadır.</p>';
-                return;
-            }
-
-            bekleyenTalepler.forEach(talep => {
-                const div = document.createElement('div');
-                div.className = 'request-item';
-                div.innerHTML = `
-                    <div class="request-info">
-                        <strong>${talep.isim}</strong> - ${talep.hesapNo}<br>
-                        ${talep.type === 'yatir' ? 'Para Yatırma' : 'Para Çekme'} - ${talep.miktar}$<br>
-                        <small>${talep.tarih}</small>
-                    </div>
-                    <div class="request-actions">
-                        <button class="btn btn-approve" onclick="onaylaPara('${talep.id}')"><i class="fas fa-check"></i> Onayla</button>
-                        <button class="btn btn-reject" onclick="reddetPara('${talep.id}')"><i class="fas fa-times"></i> Reddet</button>
-                    </div>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        // Para Talebini Onayla
-        function onaylaPara(talepId) {
-            const talep = paraTalepleri.find(t => t.id === talepId);
-            if (!talep) return;
-
-            const hesap = hesaplar.find(h => h.hesapNo === talep.hesapNo);
-            if (!hesap) return;
-
-            if (talep.type === 'yatir') {
-                hesap.bakiye += talep.miktar;
-            } else if (talep.type === 'cek') {
-                if (hesap.bakiye >= talep.miktar) {
-                    hesap.bakiye -= talep.miktar;
-                } else {
-                    showNotification('Hesap bakiyesi yetersiz!', 'error');
-                    return;
-                }
-            }
-
-            talep.durum = 'onaylandı';
-            updateLocalStorage();
-            loadParaTalepleri();
-            loadHesapListesi();
-            updateStatistics();
-            showNotification('İşlem onaylandı!', 'success');
-        }
-
-        // Para Talebini Reddet
-        function reddetPara(talepId) {
-            const talep = paraTalepleri.find(t => t.id === talepId);
-            if (!talep) return;
-
-            talep.durum = 'reddedildi';
-            updateLocalStorage();
-            loadParaTalepleri();
-            showNotification('İşlem reddedildi!', 'info');
-        }
-
-        // Sigorta Taleplerini Yükle
-        function loadSigortaTalepleri() {
-            const container = document.getElementById('sigortaTalepleriListesi');
-            container.innerHTML = '';
-
-            const bekleyenTalepler = sigortaTalepleri.filter(t => t.durum === 'beklemede');
-            
-            if (bekleyenTalepler.length === 0) {
-                container.innerHTML = '<p>Sigorta talebi bulunmamaktadır.</p>';
-                return;
-            }
-
-            bekleyenTalepler.forEach(talep => {
-                const div = document.createElement('div');
-                div.className = 'request-item';
-                div.innerHTML = `
-                    <div class="request-info">
-                        <strong>${talep.isim}</strong> - ${talep.hesapNo}<br>
-                        ${talep.aracMarka} ${talep.aracModel} - ${talep.plaka}<br>
-                        Değer: ${talep.aracDeger}$ - Paket: ${talep.paket} - Süre: ${talep.policeSuresi} gün<br>
-                        Toplam Fiyat: ${talep.toplamFiyat}$<br>
-                        <small>${talep.tarih}</small>
-                    </div>
-                    <div class="request-actions">
-                        <button class="btn btn-approve" onclick="onaylaSigorta('${talep.id}')"><i class="fas fa-check"></i> Onayla</button>
-                        <button class="btn btn-reject" onclick="reddetSigorta('${talep.id}')"><i class="fas fa-times"></i> Reddet</button>
-                    </div>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        // Sigorta Talebini Onayla
-        function onaylaSigorta(talepId) {
-            const talep = sigortaTalepleri.find(t => t.id === talepId);
-            if (!talep) return;
-
-            const hesap = hesaplar.find(h => h.hesapNo === talep.hesapNo);
-            if (!hesap) return;
-
-            if (!hesap.sigortalar) hesap.sigortalar = [];
-            hesap.sigortalar.push({
-                id: talep.id,
-                aracMarka: talep.aracMarka,
-                aracModel: talep.aracModel,
-                plaka: talep.plaka,
-                aracDeger: talep.aracDeger,
-                paket: talep.paket,
-                policeSuresi: talep.policeSuresi,
-                toplamFiyat: talep.toplamFiyat,
-                baslangicTarihi: new Date().toLocaleString()
-            });
-
-            talep.durum = 'onaylandı';
-            updateLocalStorage();
-            loadSigortaTalepleri();
-            loadHesapListesi();
-            loadAktifSigortalar();
-            updateStatistics();
-            showNotification('Sigorta talebi onaylandı!', 'success');
-        }
-
-        // Sigorta Talebini Reddet
-        function reddetSigorta(talepId) {
-            const talep = sigortaTalepleri.find(t => t.id === talepId);
-            if (!talep) return;
-
-            talep.durum = 'reddedildi';
-            updateLocalStorage();
-            loadSigortaTalepleri();
-            showNotification('Sigorta talebi reddedildi!', 'info');
-        }
-
-        // Vadeli Taleplerini Yükle
-        function loadVadeliTalepleri() {
-            const container = document.getElementById('vadeliTalepleriListesi');
-            container.innerHTML = '';
-
-            const bekleyenTalepler = vadeliTalepleri.filter(t => t.durum === 'beklemede');
-            
-            if (bekleyenTalepler.length === 0) {
-                container.innerHTML = '<p>Vadeli hesap talebi bulunmamaktadır.</p>';
-                return;
-            }
-
-            bekleyenTalepler.forEach(talep => {
-                const div = document.createElement('div');
-                div.className = 'request-item';
-                div.innerHTML = `
-                    <div class="request-info">
-                        <strong>${talep.isim}</strong> - ${talep.hesapNo}<br>
-                        Miktar: ${talep.miktar}$ - Vade: ${talep.vade} gün - Faiz: %${talep.faiz}<br>
-                        <small>${talep.tarih}</small>
-                    </div>
-                    <div class="request-actions">
-                        <button class="btn btn-approve" onclick="onaylaVadeli('${talep.id}')"><i class="fas fa-check"></i> Onayla</button>
-                        <button class="btn btn-reject" onclick="reddetVadeli('${talep.id}')"><i class="fas fa-times"></i> Reddet</button>
-                    </div>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        // Vadeli Talebini Onayla
-        function onaylaVadeli(talepId) {
-            const talep = vadeliTalepleri.find(t => t.id === talepId);
-            if (!talep) return;
-
-            const hesap = hesaplar.find(h => h.hesapNo === talep.hesapNo);
-            if (!hesap) return;
-
-            if (hesap.bakiye >= talep.miktar) {
-                hesap.bakiye -= talep.miktar;
-            } else {
-                showNotification('Hesap bakiyesi yetersiz!', 'error');
-                return;
-            }
-
-            if (!hesap.vadeliHesaplar) hesap.vadeliHesaplar = [];
-            hesap.vadeliHesaplar.push({
-                id: talep.id,
-                miktar: talep.miktar,
-                faiz: talep.faiz,
-                vade: talep.vade,
-                baslangicTarihi: new Date().toLocaleString(),
-                durum: 'aktif'
-            });
-
-            talep.durum = 'onaylandı';
-            updateLocalStorage();
-            loadVadeliTalepleri();
-            loadHesapListesi();
-            loadAktifVadeliHesaplar();
-            updateStatistics();
-            showNotification('Vadeli hesap talebi onaylandı!', 'success');
-        }
-
-        // Vadeli Talebini Reddet
-        function reddetVadeli(talepId) {
-            const talep = vadeliTalepleri.find(t => t.id === talepId);
-            if (!talep) return;
-
-            talep.durum = 'reddedildi';
-            updateLocalStorage();
-            loadVadeliTalepleri();
-            showNotification('Vadeli hesap talebi reddedildi!', 'info');
-        }
-
-        // Kredi Taleplerini Yükle
-        function loadKrediTalepleri() {
-            const container = document.getElementById('krediTalepleriListesi');
-            container.innerHTML = '';
-
-            const bekleyenTalepler = krediTalepleri.filter(t => t.durum === 'beklemede');
-            
-            if (bekleyenTalepler.length === 0) {
-                container.innerHTML = '<p>Kredi talebi bulunmamaktadır.</p>';
-                return;
-            }
-
-            bekleyenTalepler.forEach(talep => {
-                const div = document.createElement('div');
-                div.className = 'request-item';
-                div.innerHTML = `
-                    <div class="request-info">
-                        <strong>${talep.isim}</strong> - ${talep.hesapNo}<br>
-                        Miktar: ${talep.miktar}$ - Vade: ${talep.vade} gün - Faiz: %${talep.faiz}<br>
-                        <small>${talep.tarih}</small>
-                    </div>
-                    <div class="request-actions">
-                        <button class="btn btn-approve" onclick="onaylaKredi('${talep.id}')"><i class="fas fa-check"></i> Onayla</button>
-                        <button class="btn btn-reject" onclick="reddetKredi('${talep.id}')"><i class="fas fa-times"></i> Reddet</button>
-                    </div>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        // Kredi Talebini Onayla
-        function onaylaKredi(talepId) {
-            const talep = krediTalepleri.find(t => t.id === talepId);
-            if (!talep) return;
-
-            const hesap = hesaplar.find(h => h.hesapNo === talep.hesapNo);
-            if (!hesap) return;
-
-            hesap.bakiye += talep.miktar;
-
-            if (!hesap.krediler) hesap.krediler = [];
-            hesap.krediler.push({
-                id: talep.id,
-                miktar: talep.miktar,
-                faiz: talep.faiz,
-                vade: talep.vade,
-                baslangicTarihi: new Date().toLocaleString(),
-                durum: 'aktif'
-            });
-
-            talep.durum = 'onaylandı';
-            updateLocalStorage();
-            loadKrediTalepleri();
-            loadHesapListesi();
-            loadAktifKrediler();
-            updateStatistics();
-            showNotification('Kredi talebi onaylandı!', 'success');
-        }
-
-        // Kredi Talebini Reddet
-        function reddetKredi(talepId) {
-            const talep = krediTalepleri.find(t => t.id === talepId);
-            if (!talep) return;
-
-            talep.durum = 'reddedildi';
-            updateLocalStorage();
-            loadKrediTalepleri();
-            showNotification('Kredi talebi reddedildi!', 'info');
-        }
-
-        // Çalışan Sigortası Taleplerini Yükle
-        function loadCalisanSigortasiTalepleri() {
-            const container = document.getElementById('calisanSigortasiTalepleriListesi');
-            container.innerHTML = '';
-
-            const bekleyenTalepler = calisanSigortasiTalepleri.filter(t => t.durum === 'beklemede');
-            
-            if (bekleyenTalepler.length === 0) {
-                container.innerHTML = '<p>Çalışan sigortası talebi bulunmamaktadır.</p>';
-                return;
-            }
-
-            bekleyenTalepler.forEach(talep => {
-                const div = document.createElement('div');
-                div.className = 'request-item';
-                div.innerHTML = `
-                    <div class="request-info">
-                        <strong>${talep.isletmeAd}</strong> - ${talep.isletmeSahibi}<br>
-                        Çalışan: ${talep.calisanAdSoyad} - Tel: ${talep.calisanTel}<br>
-                        Sektör: ${talep.isletmeSektor} - Tür: ${talep.isletmeTuru}<br>
-                        <small>${talep.tarih}</small>
-                    </div>
-                    <div class="request-actions">
-                        <button class="btn btn-approve" onclick="onaylaCalisanSigortasi('${talep.id}')"><i class="fas fa-check"></i> Onayla</button>
-                        <button class="btn btn-reject" onclick="reddetCalisanSigortasi('${talep.id}')"><i class="fas fa-times"></i> Reddet</button>
-                    </div>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        // Çalışan Sigortası Talebini Onayla
-        function onaylaCalisanSigortasi(talepId) {
-            const talep = calisanSigortasiTalepleri.find(t => t.id === talepId);
-            if (!talep) return;
-
-            talep.durum = 'onaylandı';
-            
-            // Çalışan sigorta hesabı oluştur
-            const calisanSigortaHesabi = {
-                id: talep.id,
-                isletmeAd: talep.isletmeAd,
-                isletmeSahibi: talep.isletmeSahibi,
-                isletmeTel: talep.isletmeTel,
-                isletmeTuru: talep.isletmeTuru,
-                isletmeSektor: talep.isletmeSektor,
-                calisanAdSoyad: talep.calisanAdSoyad,
-                calisanTel: talep.calisanTel,
-                calisanSaglikRaporu: talep.calisanSaglikRaporu,
-                onayTarihi: new Date().toLocaleString(),
-                durum: 'aktif'
-            };
-            
-            calisanSigortaHesaplari.push(calisanSigortaHesabi);
-            
-            updateLocalStorage();
-            loadCalisanSigortasiTalepleri();
-            loadCalisanHesaplari();
-            updateStatistics();
-            showNotification('Çalışan sigortası talebi onaylandı ve hesap oluşturuldu!', 'success');
-        }
-
-        // Çalışan Sigortası Talebini Reddet
-        function reddetCalisanSigortasi(talepId) {
-            const talep = calisanSigortasiTalepleri.find(t => t.id === talepId);
-            if (!talep) return;
-
-            talep.durum = 'reddedildi';
-            updateLocalStorage();
-            loadCalisanSigortasiTalepleri();
-            showNotification('Çalışan sigortası talebi reddedildi!', 'info');
-        }
-
-        // Aktif Kredileri Yükle
-        function loadAktifKrediler() {
-            const container = document.getElementById('aktifKredilerListesi');
-            container.innerHTML = '';
-
-            let aktifKrediler = [];
-            hesaplar.forEach(hesap => {
-                if (hesap.krediler && hesap.krediler.length > 0) {
-                    hesap.krediler.forEach(kredi => {
-                        aktifKrediler.push({
-                            ...kredi,
-                            isim: hesap.isim,
-                            hesapNo: hesap.hesapNo
-                        });
-                    });
-                }
-            });
-
-            if (aktifKrediler.length === 0) {
-                container.innerHTML = '<p>Aktif kredi bulunmamaktadır.</p>';
-                return;
-            }
-
-            aktifKrediler.forEach(kredi => {
-                const div = document.createElement('div');
-                div.className = 'aktif-item';
-                div.innerHTML = `
-                    <div class="aktif-bilgi">
-                        <strong>${kredi.isim}</strong> - ${kredi.hesapNo}<br>
-                        Miktar: ${kredi.miktar}$ - Faiz: %${kredi.faiz} - Vade: ${kredi.vade} gün<br>
-                        <small>Başlangıç: ${kredi.baslangicTarihi}</small>
-                    </div>
-                    <div class="aktif-actions">
-                        <button class="btn btn-danger" onclick="adminSilKredi('${kredi.hesapNo}', '${kredi.id}')"><i class="fas fa-trash"></i> Sil</button>
-                    </div>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        // Aktif Vadeli Hesapları Yükle
-        function loadAktifVadeliHesaplar() {
-            const container = document.getElementById('aktifVadeliListesi');
-            container.innerHTML = '';
-
-            let aktifVadeliHesaplar = [];
-            hesaplar.forEach(hesap => {
-                if (hesap.vadeliHesaplar && hesap.vadeliHesaplar.length > 0) {
-                    hesap.vadeliHesaplar.forEach(vadeli => {
-                        aktifVadeliHesaplar.push({
-                            ...vadeli,
-                            isim: hesap.isim,
-                            hesapNo: hesap.hesapNo
-                        });
-                    });
-                }
-            });
-
-            if (aktifVadeliHesaplar.length === 0) {
-                container.innerHTML = '<p>Aktif vadeli hesap bulunmamaktadır.</p>';
-                return;
-            }
-
-            aktifVadeliHesaplar.forEach(vadeli => {
-                const div = document.createElement('div');
-                div.className = 'aktif-item';
-                div.innerHTML = `
-                    <div class="aktif-bilgi">
-                        <strong>${vadeli.isim}</strong> - ${vadeli.hesapNo}<br>
-                        Miktar: ${vadeli.miktar}$ - Faiz: %${vadeli.faiz} - Vade: ${vadeli.vade} gün<br>
-                        <small>Başlangıç: ${vadeli.baslangicTarihi}</small>
-                    </div>
-                    <div class="aktif-actions">
-                        <button class="btn btn-danger" onclick="adminSilVadeliHesap('${vadeli.hesapNo}', '${vadeli.id}')"><i class="fas fa-trash"></i> Sil</button>
-                    </div>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        // Aktif Sigortaları Yükle
-        function loadAktifSigortalar() {
-            const container = document.getElementById('aktifSigortalarListesi');
-            container.innerHTML = '';
-
-            let aktifSigortalar = [];
-            hesaplar.forEach(hesap => {
-                if (hesap.sigortalar && hesap.sigortalar.length > 0) {
-                    hesap.sigortalar.forEach(sigorta => {
-                        aktifSigortalar.push({
-                            ...sigorta,
-                            isim: hesap.isim,
-                            hesapNo: hesap.hesapNo
-                        });
-                    });
-                }
-            });
-
-            if (aktifSigortalar.length === 0) {
-                container.innerHTML = '<p>Aktif araç sigortası bulunmamaktadır.</p>';
-                return;
-            }
-
-            aktifSigortalar.forEach(sigorta => {
-                const div = document.createElement('div');
-                div.className = 'aktif-item';
-                div.innerHTML = `
-                    <div class="aktif-bilgi">
-                        <strong>${sigorta.isim}</strong> - ${sigorta.hesapNo}<br>
-                        ${sigorta.aracMarka} ${sigorta.aracModel} - ${sigorta.plaka}<br>
-                        Değer: ${sigorta.aracDeger}$ - Paket: ${sigorta.paket} - Süre: ${sigorta.policeSuresi} gün<br>
-                        Toplam Fiyat: ${sigorta.toplamFiyat}$<br>
-                        <small>Başlangıç: ${sigorta.baslangicTarihi}</small>
-                    </div>
-                    <div class="aktif-actions">
-                        <button class="btn btn-danger" onclick="adminSilSigorta('${sigorta.hesapNo}', '${sigorta.id}')"><i class="fas fa-trash"></i> Sil</button>
-                    </div>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        // Admin Kredi Sil
-        function adminSilKredi(hesapNo, krediId) {
-            if (confirm('Bu krediyi silmek istediğinizden emin misiniz?')) {
-                const hesap = hesaplar.find(h => h.hesapNo === hesapNo);
-                if (hesap && hesap.krediler) {
-                    const kredi = hesap.krediler.find(k => k.id === krediId);
-                    if (kredi && hesap.bakiye >= kredi.miktar) {
-                        hesap.bakiye -= kredi.miktar;
-                        hesap.krediler = hesap.krediler.filter(k => k.id !== krediId);
-                        updateLocalStorage();
-                        loadAktifKrediler();
-                        loadHesapListesi();
-                        updateStatistics();
-                        showNotification('Kredi silindi!', 'success');
-                    } else {
-                        showNotification('Krediyi kapatmak için hesap bakiyesi yetersiz!', 'error');
-                    }
-                }
-            }
-        }
-
-        // Admin Vadeli Hesap Sil
-        function adminSilVadeliHesap(hesapNo, vadeliId) {
-            if (confirm('Bu vadeli hesabı silmek istediğinizden emin misiniz?')) {
-                const hesap = hesaplar.find(h => h.hesapNo === hesapNo);
-                if (hesap && hesap.vadeliHesaplar) {
-                    const vadeli = hesap.vadeliHesaplar.find(v => v.id === vadeliId);
-                    if (vadeli) {
-                        hesap.bakiye += vadeli.miktar;
-                        hesap.vadeliHesaplar = hesap.vadeliHesaplar.filter(v => v.id !== vadeliId);
-                        updateLocalStorage();
-                        loadAktifVadeliHesaplar();
-                        loadHesapListesi();
-                        updateStatistics();
-                        showNotification('Vadeli hesap silindi!', 'success');
-                    }
-                }
-            }
-        }
-
-        // Admin Sigorta Sil
-        function adminSilSigorta(hesapNo, sigortaId) {
-            if (confirm('Bu sigortayı silmek istediğinizden emin misiniz?')) {
-                const hesap = hesaplar.find(h => h.hesapNo === hesapNo);
-                if (hesap && hesap.sigortalar) {
-                    hesap.sigortalar = hesap.sigortalar.filter(s => s.id !== sigortaId);
-                    updateLocalStorage();
-                    loadAktifSigortalar();
-                    loadHesapListesi();
-                    updateStatistics();
-                    showNotification('Sigorta silindi!', 'success');
-                }
-            }
-        }
-
-        // Hesap listesini yükle
-        function loadHesapListesi() {
-            const container = document.getElementById('tumHesaplarListesi');
-            container.innerHTML = '';
-
-            if (hesaplar.length === 0) {
-                container.innerHTML = '<p>Henüz hesap bulunmamaktadır.</p>';
-                return;
-            }
-
-            hesaplar.forEach(hesap => {
-                const div = document.createElement('div');
-                div.className = 'hesap-item';
-                div.innerHTML = `
-                    <div>
-                        <strong>${hesap.isim}</strong> - ${hesap.hesapNo}<br>
-                        <small>Bakiye: ${hesap.bakiye.toFixed(2)}$ | Telefon: ${hesap.telefon}</small>
-                    </div>
-                    <div>
-                        <button class="btn btn-danger" onclick="event.stopPropagation(); hesapSil('${hesap.id}')"><i class="fas fa-trash"></i> Sil</button>
-                    </div>
-                `;
-                div.onclick = () => showHesapDetay(hesap.id);
-                container.appendChild(div);
-            });
-        }
-
-        // Çalışan Hesaplarını Yükle
+        // Çalışan Hesapları Yönetimi
         function loadCalisanHesaplari() {
             const container = document.getElementById('calisanHesaplariListesi');
             container.innerHTML = '';
@@ -2659,11 +3183,12 @@
                 div.className = 'calisan-sigorta-item';
                 div.innerHTML = `
                     <div>
-                        <strong>${hesap.isletmeAd}</strong> - ${hesap.calisanAdSoyad}<br>
-                        <small>Onay Tarihi: ${hesap.onayTarihi} | Durum: ${hesap.durum}</small>
+                        <strong>${hesap.isletmeAd}</strong><br>
+                        <small>Çalışan: ${hesap.calisanAdSoyad} | Durum: ${hesap.durum}</small><br>
+                        <small>Başlangıç: ${hesap.baslangicTarihi}</small>
                     </div>
                     <div>
-                        <button class="btn btn-info" onclick="showCalisanHesapDetay('${hesap.id}')"><i class="fas fa-info-circle"></i> Detay</button>
+                        <button class="btn btn-info" onclick="showCalisanHesapDetay('${hesap.id}')"><i class="fas fa-eye"></i> Detay</button>
                         <button class="btn btn-danger" onclick="calisanHesapSil('${hesap.id}')"><i class="fas fa-trash"></i> Sil</button>
                     </div>
                 `;
@@ -2671,223 +3196,399 @@
             });
         }
 
-        // Hesap sil
+        // Çalışan hesabı silme fonksiyonu
+        function calisanHesapSil(hesapId) {
+            if (confirm('Bu çalışan sigortası hesabını silmek istediğinizden emin misiniz?')) {
+                calisanSigortaHesaplari = calisanSigortaHesaplari.filter(h => h.id !== hesapId);
+                updateLocalStorage();
+                loadCalisanHesaplari();
+                updateStatistics();
+                showNotification('Çalışan sigortası hesabı başarıyla silindi!', 'success');
+            }
+        }
+
+        // Çalışan sigortası talebi silme fonksiyonu
+        function calisanTalepSil(talepId) {
+            if (confirm('Bu çalışan sigortası talebini silmek istediğinizden emin misiniz?')) {
+                calisanSigortasiTalepleri = calisanSigortasiTalepleri.filter(t => t.id !== talepId);
+                updateLocalStorage();
+                loadCalisanSigortasiTalepleri();
+                updateStatistics();
+                showNotification('Çalışan sigortası talebi başarıyla silindi!', 'success');
+            }
+        }
+
+        // Detay gösterim fonksiyonunu da geliştirelim
+        function showCalisanHesapDetay(hesapId) {
+            const hesap = calisanSigortaHesaplari.find(h => h.id === hesapId);
+            if (hesap) {
+                // Mevcut detay penceresini kapat
+                const existingDetail = document.getElementById('calisanHesapDetaylari');
+                if (existingDetail) {
+                    existingDetail.remove();
+                }
+                
+                const detayHTML = `
+                    <div class="hesap-detay" id="calisanHesapDetaylari">
+                        <h4>Çalışan Sigortası Detayları</h4>
+                        <div class="detay-grid">
+                            <div class="detay-item">
+                                <span class="detay-label">İşletme Adı:</span>
+                                <span class="detay-value">${hesap.isletmeAd}</span>
+                            </div>
+                            <div class="detay-item">
+                                <span class="detay-label">İşletme Sahibi:</span>
+                                <span class="detay-value">${hesap.isletmeSahibi}</span>
+                            </div>
+                            <div class="detay-item">
+                                <span class="detay-label">İşletme Telefon:</span>
+                                <span class="detay-value">${hesap.isletmeTel}</span>
+                            </div>
+                            <div class="detay-item">
+                                <span class="detay-label">İşletme Türü:</span>
+                                <span class="detay-value">${hesap.isletmeTuru}</span>
+                            </div>
+                            <div class="detay-item">
+                                <span class="detay-label">İşletme Sektörü:</span>
+                                <span class="detay-value">${hesap.isletmeSektor}</span>
+                            </div>
+                            <div class="detay-item">
+                                <span class="detay-label">Çalışan Adı:</span>
+                                <span class="detay-value">${hesap.calisanAdSoyad}</span>
+                            </div>
+                            <div class="detay-item">
+                                <span class="detay-label">Çalışan Telefon:</span>
+                                <span class="detay-value">${hesap.calisanTel}</span>
+                            </div>
+                            <div class="detay-item">
+                                <span class="detay-label">Sağlık Raporu:</span>
+                                <span class="detay-value">${hesap.calisanSaglikRaporu}</span>
+                            </div>
+                            <div class="detay-item">
+                                <span class="detay-label">Başlangıç Tarihi:</span>
+                                <span class="detay-value">${hesap.baslangicTarihi}</span>
+                            </div>
+                            <div class="detay-item">
+                                <span class="detay-label">Durum:</span>
+                                <span class="detay-value">${hesap.durum}</span>
+                            </div>
+                        </div>
+                        <div style="margin-top: 1rem; text-align: center;">
+                            <button class="btn btn-danger" onclick="calisanHesapSil('${hesap.id}')"><i class="fas fa-trash"></i> Bu Hesabı Sil</button>
+                        </div>
+                    </div>
+                `;
+                
+                // Detayları göster
+                document.getElementById('calisan-hesaplari').insertAdjacentHTML('beforeend', detayHTML);
+            }
+        }
+
+        // İstatistikleri güncelle
+        function updateStatistics() {
+            const toplamHesap = hesaplar.length;
+            const toplamBakiye = hesaplar.reduce((toplam, hesap) => toplam + hesap.bakiye, 0);
+            
+            let toplamKredi = 0;
+            let toplamVadeli = 0;
+            let toplamSigorta = 0;
+            
+            hesaplar.forEach(hesap => {
+                if (hesap.krediler) toplamKredi += hesap.krediler.length;
+                if (hesap.vadeliHesaplar) toplamVadeli += hesap.vadeliHesaplar.length;
+                if (hesap.sigortalar) toplamSigorta += hesap.sigortalar.length;
+            });
+
+            const toplamCalisanSigorta = calisanSigortaHesaplari.length;
+
+            document.getElementById('toplam-hesap').textContent = toplamHesap;
+            document.getElementById('toplam-bakiye').textContent = toplamBakiye.toFixed(2) + '$';
+            document.getElementById('toplam-kredi').textContent = toplamKredi;
+            document.getElementById('toplam-vadeli').textContent = toplamVadeli;
+            document.getElementById('toplam-sigorta').textContent = toplamSigorta;
+            document.getElementById('toplam-calisan-sigorta').textContent = toplamCalisanSigorta;
+
+            // Detaylı istatistikleri de güncelle
+            loadDetayliIstatistikler();
+        }
+
+        // Yönetici verilerini yükle
+        function loadAdminData() {
+            loadParaTalepleri();
+            loadSigortaTalepleri();
+            loadVadeliTalepleri();
+            loadKrediTalepleri();
+            loadCalisanSigortasiTalepleri();
+            loadHesapListesi();
+            loadCalisanHesaplari();
+            loadAktifKrediler();
+            loadAktifVadeliHesaplar();
+            loadAktifSigortalar();
+            updateStatistics();
+        }
+
+        // Kalan yönetici fonksiyonları
+        function loadHesapListesi() {
+            const container = document.getElementById('tumHesaplarListesi');
+            container.innerHTML = '';
+
+            if (hesaplar.length === 0) {
+                container.innerHTML = '<p>Henüz hesap bulunmamaktadır.</p>';
+                return;
+            }
+
+            hesaplar.forEach(hesap => {
+                const div = document.createElement('div');
+                div.className = 'hesap-item';
+                div.innerHTML = `
+                    <div>
+                        <strong>${hesap.isim}</strong> (${hesap.hesapNo})<br>
+                        <small>Telefon: ${hesap.telefon} | Bakiye: ${hesap.bakiye}$</small>
+                    </div>
+                    <div>
+                        <button class="btn btn-info" onclick="showHesapDetay('${hesap.id}')"><i class="fas fa-eye"></i> Detay</button>
+                        <button class="btn btn-danger" onclick="hesapSil('${hesap.id}')"><i class="fas fa-trash"></i> Sil</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function loadAktifKrediler() {
+            const container = document.getElementById('aktifKredilerListesi');
+            container.innerHTML = '';
+
+            let aktifKrediler = [];
+            hesaplar.forEach(hesap => {
+                if (hesap.krediler) {
+                    hesap.krediler.forEach(kredi => {
+                        if (kredi.durum === 'aktif') {
+                            aktifKrediler.push({
+                                ...kredi,
+                                isim: hesap.isim,
+                                hesapNo: hesap.hesapNo
+                            });
+                        }
+                    });
+                }
+            });
+
+            if (aktifKrediler.length === 0) {
+                container.innerHTML = '<p>Aktif kredi bulunmamaktadır.</p>';
+                return;
+            }
+
+            aktifKrediler.forEach(kredi => {
+                const div = document.createElement('div');
+                div.className = 'aktif-item';
+                div.innerHTML = `
+                    <div class="aktif-bilgi">
+                        <strong>${kredi.isim}</strong> (${kredi.hesapNo})<br>
+                        <strong>Miktar:</strong> ${kredi.miktar}$ | <strong>Faiz:</strong> %${kredi.faiz}<br>
+                        <small>Başlangıç: ${kredi.baslangicTarihi}</small>
+                    </div>
+                    <div class="aktif-actions">
+                        <button class="btn btn-danger" onclick="adminSilKredi('${kredi.id}')"><i class="fas fa-trash"></i> Sil</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function loadAktifVadeliHesaplar() {
+            const container = document.getElementById('aktifVadeliListesi');
+            container.innerHTML = '';
+
+            let aktifVadeli = [];
+            hesaplar.forEach(hesap => {
+                if (hesap.vadeliHesaplar) {
+                    hesap.vadeliHesaplar.forEach(vadeli => {
+                        if (vadeli.durum === 'aktif') {
+                            aktifVadeli.push({
+                                ...vadeli,
+                                isim: hesap.isim,
+                                hesapNo: hesap.hesapNo
+                            });
+                        }
+                    });
+                }
+            });
+
+            if (aktifVadeli.length === 0) {
+                container.innerHTML = '<p>Aktif vadeli hesap bulunmamaktadır.</p>';
+                return;
+            }
+
+            aktifVadeli.forEach(vadeli => {
+                const div = document.createElement('div');
+                div.className = 'aktif-item';
+                div.innerHTML = `
+                    <div class="aktif-bilgi">
+                        <strong>${vadeli.isim}</strong> (${vadeli.hesapNo})<br>
+                        <strong>Miktar:</strong> ${vadeli.miktar}$ | <strong>Faiz:</strong> %${vadeli.faiz}<br>
+                        <small>Başlangıç: ${vadeli.baslangicTarihi}</small>
+                    </div>
+                    <div class="aktif-actions">
+                        <button class="btn btn-danger" onclick="adminSilVadeliHesap('${vadeli.id}')"><i class="fas fa-trash"></i> Sil</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function loadAktifSigortalar() {
+            const container = document.getElementById('aktifSigortalarListesi');
+            container.innerHTML = '';
+
+            let aktifSigortalar = [];
+            hesaplar.forEach(hesap => {
+                if (hesap.sigortalar) {
+                    hesap.sigortalar.forEach(sigorta => {
+                        if (sigorta.durum === 'aktif') {
+                            aktifSigortalar.push({
+                                ...sigorta,
+                                isim: hesap.isim,
+                                hesapNo: hesap.hesapNo
+                            });
+                        }
+                    });
+                }
+            });
+
+            if (aktifSigortalar.length === 0) {
+                container.innerHTML = '<p>Aktif araç sigortası bulunmamaktadır.</p>';
+                return;
+            }
+
+            aktifSigortalar.forEach(sigorta => {
+                const div = document.createElement('div');
+                div.className = 'aktif-item';
+                div.innerHTML = `
+                    <div class="aktif-bilgi">
+                        <strong>${sigorta.isim}</strong> (${sigorta.hesapNo})<br>
+                        <strong>Araç:</strong> ${sigorta.aracMarka} ${sigorta.aracModel}<br>
+                        <small>Plaka: ${sigorta.plaka} | Paket: ${sigorta.paket}</small>
+                    </div>
+                    <div class="aktif-actions">
+                        <button class="btn btn-danger" onclick="adminSilSigorta('${sigorta.id}')"><i class="fas fa-trash"></i> Sil</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function loadSigortalarim() {
+            const container = document.getElementById('sigortalarimListesi');
+            container.innerHTML = '';
+
+            if (!currentUser || !currentUser.sigortalar || currentUser.sigortalar.length === 0) {
+                container.innerHTML = '<p>Henüz sigortanız bulunmamaktadır.</p>';
+                return;
+            }
+
+            currentUser.sigortalar.forEach(sigorta => {
+                const div = document.createElement('div');
+                div.className = 'aktif-item';
+                div.innerHTML = `
+                    <div class="aktif-bilgi">
+                        <strong>${sigorta.aracMarka} ${sigorta.aracModel}</strong><br>
+                        <small>Plaka: ${sigorta.plaka} | Paket: ${sigorta.paket}</small><br>
+                        <small>Başlangıç: ${sigorta.baslangicTarihi} | Bitiş: ${sigorta.bitisTarihi}</small>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Basit silme fonksiyonları
         function hesapSil(hesapId) {
-            if (confirm('Bu hesabı silmek istediğinizden emin misiniz? Bu işlem geri alınamaz!')) {
+            if (confirm('Bu hesabı silmek istediğinizden emin misiniz?')) {
                 hesaplar = hesaplar.filter(h => h.id !== hesapId);
                 updateLocalStorage();
                 loadHesapListesi();
-                document.getElementById('hesapDetaylari').innerHTML = '';
                 updateStatistics();
                 showNotification('Hesap başarıyla silindi!', 'success');
             }
         }
 
-        // Çalışan Hesap sil
-        function calisanHesapSil(hesapId) {
-            if (confirm('Bu çalışan hesabını silmek istediğinizden emin misiniz? Bu işlem geri alınamaz!')) {
-                calisanSigortaHesaplari = calisanSigortaHesaplari.filter(h => h.id !== hesapId);
+        function adminSilKredi(krediId) {
+            if (confirm('Bu krediyi silmek istediğinizden emin misiniz?')) {
+                hesaplar.forEach(hesap => {
+                    if (hesap.krediler) {
+                        hesap.krediler = hesap.krediler.filter(k => k.id !== krediId);
+                    }
+                });
                 updateLocalStorage();
-                loadCalisanHesaplari();
+                loadAktifKrediler();
                 updateStatistics();
-                showNotification('Çalışan hesabı başarıyla silindi!', 'success');
+                showNotification('Kredi başarıyla silindi!', 'success');
             }
         }
 
-        // Hesap detayını göster
+        function adminSilVadeliHesap(vadeliId) {
+            if (confirm('Bu vadeli hesabı silmek istediğinizden emin misiniz?')) {
+                hesaplar.forEach(hesap => {
+                    if (hesap.vadeliHesaplar) {
+                        hesap.vadeliHesaplar = hesap.vadeliHesaplar.filter(v => v.id !== vadeliId);
+                    }
+                });
+                updateLocalStorage();
+                loadAktifVadeliHesaplar();
+                updateStatistics();
+                showNotification('Vadeli hesap başarıyla silindi!', 'success');
+            }
+        }
+
+        function adminSilSigorta(sigortaId) {
+            if (confirm('Bu sigortayı silmek istediğinizden emin misiniz?')) {
+                hesaplar.forEach(hesap => {
+                    if (hesap.sigortalar) {
+                        hesap.sigortalar = hesap.sigortalar.filter(s => s.id !== sigortaId);
+                    }
+                });
+                updateLocalStorage();
+                loadAktifSigortalar();
+                updateStatistics();
+                showNotification('Sigorta başarıyla silindi!', 'success');
+            }
+        }
+
+        // Basit detay gösterim fonksiyonları
         function showHesapDetay(hesapId) {
             const hesap = hesaplar.find(h => h.id === hesapId);
-            const container = document.getElementById('hesapDetaylari');
-            
-            if (!hesap) return;
-            
-            container.innerHTML = `
-                <div class="hesap-detay">
-                    <h4>Hesap Detayları - ${hesap.isim}</h4>
-                    <div class="detay-grid">
-                        <div class="detay-item">
-                            <span class="detay-label">Hesap No:</span>
-                            <span class="detay-value">${hesap.hesapNo}</span>
-                        </div>
-                        <div class="detay-item">
-                            <span class="detay-label">Bakiye:</span>
-                            <span class="detay-value">${hesap.bakiye.toFixed(2)}$</span>
-                        </div>
-                        <div class="detay-item">
-                            <span class="detay-label">Doğum Tarihi:</span>
-                            <span class="detay-value">${hesap.dogumTarihi}</span>
-                        </div>
-                        <div class="detay-item">
-                            <span class="detay-label">Telefon:</span>
-                            <span class="detay-value">${hesap.telefon}</span>
-                        </div>
-                        <div class="detay-item">
-                            <span class="detay-label">Meslek:</span>
-                            <span class="detay-value">${hesap.meslek}</span>
-                        </div>
-                        <div class="detay-item">
-                            <span class="detay-label">Mallar:</span>
-                            <span class="detay-value">${hesap.mallar}</span>
-                        </div>
-                        <div class="detay-item">
-                            <span class="detay-label">Haftalık Gelir:</span>
-                            <span class="detay-value">${hesap.gelir}$</span>
-                        </div>
-                    </div>
-                    
-                    <h5>Sigortalar (${hesap.sigortalar ? hesap.sigortalar.length : 0})</h5>
-                    ${hesap.sigortalar && hesap.sigortalar.length > 0 ? 
-                        hesap.sigortalar.map(sigorta => `
-                            <div class="calisan-sigorta-item">
-                                <div class="sigorta-bilgi">
-                                    <strong>${sigorta.aracMarka} ${sigorta.aracModel}</strong><br>
-                                    Plaka: ${sigorta.plaka} | Değer: ${sigorta.aracDeger}$ | Paket: ${sigorta.paket}<br>
-                                    Poliçe Süresi: ${sigorta.policeSuresi} gün | Toplam Fiyat: ${sigorta.toplamFiyat}$<br>
-                                    <small>Başlangıç: ${sigorta.baslangicTarihi}</small>
-                                </div>
-                            </div>
-                        `).join('') : '<p>Sigorta bulunmamaktadır.</p>'
-                    }
-                    
-                    <h5>Vadeli Hesaplar (${hesap.vadeliHesaplar ? hesap.vadeliHesaplar.length : 0})</h5>
-                    ${hesap.vadeliHesaplar && hesap.vadeliHesaplar.length > 0 ? 
-                        hesap.vadeliHesaplar.map(vadeli => `
-                            <div class="calisan-sigorta-item">
-                                <div>
-                                    <strong>${vadeli.miktar}$</strong> - %${vadeli.faiz} faiz - ${vadeli.vade} gün<br>
-                                    <small>Başlangıç: ${vadeli.baslangicTarihi} | Durum: ${vadeli.durum}</small>
-                                </div>
-                            </div>
-                        `).join('') : '<p>Vadeli hesap bulunmamaktadır.</p>'
-                    }
-                    
-                    <h5>Krediler (${hesap.krediler ? hesap.krediler.length : 0})</h5>
-                    ${hesap.krediler && hesap.krediler.length > 0 ? 
-                        hesap.krediler.map(kredi => `
-                            <div class="calisan-sigorta-item">
-                                <div>
-                                    <strong>${kredi.miktar}$</strong> - %${kredi.faiz} faiz - ${kredi.vade} gün<br>
-                                    <small>Başlangıç: ${kredi.baslangicTarihi} | Durum: ${kredi.durum}</small>
-                                </div>
-                            </div>
-                        `).join('') : '<p>Kredi bulunmamaktadır.</p>'
-                    }
-                    
-                    <button class="btn btn-info" onclick="duzenleHesap('${hesap.id}')" style="margin-top: 1rem;"><i class="fas fa-edit"></i> Bakiye Düzenle</button>
-                </div>
-            `;
-            container.style.display = 'block';
-        }
-
-        // Çalışan Hesap detayını göster
-        function showCalisanHesapDetay(hesapId) {
-            const hesap = calisanSigortaHesaplari.find(h => h.id === hesapId);
-            if (!hesap) return;
-            
-            const container = document.getElementById('calisanHesaplariListesi');
-            const detayDiv = document.createElement('div');
-            detayDiv.className = 'calisan-sigorta-detay';
-            detayDiv.innerHTML = `
-                <h4>Çalışan Hesap Detayları - ${hesap.isletmeAd}</h4>
-                <div class="detay-grid">
-                    <div class="detay-item">
-                        <span class="detay-label">İşletme Adı:</span>
-                        <span class="detay-value">${hesap.isletmeAd}</span>
-                    </div>
-                    <div class="detay-item">
-                        <span class="detay-label">İşletme Sahibi:</span>
-                        <span class="detay-value">${hesap.isletmeSahibi}</span>
-                    </div>
-                    <div class="detay-item">
-                        <span class="detay-label">İşletme Telefon:</span>
-                        <span class="detay-value">${hesap.isletmeTel}</span>
-                    </div>
-                    <div class="detay-item">
-                        <span class="detay-label">İşletme Türü:</span>
-                        <span class="detay-value">${hesap.isletmeTuru}</span>
-                    </div>
-                    <div class="detay-item">
-                        <span class="detay-label">İşletme Sektörü:</span>
-                        <span class="detay-value">${hesap.isletmeSektor}</span>
-                    </div>
-                    <div class="detay-item">
-                        <span class="detay-label">Çalışan Ad Soyad:</span>
-                        <span class="detay-value">${hesap.calisanAdSoyad}</span>
-                    </div>
-                    <div class="detay-item">
-                        <span class="detay-label">Çalışan Telefon:</span>
-                        <span class="detay-value">${hesap.calisanTel}</span>
-                    </div>
-                    <div class="detay-item">
-                        <span class="detay-label">Sağlık Raporu:</span>
-                        <span class="detay-value">${hesap.calisanSaglikRaporu}</span>
-                    </div>
-                    <div class="detay-item">
-                        <span class="detay-label">Onay Tarihi:</span>
-                        <span class="detay-value">${hesap.onayTarihi}</span>
-                    </div>
-                    <div class="detay-item">
-                        <span class="detay-label">Durum:</span>
-                        <span class="detay-value">${hesap.durum}</span>
-                    </div>
-                </div>
-                <button class="btn btn-warning" onclick="pasiflestirCalisanHesap('${hesap.id}')" style="margin-top: 1rem;"><i class="fas fa-pause"></i> Pasifleştir</button>
-                <button class="btn btn-success" onclick="aktiflestirCalisanHesap('${hesap.id}')" style="margin-top: 1rem;"><i class="fas fa-play"></i> Aktifleştir</button>
-            `;
-            
-            // Eski detayı kaldır ve yenisini ekle
-            const eskiDetay = container.querySelector('.calisan-sigorta-detay');
-            if (eskiDetay) {
-                container.removeChild(eskiDetay);
-            }
-            container.appendChild(detayDiv);
-        }
-
-        // Çalışan Hesabı Pasifleştir
-        function pasiflestirCalisanHesap(hesapId) {
-            const hesap = calisanSigortaHesaplari.find(h => h.id === hesapId);
             if (hesap) {
-                hesap.durum = 'pasif';
-                updateLocalStorage();
-                loadCalisanHesaplari();
-                showNotification('Çalışan hesabı pasifleştirildi!', 'success');
+                document.getElementById('hesapDetaylari').innerHTML = `
+                    <div class="hesap-detay">
+                        <h4>Hesap Detayları</h4>
+                        <div class="detay-grid">
+                            <div class="detay-item">
+                                <span class="detay-label">İsim:</span>
+                                <span class="detay-value">${hesap.isim}</span>
+                            </div>
+                            <div class="detay-item">
+                                <span class="detay-label">Hesap No:</span>
+                                <span class="detay-value">${hesap.hesapNo}</span>
+                            </div>
+                            <div class="detay-item">
+                                <span class="detay-label">Telefon:</span>
+                                <span class="detay-value">${hesap.telefon}</span>
+                            </div>
+                            <div class="detay-item">
+                                <span class="detay-label">Bakiye:</span>
+                                <span class="detay-value">${hesap.bakiye}$</span>
+                            </div>
+                            <div class="detay-item">
+                                <span class="detay-label">Meslek:</span>
+                                <span class="detay-value">${hesap.meslek}</span>
+                            </div>
+                            <div class="detay-item">
+                                <span class="detay-label">Gelir:</span>
+                                <span class="detay-value">${hesap.gelir}$/hafta</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
             }
-        }
-
-        // Çalışan Hesabı Aktifleştir
-        function aktiflestirCalisanHesap(hesapId) {
-            const hesap = calisanSigortaHesaplari.find(h => h.id === hesapId);
-            if (hesap) {
-                hesap.durum = 'aktif';
-                updateLocalStorage();
-                loadCalisanHesaplari();
-                showNotification('Çalışan hesabı aktifleştirildi!', 'success');
-            }
-        }
-
-        // Hesap düzenle
-        function duzenleHesap(hesapId) {
-            const hesap = hesaplar.find(h => h.id === hesapId);
-            const yeniBakiye = prompt(`Hesap bakiyesini güncelleyin (Mevcut: ${hesap.bakiye}$):`, hesap.bakiye);
-            
-            if (yeniBakiye !== null && !isNaN(yeniBakiye)) {
-                hesap.bakiye = parseFloat(yeniBakiye);
-                updateLocalStorage();
-                loadHesapListesi();
-                showHesapDetay(hesapId);
-                updateStatistics();
-                showNotification('Hesap bakiyesi güncellendi!', 'success');
-            }
-        }
-
-        function updateLocalStorage() {
-            localStorage.setItem('bankofmaze_hesaplar', JSON.stringify(hesaplar));
-            localStorage.setItem('bankofmaze_para_talepler', JSON.stringify(paraTalepleri));
-            localStorage.setItem('bankofmaze_sigorta_talepler', JSON.stringify(sigortaTalepleri));
-            localStorage.setItem('bankofmaze_vadeli_talepler', JSON.stringify(vadeliTalepleri));
-            localStorage.setItem('bankofmaze_kredi_talepler', JSON.stringify(krediTalepleri));
-            localStorage.setItem('bankofmaze_calisan_sigortasi_talepler', JSON.stringify(calisanSigortasiTalepleri));
-            localStorage.setItem('bankofmaze_calisan_sigorta_hesaplari', JSON.stringify(calisanSigortaHesaplari));
         }
     </script>
 </body>
