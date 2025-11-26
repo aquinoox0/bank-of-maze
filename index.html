@@ -1020,6 +1020,131 @@
     </style>
 </head>
 <body>
+<!-- SUPABASE INTEGRATION PANEL (ADDED) -->
+<div id="supabase-integration" style="position:fixed;right:16px;bottom:16px;z-index:9999;background:#fff;padding:12px;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,0.12);width:320px;">
+  <h4 style="margin:0 0 8px 0;font-size:16px">Supabase Sync (Opsiyonel)</h4>
+  <input id="sbUrl" placeholder="SUPABASE URL" style="width:100%;padding:8px;margin-bottom:6px" />
+  <input id="sbKey" placeholder="SUPABASE ANON KEY" style="width:100%;padding:8px;margin-bottom:6px" />
+  <div style="display:flex;gap:6px">
+    <button id="sbInit" style="flex:1;padding:8px;background:#0077cc;color:#fff;border:none;border-radius:6px;cursor:pointer">Init</button>
+    <button id="sbPush" style="flex:1;padding:8px;background:#28a745;color:#fff;border:none;border-radius:6px;cursor:pointer">Push → DB</button>
+  </div>
+  <div style="display:flex;gap:6px;margin-top:6px">
+    <button id="sbPull" style="flex:1;padding:8px;background:#6c757d;color:#fff;border:none;border-radius:6px;cursor:pointer">Pull ← DB</button>
+    <button id="sbClose" style="flex:1;padding:8px;background:#dc3545;color:#fff;border:none;border-radius:6px;cursor:pointer">Kapat</button>
+  </div>
+  <div id="sbStatus" style="margin-top:8px;font-size:13px;color:#333">Durum: Hazır</div>
+  <small style="display:block;margin-top:6px;color:#666">Not: Bu panel demo amaçlıdır. Prod'ta service_role kullanma.</small>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+(function(){
+  let supabase = null;
+  const statusEl = document.getElementById('sbStatus');
+
+  function setStatus(t){ statusEl.textContent = 'Durum: ' + t; }
+
+  document.getElementById('sbInit').addEventListener('click', function(){
+    const url = document.getElementById('sbUrl').value.trim();
+    const key = document.getElementById('sbKey').value.trim();
+    if(!url || !key){ alert('URL ve ANON KEY girin'); return; }
+    supabase = window.supabase.createClient(url, key);
+    setStatus('Bağlandı (anon key ile)');
+    // quick test
+    supabase.from('profiles').select('id').limit(1).then(res=>{
+      if(res.error) {
+        console.warn(res.error);
+        setStatus('Bağlandı ama sorgu hatası (RLS/izin olabilir)');
+      } else {
+        setStatus('Bağlandı, DB erişimi OK');
+      }
+    });
+  });
+
+  // Helper: phone -> fake email
+  function phoneToEmail(phone){
+    return encodeURIComponent((phone||'').replace(/[^0-9+]/g,'')) + '@bankofmaze.local';
+  }
+
+  // Push localStorage hesaplar -> Supabase profiles
+  document.getElementById('sbPush').addEventListener('click', async function(){
+    if(!supabase){ alert('Önce init yapın'); return; }
+    setStatus('Local → DB, işlem başlıyor...');
+    // read local hesaplar
+    let hesaplar = JSON.parse(localStorage.getItem('bankofmaze_hesaplar') || '[]');
+    if(!hesaplar || hesaplar.length===0){ alert('Local hesap bulunamadı'); setStatus('Local boş'); return; }
+
+    // For each hesap, attempt to signUp user (email/password) and insert profile row.
+    // WARNING: If users already exist in auth, signUp will fail; we handle by trying signIn fallback.
+    let created = 0, updated = 0, failed = 0;
+    for(const h of hesaplar){
+      try{
+        const email = phoneToEmail(h.telefon||h.phone||'unknown');
+        const password = h.sifre || 'degistir123';
+        // try signUp
+        let res = await supabase.auth.signUp({ email: email, password: password });
+        let user = res.data ? res.data.user : null;
+        if(res.error && res.error.message && res.error.message.includes('User already registered')){
+          // try signIn (anon key won't allow signIn? but attempt)
+          const login = await supabase.auth.signInWithPassword({ email: email, password: password });
+          user = login.data ? login.data.user : null;
+        }
+        if(user && user.id){
+          // insert or upsert profile
+          const profile = {
+            id: user.id,
+            full_name: h.isim || h.fullName || '',
+            phone: h.telefon || h.phone || '',
+            income: h.gelir || h.income || 0,
+            balance: h.bakiye || h.balance || 0
+          };
+          // use upsert (requires the table to exist and anon key to have permissions)
+          const up = await supabase.from('profiles').upsert(profile, { onConflict: 'id' });
+          if(up.error){ console.warn('upsert error', up.error); failed++; } else { created++; }
+        } else {
+          failed++;
+        }
+      }catch(err){
+        console.error(err);
+        failed++;
+      }
+    }
+    setStatus(`İşlem tamam. Başarılı: ${created}, Başarısız: ${failed}`);
+    alert('Push tamamlandı. Konsolu kontrol et.');
+  });
+
+  // Pull DB -> localStorage (overwrite local hesaplar)
+  document.getElementById('sbPull').addEventListener('click', async function(){
+    if(!supabase){ alert('Önce init yapın'); return; }
+    setStatus('DB → Local, çekiliyor...');
+    const res = await supabase.from('profiles').select('*');
+    if(res.error){ setStatus('Hata: ' + res.error.message); alert('DB çekme hatası: ' + res.error.message); return; }
+    const profiles = res.data || [];
+    // Map profiles to hesaplar structure minimally
+    const hesaplar = profiles.map(p => ({
+      id: p.id,
+      isim: p.full_name || '',
+      telefon: p.phone || '',
+      sifre: '********', // unknown
+      gelir: p.income || 0,
+      bakiye: p.balance || 0,
+      hesapNo: ('MAZE' + p.id).slice(0,20)
+    }));
+    localStorage.setItem('bankofmaze_hesaplar', JSON.stringify(hesaplar));
+    setStatus('Local güncellendi (' + hesaplar.length + ' kayıt).');
+    alert('LocalStorage güncellendi. Siteyi yenileyebilirsiniz.');
+  });
+
+  document.getElementById('sbClose').addEventListener('click', function(){
+    const el = document.getElementById('supabase-integration');
+    el.style.display = 'none';
+  });
+
+})();
+</script>
+<!-- END SUPABASE INTEGRATION PANEL -->
+
     <!-- FDIC Banner -->
     <div class="fdic-banner">
         <i class="fas fa-shield-alt"></i> Bank of Maze mevduat: FDIC-Insured - Backed by the full faith and credit of the LOFT. Government
